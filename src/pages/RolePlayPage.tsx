@@ -535,7 +535,7 @@ const RolePlayPage = () => {
                 <Textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={canSendMore ? "Escribí tu respuesta como agente..." : "Límite de mensajes alcanzado"}
+                  placeholder={canSendMore ? "Escribe tu respuesta como agente..." : "Límite de mensajes alcanzado"}
                   className="min-h-[40px] max-h-[80px] resize-none"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {

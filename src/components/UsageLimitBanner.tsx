@@ -49,7 +49,7 @@ export function UsageLimitBanner({ toolId }: UsageLimitBannerProps) {
           <Lock className="h-5 w-5 text-destructive" />
           <div>
             <p className="text-sm font-semibold text-destructive">Prueba expirada</p>
-            <p className="text-xs text-muted-foreground">Activá tu plan para seguir usando esta herramienta.</p>
+            <p className="text-xs text-muted-foreground">Activa tu plan para seguir usando esta herramienta.</p>
           </div>
         </div>
         <Button size="sm" className="bg-gradient-to-r from-blue-600 via-primary to-cyan-500 border-0">

@@ -103,7 +103,7 @@ const ContratosPage = () => {
               <Label>Tipo de contrato</Label>
               <Select value={tipoContrato} onValueChange={setTipoContrato}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Seleccioná el tipo de contrato" />
+                  <SelectValue placeholder="Selecciona el tipo de contrato" />
                 </SelectTrigger>
                 <SelectContent>
                   {tiposContrato.map((t) => (
