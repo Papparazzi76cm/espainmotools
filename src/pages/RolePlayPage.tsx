@@ -365,7 +365,7 @@ const RolePlayPage = () => {
             <CardContent className="space-y-3 text-sm text-muted-foreground">
               <div className="flex items-start gap-2">
                 <span className="text-primary font-bold">1.</span>
-                <p>Elegí el <strong>rol del cliente</strong> (comprador o vendedor) y su <strong>perfil de personalidad</strong>.</p>
+                <p>Elige el <strong>rol del cliente</strong> (comprador o vendedor) y su <strong>perfil de personalidad</strong>.</p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-primary font-bold">2.</span>
