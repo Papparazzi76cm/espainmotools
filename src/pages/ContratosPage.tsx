@@ -128,7 +128,7 @@ const ContratosPage = () => {
             <div>
               <Label>Descripción del inmueble</Label>
               <Textarea
-                placeholder="Ej: Casa de 3 habitaciones, 150 m², ubicada en Barrio Herrera, Asunción. Finca N° 1234, CUC N° 01-001-0001..."
+                placeholder="Ej: Piso de 3 habitaciones, 90 m², situado en Calle Gran Vía 45, 3ºA, Madrid. Ref. catastral 1234567..."
                 value={inmueble}
                 onChange={(e) => setInmueble(e.target.value)}
                 rows={3}
