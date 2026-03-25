@@ -14,15 +14,15 @@ import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 
 const tiposContrato = [
   { value: "compraventa", label: "Compraventa de Inmueble" },
-  { value: "alquiler", label: "Contrato de Alquiler / Locación" },
-  { value: "reserva", label: "Boleto de Reserva" },
-  { value: "promesa", label: "Promesa de Compraventa" },
+  { value: "alquiler", label: "Contrato de Arrendamiento (LAU)" },
+  { value: "arras", label: "Contrato de Arras" },
+  { value: "reserva", label: "Reserva de Inmueble" },
+  { value: "opcion_compra", label: "Opción de Compra" },
   { value: "cesion", label: "Cesión de Derechos" },
-  { value: "comodato", label: "Comodato (Préstamo de Uso)" },
   { value: "permuta", label: "Permuta de Inmuebles" },
   { value: "exclusividad", label: "Contrato de Exclusividad Inmobiliaria" },
   { value: "administracion", label: "Administración de Inmueble" },
-  { value: "anticresis", label: "Anticresis" },
+  { value: "alquiler_temporal", label: "Alquiler de Temporada" },
 ];
 
 const ContratosPage = () => {
