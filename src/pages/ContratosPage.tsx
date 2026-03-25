@@ -118,7 +118,7 @@ const ContratosPage = () => {
             <div>
               <Label>Partes involucradas</Label>
               <Textarea
-                placeholder="Ej: Vendedor: Juan Pérez, CI 1.234.567. Comprador: María López, CI 2.345.678..."
+                placeholder="Ej: Vendedor: Juan Pérez, DNI 12.345.678-A. Comprador: María López, DNI 23.456.789-B..."
                 value={partes}
                 onChange={(e) => setPartes(e.target.value)}
                 rows={3}
