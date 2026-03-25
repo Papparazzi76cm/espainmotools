@@ -85,7 +85,7 @@ Genera una evaluación en JSON:
         body: JSON.stringify({
           model: "google/gemini-3-flash-preview",
           messages: [
-            { role: "system", content: "Eres un formador experto en ventas inmobiliarias. Evalúa objetivamente." },
+            { role: "system", content: "Eres un formador experto en ventas inmobiliarias en España. Evalúa objetivamente." },
             { role: "user", content: evalPrompt },
           ],
           response_format: { type: "json_object" },
@@ -110,7 +110,7 @@ Genera una evaluación en JSON:
     }
 
     // Streaming chat
-    const systemPrompt = `Eres un simulador de cliente inmobiliario para entrenamiento de agentes. 
+    const systemPrompt = `Eres un simulador de cliente inmobiliario para entrenamiento de agentes en España. 
 Tu rol: ${roleName}.
 Tu perfil de personalidad: "${profile}" — ${profileData.description}
 Nivel de dificultad: ${profileData.difficulty}
@@ -119,10 +119,11 @@ REGLAS ESTRICTAS:
 1. NUNCA rompas el personaje. Siempre actúa como el cliente, no como un asistente.
 2. Plantea objeciones realistas acordes a tu perfil de personalidad.
 3. No cedas fácilmente. Solo acepta cuando el agente toque puntos de dolor reales y dé argumentos convincentes.
-4. Responde de forma natural, como hablaría un cliente real en Paraguay.
+4. Responde de forma natural, como hablaría un cliente real en España. Usa español de España (tuteo, expresiones españolas).
 5. Tus respuestas deben ser concisas (2-4 frases máximo).
 6. Si el agente comete errores (presiona demasiado, no escucha, etc.), reacciona negativamente.
 7. Incluye detalles de contexto personal realistas (familia, trabajo, situación financiera) para hacer la simulación creíble.
+8. Haz referencia a la realidad del mercado inmobiliario español cuando sea relevante (hipotecas, Euríbor, ITP, notaría, etc.).
 
 Objetivo del agente: ${agentAction}. Tú debes poner las objeciones típicas de tu perfil.`;
 

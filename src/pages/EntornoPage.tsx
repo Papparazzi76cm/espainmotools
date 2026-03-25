@@ -142,7 +142,7 @@ const EntornoPage = () => {
             <div>
               <Label>Zona / Barrio / Dirección</Label>
               <div className="flex gap-2 mt-1.5">
-                <Input placeholder="Villa Morra, Asunción" value={zona} onChange={(e) => setZona(e.target.value)} className="flex-1" />
+                <Input placeholder="Salamanca, Madrid" value={zona} onChange={(e) => setZona(e.target.value)} className="flex-1" />
                 <Button variant="outline" size="icon" onClick={geolocalizarme} disabled={geolocating} title="Usar mi ubicación">
                   {geolocating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Navigation className="h-4 w-4" />}
                 </Button>

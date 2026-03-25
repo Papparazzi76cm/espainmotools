@@ -265,10 +265,10 @@ const ContratosPage = () => {
               <CardContent className="p-8 text-center text-muted-foreground">
                 <FileSignature className="h-10 w-10 mx-auto mb-3 opacity-30" />
                 <p className="text-sm">
-                  Generá contratos inmobiliarios completos adaptados a la legislación paraguaya.
+                  Genera contratos inmobiliarios completos adaptados a la legislación española.
                 </p>
                 <p className="text-xs mt-2 text-muted-foreground/60">
-                  Código Civil, Ley de Locaciones, normativa catastral y más.
+                  Código Civil, LAU, LPH, Ley Hipotecaria y más.
                 </p>
               </CardContent>
             </Card>

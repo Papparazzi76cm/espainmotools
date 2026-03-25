@@ -99,7 +99,7 @@ const ConsultorLegalPage = () => {
             <Card className="glass-card">
               <CardContent className="p-8 text-center text-muted-foreground">
                 <Scale className="h-10 w-10 mx-auto mb-3 opacity-30" />
-                <p className="text-sm">Escribe tu consulta legal inmobiliaria y recibirás orientación adaptada a Paraguay.</p>
+                <p className="text-sm">Escribe tu consulta legal inmobiliaria y recibirás orientación adaptada a la legislación española.</p>
               </CardContent>
             </Card>
           )}

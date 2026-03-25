@@ -17,7 +17,7 @@ const Dashboard = () => {
           </h1>
         </div>
         <p className="text-muted-foreground">
-          Tu playground de herramientas con IA para el sector inmobiliario en Paraguay.
+          Tu suite de herramientas con IA para el sector inmobiliario en España.
         </p>
       </div>
 

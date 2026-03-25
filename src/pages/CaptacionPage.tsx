@@ -41,7 +41,7 @@ const CaptacionPage = () => {
         <Card className="glass-card">
           <CardHeader><CardTitle className="text-base">Contexto de Captación</CardTitle></CardHeader>
           <CardContent className="space-y-4">
-            <div><Label>Zona objetivo</Label><Input placeholder="Villa Morra, Asunción..." value={zona} onChange={(e) => setZona(e.target.value)} /></div>
+            <div><Label>Zona objetivo</Label><Input placeholder="Chamberí, Madrid..." value={zona} onChange={(e) => setZona(e.target.value)} /></div>
             <div><Label>Tipo de inmueble (opcional)</Label><Input placeholder="Casas, departamentos..." value={tipo} onChange={(e) => setTipo(e.target.value)} /></div>
             <div><Label>Contexto adicional</Label><Textarea placeholder="Propietarios que quieren vender, zona en crecimiento..." value={contexto} onChange={(e) => setContexto(e.target.value)} rows={3} /></div>
             <Button onClick={generar} className="w-full" disabled={loading || !zona.trim()}>

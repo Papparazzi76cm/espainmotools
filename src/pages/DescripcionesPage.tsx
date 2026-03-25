@@ -77,7 +77,7 @@ const DescripcionesPage = () => {
             </div>
             <div>
               <Label>Ubicación</Label>
-              <Input placeholder="Asunción, Barrio..." value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} />
+              <Input placeholder="Madrid, Barrio de Salamanca..." value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} />
             </div>
             <div>
               <Label>Estilo de redacción</Label>

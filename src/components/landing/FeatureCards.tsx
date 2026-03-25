@@ -20,7 +20,7 @@ const FeatureCards = () => {
             <Cpu className="h-3 w-3" /> Herramientas
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Todo lo que necesitás,{" "}
+            Todo lo que necesitas,{" "}
             <span className="bg-gradient-to-r from-blue-400 via-primary to-cyan-400 bg-clip-text text-transparent">
               en un solo lugar
             </span>

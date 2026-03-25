@@ -165,7 +165,7 @@ export async function exportContratoPdf(
 
   // === BASE LEGAL ===
   if (contrato.base_legal?.length > 0) {
-    addSection("BASE LEGAL PARAGUAYA", blueColor);
+    addSection("BASE LEGAL ESPAÑOLA", blueColor);
     addBulletList(contrato.base_legal, blueColor, "§");
   }
 

@@ -246,7 +246,7 @@ const RolePlayPage = () => {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.lang = "es-PY";
+    recognition.lang = "es-ES";
     recognition.interimResults = true;
     recognition.continuous = false;
 
