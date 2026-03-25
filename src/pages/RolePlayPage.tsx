@@ -381,7 +381,7 @@ const RolePlayPage = () => {
               </div>
               <div className="mt-4 p-3 rounded-lg bg-muted/50 border border-border">
                 <p className="text-xs">
-                  <strong>Límites:</strong> Máximo {MAX_MESSAGES} mensajes por sesión. Podés escribir o usar el micrófono 🎤 para dictar tus respuestas.
+                  <strong>Límites:</strong> Máximo {MAX_MESSAGES} mensajes por sesión. Puedes escribir o usar el micrófono 🎤 para dictar tus respuestas.
                 </p>
               </div>
             </CardContent>
