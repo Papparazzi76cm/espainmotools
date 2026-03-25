@@ -43,7 +43,7 @@ const ContratosPage = () => {
 
   const generar = async () => {
     if (!tipoContrato || !partes.trim() || !inmueble.trim()) {
-      toast.error("Completá el tipo de contrato, partes e inmueble como mínimo.");
+      toast.error("Completa el tipo de contrato, partes e inmueble como mínimo.");
       return;
     }
     const result = await generate("contratos", {
