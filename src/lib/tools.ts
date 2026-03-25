@@ -46,7 +46,7 @@ export const tools: Tool[] = [
   {
     id: "consultor-legal",
     title: "Consultor Jurídico",
-    description: "Resuelve dudas legales inmobiliarias de Paraguay",
+    description: "Resuelve dudas legales inmobiliarias de España",
     icon: Scale,
     path: "/herramientas/consultor-legal",
     category: "legal",
