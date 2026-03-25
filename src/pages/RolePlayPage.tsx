@@ -66,7 +66,7 @@ const RolePlayPage = () => {
 
   const startSession = async () => {
     if (!role || !profile) {
-      toast.error("Seleccioná un rol y un perfil de cliente.");
+      toast.error("Selecciona un rol y un perfil de cliente.");
       return;
     }
 
