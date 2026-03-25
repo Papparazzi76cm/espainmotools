@@ -43,7 +43,7 @@ const ConsultorLegalPage = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <Textarea
-              placeholder="Escribe tu duda legal inmobiliaria... Ej: ¿Qué impuestos se pagan al vender una propiedad en Paraguay?"
+              placeholder="Escribe tu duda legal inmobiliaria... Ej: ¿Qué impuestos se pagan al vender una propiedad en España?"
               value={consulta}
               onChange={(e) => setConsulta(e.target.value)}
               rows={8}
