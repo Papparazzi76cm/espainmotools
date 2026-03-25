@@ -59,7 +59,7 @@ const HeroSection = ({ onGetStarted }: HeroSectionProps) => {
           className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed px-2"
         >
           12 herramientas inteligentes en una sola plataforma. Captación, comercialización, análisis legal y contenido —
-          todo lo que necesitas como agente inmobiliario en España.
+          todo lo que necesitás como agente inmobiliario en España.
         </motion.p>
 
         <motion.div
