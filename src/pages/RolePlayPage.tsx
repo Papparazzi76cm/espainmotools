@@ -329,7 +329,7 @@ const RolePlayPage = () => {
                   <Label>Perfil de personalidad del cliente</Label>
                   <Select value={profile} onValueChange={setProfile}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Seleccioná un perfil" />
+                      <SelectValue placeholder="Selecciona un perfil" />
                     </SelectTrigger>
                     <SelectContent>
                       {CLIENT_PROFILES.map((p) => (
