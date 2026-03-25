@@ -128,7 +128,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
           viewport={{ once: true }}
           className="text-center text-sm text-muted-foreground"
         >
-          ¿Más de 20 usuarios?{" "}
+          ¿Más de 10 usuarios?{" "}
           <button onClick={onGetStarted} className="text-primary hover:underline font-medium">
             Contactanos para un plan personalizado
           </button>
