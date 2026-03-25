@@ -316,11 +316,11 @@ const RolePlayPage = () => {
                   <p className="text-xs text-muted-foreground">Tú serás el agente inmobiliario. La IA será el cliente.</p>
                   <Select value={role} onValueChange={setRole}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Seleccioná el rol" />
+                      <SelectValue placeholder="Selecciona el rol" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="comprador">🏠 Comprador — Vos intentás vender</SelectItem>
-                      <SelectItem value="vendedor">🔑 Vendedor/Propietario — Vos intentás captar</SelectItem>
+                      <SelectItem value="comprador">🏠 Comprador — Tú intentas vender</SelectItem>
+                      <SelectItem value="vendedor">🔑 Vendedor/Propietario — Tú intentas captar</SelectItem>
                     </SelectContent>
                   </Select>
                 </TabsContent>
