@@ -373,7 +373,7 @@ const RolePlayPage = () => {
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-primary font-bold">3.</span>
-                <p>Intentá resolver todas las objeciones y llegar a un acuerdo.</p>
+                <p>Intenta resolver todas las objeciones y llegar a un acuerdo.</p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-primary font-bold">4.</span>
