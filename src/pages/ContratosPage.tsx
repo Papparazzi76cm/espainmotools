@@ -138,7 +138,7 @@ const ContratosPage = () => {
             <div>
               <Label>Condiciones económicas</Label>
               <Input
-                placeholder="Ej: Precio USD 85.000, pago 50% contado y 50% financiado a 12 meses..."
+                placeholder="Ej: Precio 250.000 €, pago mediante hipoteca con 20% de entrada..."
                 value={condiciones}
                 onChange={(e) => setCondiciones(e.target.value)}
               />
