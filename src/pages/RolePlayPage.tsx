@@ -170,7 +170,7 @@ const RolePlayPage = () => {
 
   const finishSession = async () => {
     if (messages.length < 2) {
-      toast.error("Necesitás al menos un intercambio para evaluar.");
+      toast.error("Necesitas al menos un intercambio para evaluar.");
       return;
     }
 
