@@ -226,7 +226,7 @@ const ContratosPage = () => {
               {resultado.base_legal?.length > 0 && (
                 <Card className="glass-card border-blue-500/20">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">⚖️ Base Legal Paraguaya</CardTitle>
+                    <CardTitle className="text-sm">⚖️ Base Legal Española</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1.5">
