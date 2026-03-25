@@ -25,7 +25,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
       name: "Anual",
       price: "10",
       period: "/mes",
-      badge: "Ahorrá 37%",
+      badge: "Ahorra un 37%",
       icon: Crown,
       features: [
         "Todo del plan mensual",
