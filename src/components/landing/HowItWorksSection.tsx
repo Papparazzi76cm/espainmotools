@@ -48,7 +48,7 @@ const HowItWorksSection = () => {
             </span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Empezá a generar resultados profesionales en menos de un minuto.
+            Empieza a generar resultados profesionales en menos de un minuto.
           </p>
         </motion.div>
 
