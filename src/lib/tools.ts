@@ -46,7 +46,7 @@ export const tools: Tool[] = [
   {
     id: "consultor-legal",
     title: "Consultor Jurídico",
-    description: "Resuelve dudas legales inmobiliarias de Paraguay",
+    description: "Resuelve dudas legales inmobiliarias de España",
     icon: Scale,
     path: "/herramientas/consultor-legal",
     category: "legal",
@@ -118,7 +118,7 @@ export const tools: Tool[] = [
   {
     id: "contratos",
     title: "Generador de Contratos",
-    description: "Contratos inmobiliarios adaptados a leyes paraguayas",
+    description: "Contratos inmobiliarios adaptados a la legislación española",
     icon: FileSignature,
     path: "/herramientas/contratos",
     category: "legal",

@@ -4,17 +4,40 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, ArrowDown, ArrowUp } from "lucide-react";
+import { Calculator, ArrowDown, ArrowUp, Info } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
+
+const comunidades = [
+  { value: "general", label: "General (tipo medio)", itp: 0.06 },
+  { value: "andalucia", label: "Andalucía", itp: 0.07 },
+  { value: "aragon", label: "Aragón", itp: 0.08 },
+  { value: "asturias", label: "Asturias", itp: 0.08 },
+  { value: "baleares", label: "Islas Baleares", itp: 0.08 },
+  { value: "canarias", label: "Canarias", itp: 0.065 },
+  { value: "cantabria", label: "Cantabria", itp: 0.10 },
+  { value: "castilla_leon", label: "Castilla y León", itp: 0.08 },
+  { value: "castilla_mancha", label: "Castilla-La Mancha", itp: 0.09 },
+  { value: "cataluna", label: "Cataluña", itp: 0.10 },
+  { value: "extremadura", label: "Extremadura", itp: 0.08 },
+  { value: "galicia", label: "Galicia", itp: 0.09 },
+  { value: "madrid", label: "Comunidad de Madrid", itp: 0.06 },
+  { value: "murcia", label: "Región de Murcia", itp: 0.08 },
+  { value: "navarra", label: "Navarra", itp: 0.06 },
+  { value: "pais_vasco", label: "País Vasco", itp: 0.04 },
+  { value: "rioja", label: "La Rioja", itp: 0.07 },
+  { value: "valencia", label: "Comunidad Valenciana", itp: 0.10 },
+];
 
 const CostesPage = () => {
   const [precio, setPrecio] = useState("");
   const [operacion, setOperacion] = useState("compraventa");
+  const [comunidad, setComunidad] = useState("general");
+  const [esObraNueva, setEsObraNueva] = useState(false);
   const [comision, setComision] = useState("3");
   const [resultado, setResultado] = useState<{
-    comprador: { impuestos: number; notaria: number; registro: number; gestoria: number; total: number };
-    vendedor: { plusvalia: number; irp: number; comision: number; total: number };
+    comprador: { impuestos: number; impuestoLabel: string; notaria: number; registro: number; gestoria: number; total: number };
+    vendedor: { plusvalia: number; irpf: number; comision: number; total: number };
   } | null>(null);
 
   const calcular = () => {
@@ -22,21 +45,39 @@ const CostesPage = () => {
     if (!p || p <= 0) return;
 
     const comPct = parseFloat(comision) / 100;
+    const ccaa = comunidades.find(c => c.value === comunidad);
+    const itpPct = ccaa?.itp || 0.06;
 
-    // Costes del comprador (estimaciones Paraguay)
-    const impuestosComprador = p * 0.015; // IVA transferencia ~1.5%
-    const notaria = p * 0.005; // ~0.5%
-    const registro = p * 0.003; // ~0.3%
-    const gestoria = Math.max(p * 0.002, 200000); // ~0.2% min 200k Gs
+    // Costes del comprador (España)
+    let impuestosComprador: number;
+    let impuestoLabel: string;
+    if (esObraNueva) {
+      // Obra nueva: IVA 10% + AJD ~1.5%
+      impuestosComprador = p * 0.10 + p * 0.015;
+      impuestoLabel = "IVA (10%) + AJD (~1,5%)";
+    } else {
+      // Segunda mano: ITP (varía por CCAA)
+      impuestosComprador = p * itpPct;
+      impuestoLabel = `ITP (${(itpPct * 100).toFixed(0)}% - ${ccaa?.label || "General"})`;
+    }
+    // Notaría: ~0.3-0.5% del precio
+    const notaria = Math.max(p * 0.004, 600);
+    // Registro de la Propiedad: ~0.1-0.25%
+    const registro = Math.max(p * 0.002, 400);
+    // Gestoría: tarifa fija aprox
+    const gestoria = 400;
 
     // Costes del vendedor
-    const plusvalia = p * 0.025; // ~2.5% estimado
-    const irp = p * 0.01; // IRP ~1%
+    // Plusvalía municipal (estimación)
+    const plusvalia = p * 0.02;
+    // IRPF sobre ganancia patrimonial (estimación ~19-23%)
+    const irpf = p * 0.03;
     const comisionMonto = p * comPct;
 
     setResultado({
       comprador: {
         impuestos: impuestosComprador,
+        impuestoLabel,
         notaria,
         registro,
         gestoria,
@@ -44,18 +85,15 @@ const CostesPage = () => {
       },
       vendedor: {
         plusvalia,
-        irp,
+        irpf,
         comision: comisionMonto,
-        total: plusvalia + irp + comisionMonto,
+        total: plusvalia + irpf + comisionMonto,
       },
     });
   };
 
   const fmt = (n: number) =>
-    new Intl.NumberFormat("es-PY", { style: "currency", currency: "PYG", maximumFractionDigits: 0 }).format(n);
-
-  const fmtUsd = (n: number) =>
-    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n / 7500);
+    new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in">
@@ -72,8 +110,8 @@ const CostesPage = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label>Precio del inmueble (Gs.)</Label>
-              <Input type="number" placeholder="500.000.000" value={precio} onChange={(e) => setPrecio(e.target.value)} />
+              <Label>Precio del inmueble (€)</Label>
+              <Input type="number" placeholder="250.000" value={precio} onChange={(e) => setPrecio(e.target.value)} />
             </div>
             <div>
               <Label>Tipo de operación</Label>
@@ -84,6 +122,27 @@ const CostesPage = () => {
                   <SelectItem value="alquiler">Alquiler</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div>
+              <Label>Comunidad Autónoma</Label>
+              <Select value={comunidad} onValueChange={setComunidad}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {comunidades.map(c => (
+                    <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="obraNueva"
+                checked={esObraNueva}
+                onChange={(e) => setEsObraNueva(e.target.checked)}
+                className="rounded border-border"
+              />
+              <Label htmlFor="obraNueva" className="cursor-pointer text-sm">Obra nueva (IVA en vez de ITP)</Label>
             </div>
             <div>
               <Label>Comisión inmobiliaria (%)</Label>
@@ -105,16 +164,15 @@ const CostesPage = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <CostLine label="Impuestos de transferencia" value={resultado.comprador.impuestos} fmt={fmt} fmtUsd={fmtUsd} />
-                <CostLine label="Notaría" value={resultado.comprador.notaria} fmt={fmt} fmtUsd={fmtUsd} />
-                <CostLine label="Registro" value={resultado.comprador.registro} fmt={fmt} fmtUsd={fmtUsd} />
-                <CostLine label="Gestoría" value={resultado.comprador.gestoria} fmt={fmt} fmtUsd={fmtUsd} />
+                <CostLine label={resultado.comprador.impuestoLabel} value={resultado.comprador.impuestos} fmt={fmt} />
+                <CostLine label="Notaría" value={resultado.comprador.notaria} fmt={fmt} />
+                <CostLine label="Registro de la Propiedad" value={resultado.comprador.registro} fmt={fmt} />
+                <CostLine label="Gestoría" value={resultado.comprador.gestoria} fmt={fmt} />
                 <Separator />
                 <div className="flex justify-between font-semibold">
                   <span>Total</span>
                   <div className="text-right">
                     <div className="text-primary">{fmt(resultado.comprador.total)}</div>
-                    <div className="text-xs text-muted-foreground">{fmtUsd(resultado.comprador.total)}</div>
                   </div>
                 </div>
               </CardContent>
@@ -128,15 +186,14 @@ const CostesPage = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <CostLine label="Plusvalía estimada" value={resultado.vendedor.plusvalia} fmt={fmt} fmtUsd={fmtUsd} />
-                <CostLine label="IRP" value={resultado.vendedor.irp} fmt={fmt} fmtUsd={fmtUsd} />
-                <CostLine label="Comisión inmobiliaria" value={resultado.vendedor.comision} fmt={fmt} fmtUsd={fmtUsd} />
+                <CostLine label="Plusvalía municipal (est.)" value={resultado.vendedor.plusvalia} fmt={fmt} />
+                <CostLine label="IRPF ganancia patrimonial (est.)" value={resultado.vendedor.irpf} fmt={fmt} />
+                <CostLine label="Comisión inmobiliaria" value={resultado.vendedor.comision} fmt={fmt} />
                 <Separator />
                 <div className="flex justify-between font-semibold">
                   <span>Total</span>
                   <div className="text-right">
                     <div className="text-primary">{fmt(resultado.vendedor.total)}</div>
-                    <div className="text-xs text-muted-foreground">{fmtUsd(resultado.vendedor.total)}</div>
                   </div>
                 </div>
               </CardContent>
@@ -146,7 +203,15 @@ const CostesPage = () => {
           <Card className="glass-card lg:col-span-2">
             <CardContent className="p-8 text-center text-muted-foreground">
               <Calculator className="h-10 w-10 mx-auto mb-3 opacity-30" />
-              <p className="text-sm">Ingresa el precio y presiona "Calcular" para ver el desglose.</p>
+              <p className="text-sm">Introduce el precio y pulsa "Calcular" para ver el desglose de costes.</p>
+              <div className="mt-4 p-3 rounded-lg bg-muted/50 border border-border text-left">
+                <div className="flex items-start gap-2">
+                  <Info className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-xs text-muted-foreground">
+                    Los cálculos son estimaciones basadas en la fiscalidad española vigente. El ITP varía según la Comunidad Autónoma. Consulta con un asesor fiscal para datos exactos.
+                  </p>
+                </div>
+              </div>
             </CardContent>
           </Card>
         )}
@@ -159,19 +224,16 @@ function CostLine({
   label,
   value,
   fmt,
-  fmtUsd,
 }: {
   label: string;
   value: number;
   fmt: (n: number) => string;
-  fmtUsd: (n: number) => string;
 }) {
   return (
     <div className="flex justify-between text-sm">
       <span className="text-muted-foreground">{label}</span>
       <div className="text-right">
         <div>{fmt(value)}</div>
-        <div className="text-[11px] text-muted-foreground">{fmtUsd(value)}</div>
       </div>
     </div>
   );

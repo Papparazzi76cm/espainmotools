@@ -13,7 +13,7 @@ export function useInmoAI() {
       const check = canUseTool(tool);
       if (!check.allowed) {
         if (trial.isTrialExpired) {
-          toast.error("Tu período de prueba ha expirado. Activá tu plan para seguir usando las herramientas.");
+          toast.error("Tu período de prueba ha expirado. Activa tu plan para seguir usando las herramientas.");
         } else {
           toast.error(`Has alcanzado el límite ${check.limitType === "daily" ? "diario" : "total"} para esta herramienta (${check.used}/${check.max}).`);
         }

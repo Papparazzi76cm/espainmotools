@@ -66,7 +66,7 @@ const RolePlayPage = () => {
 
   const startSession = async () => {
     if (!role || !profile) {
-      toast.error("Seleccioná un rol y un perfil de cliente.");
+      toast.error("Selecciona un rol y un perfil de cliente.");
       return;
     }
 
@@ -170,7 +170,7 @@ const RolePlayPage = () => {
 
   const finishSession = async () => {
     if (messages.length < 2) {
-      toast.error("Necesitás al menos un intercambio para evaluar.");
+      toast.error("Necesitas al menos un intercambio para evaluar.");
       return;
     }
 
@@ -246,7 +246,7 @@ const RolePlayPage = () => {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.lang = "es-PY";
+    recognition.lang = "es-ES";
     recognition.interimResults = true;
     recognition.continuous = false;
 
@@ -316,11 +316,11 @@ const RolePlayPage = () => {
                   <p className="text-xs text-muted-foreground">Tú serás el agente inmobiliario. La IA será el cliente.</p>
                   <Select value={role} onValueChange={setRole}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Seleccioná el rol" />
+                      <SelectValue placeholder="Selecciona el rol" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="comprador">🏠 Comprador — Vos intentás vender</SelectItem>
-                      <SelectItem value="vendedor">🔑 Vendedor/Propietario — Vos intentás captar</SelectItem>
+                      <SelectItem value="comprador">🏠 Comprador — Tú intentas vender</SelectItem>
+                      <SelectItem value="vendedor">🔑 Vendedor/Propietario — Tú intentas captar</SelectItem>
                     </SelectContent>
                   </Select>
                 </TabsContent>
@@ -329,7 +329,7 @@ const RolePlayPage = () => {
                   <Label>Perfil de personalidad del cliente</Label>
                   <Select value={profile} onValueChange={setProfile}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Seleccioná un perfil" />
+                      <SelectValue placeholder="Selecciona un perfil" />
                     </SelectTrigger>
                     <SelectContent>
                       {CLIENT_PROFILES.map((p) => (
@@ -365,7 +365,7 @@ const RolePlayPage = () => {
             <CardContent className="space-y-3 text-sm text-muted-foreground">
               <div className="flex items-start gap-2">
                 <span className="text-primary font-bold">1.</span>
-                <p>Elegí el <strong>rol del cliente</strong> (comprador o vendedor) y su <strong>perfil de personalidad</strong>.</p>
+                <p>Elige el <strong>rol del cliente</strong> (comprador o vendedor) y su <strong>perfil de personalidad</strong>.</p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-primary font-bold">2.</span>
@@ -373,7 +373,7 @@ const RolePlayPage = () => {
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-primary font-bold">3.</span>
-                <p>Intentá resolver todas las objeciones y llegar a un acuerdo.</p>
+                <p>Intenta resolver todas las objeciones y llegar a un acuerdo.</p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-primary font-bold">4.</span>
@@ -381,7 +381,7 @@ const RolePlayPage = () => {
               </div>
               <div className="mt-4 p-3 rounded-lg bg-muted/50 border border-border">
                 <p className="text-xs">
-                  <strong>Límites:</strong> Máximo {MAX_MESSAGES} mensajes por sesión. Podés escribir o usar el micrófono 🎤 para dictar tus respuestas.
+                  <strong>Límites:</strong> Máximo {MAX_MESSAGES} mensajes por sesión. Puedes escribir o usar el micrófono 🎤 para dictar tus respuestas.
                 </p>
               </div>
             </CardContent>
@@ -535,7 +535,7 @@ const RolePlayPage = () => {
                 <Textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={canSendMore ? "Escribí tu respuesta como agente..." : "Límite de mensajes alcanzado"}
+                  placeholder={canSendMore ? "Escribe tu respuesta como agente..." : "Límite de mensajes alcanzado"}
                   className="min-h-[40px] max-h-[80px] resize-none"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {

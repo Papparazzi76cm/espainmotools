@@ -14,15 +14,15 @@ import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 
 const tiposContrato = [
   { value: "compraventa", label: "Compraventa de Inmueble" },
-  { value: "alquiler", label: "Contrato de Alquiler / Locación" },
-  { value: "reserva", label: "Boleto de Reserva" },
-  { value: "promesa", label: "Promesa de Compraventa" },
+  { value: "alquiler", label: "Contrato de Arrendamiento (LAU)" },
+  { value: "arras", label: "Contrato de Arras" },
+  { value: "reserva", label: "Reserva de Inmueble" },
+  { value: "opcion_compra", label: "Opción de Compra" },
   { value: "cesion", label: "Cesión de Derechos" },
-  { value: "comodato", label: "Comodato (Préstamo de Uso)" },
   { value: "permuta", label: "Permuta de Inmuebles" },
   { value: "exclusividad", label: "Contrato de Exclusividad Inmobiliaria" },
   { value: "administracion", label: "Administración de Inmueble" },
-  { value: "anticresis", label: "Anticresis" },
+  { value: "alquiler_temporal", label: "Alquiler de Temporada" },
 ];
 
 const ContratosPage = () => {
@@ -43,7 +43,7 @@ const ContratosPage = () => {
 
   const generar = async () => {
     if (!tipoContrato || !partes.trim() || !inmueble.trim()) {
-      toast.error("Completá el tipo de contrato, partes e inmueble como mínimo.");
+      toast.error("Completa el tipo de contrato, partes e inmueble como mínimo.");
       return;
     }
     const result = await generate("contratos", {
@@ -103,7 +103,7 @@ const ContratosPage = () => {
               <Label>Tipo de contrato</Label>
               <Select value={tipoContrato} onValueChange={setTipoContrato}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Seleccioná el tipo de contrato" />
+                  <SelectValue placeholder="Selecciona el tipo de contrato" />
                 </SelectTrigger>
                 <SelectContent>
                   {tiposContrato.map((t) => (
@@ -118,7 +118,7 @@ const ContratosPage = () => {
             <div>
               <Label>Partes involucradas</Label>
               <Textarea
-                placeholder="Ej: Vendedor: Juan Pérez, CI 1.234.567. Comprador: María López, CI 2.345.678..."
+                placeholder="Ej: Vendedor: Juan Pérez, DNI 12.345.678-A. Comprador: María López, DNI 23.456.789-B..."
                 value={partes}
                 onChange={(e) => setPartes(e.target.value)}
                 rows={3}
@@ -128,7 +128,7 @@ const ContratosPage = () => {
             <div>
               <Label>Descripción del inmueble</Label>
               <Textarea
-                placeholder="Ej: Casa de 3 habitaciones, 150 m², ubicada en Barrio Herrera, Asunción. Finca N° 1234, CUC N° 01-001-0001..."
+                placeholder="Ej: Piso de 3 habitaciones, 90 m², situado en Calle Gran Vía 45, 3ºA, Madrid. Ref. catastral 1234567..."
                 value={inmueble}
                 onChange={(e) => setInmueble(e.target.value)}
                 rows={3}
@@ -138,7 +138,7 @@ const ContratosPage = () => {
             <div>
               <Label>Condiciones económicas</Label>
               <Input
-                placeholder="Ej: Precio USD 85.000, pago 50% contado y 50% financiado a 12 meses..."
+                placeholder="Ej: Precio 250.000 €, pago mediante hipoteca con 20% de entrada..."
                 value={condiciones}
                 onChange={(e) => setCondiciones(e.target.value)}
               />
@@ -226,7 +226,7 @@ const ContratosPage = () => {
               {resultado.base_legal?.length > 0 && (
                 <Card className="glass-card border-blue-500/20">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">⚖️ Base Legal Paraguaya</CardTitle>
+                    <CardTitle className="text-sm">⚖️ Base Legal Española</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1.5">
@@ -265,10 +265,10 @@ const ContratosPage = () => {
               <CardContent className="p-8 text-center text-muted-foreground">
                 <FileSignature className="h-10 w-10 mx-auto mb-3 opacity-30" />
                 <p className="text-sm">
-                  Generá contratos inmobiliarios completos adaptados a la legislación paraguaya.
+                  Genera contratos inmobiliarios completos adaptados a la legislación española.
                 </p>
                 <p className="text-xs mt-2 text-muted-foreground/60">
-                  Código Civil, Ley de Locaciones, normativa catastral y más.
+                  Código Civil, LAU, LPH, Ley Hipotecaria y más.
                 </p>
               </CardContent>
             </Card>

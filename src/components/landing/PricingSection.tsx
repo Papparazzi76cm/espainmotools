@@ -25,7 +25,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
       name: "Anual",
       price: "10",
       period: "/mes",
-      badge: "Ahorrá 37%",
+      badge: "Ahorra un 37%",
       icon: Crown,
       features: [
         "Todo del plan mensual",
@@ -57,7 +57,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
       name: "Agencia Anual",
       price: "37",
       period: "/mes",
-      badge: "Ahorrá 20%",
+      badge: "Ahorra un 20%",
       icon: Users,
       features: [
         "Máximo 10 usuarios",
@@ -128,9 +128,9 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
           viewport={{ once: true }}
           className="text-center text-sm text-muted-foreground"
         >
-          ¿Más de 20 usuarios?{" "}
+        ¿Más de 20 usuarios?{" "}
           <button onClick={onGetStarted} className="text-primary hover:underline font-medium">
-            Contactanos para un plan personalizado
+            Contáctanos para un plan personalizado
           </button>
         </motion.p>
       </div>

@@ -18,31 +18,32 @@ serve(async (req) => {
 
     switch (tool) {
       case "descripciones": {
-        systemPrompt = `Eres un experto copywriter inmobiliario en Paraguay. Genera descripciones profesionales de inmuebles.
+        systemPrompt = `Eres un experto copywriter inmobiliario en España. Genera descripciones profesionales de inmuebles adaptadas al mercado español.
 Siempre responde en formato JSON con esta estructura exacta:
 {"corta": "descripción corta de 1-2 líneas", "larga": "descripción detallada de 4-6 líneas", "redes": "copy para redes sociales con emojis y hashtags"}`;
-        userPrompt = `Genera descripciones para: Tipo: ${data.tipo || "propiedad"}. Habitaciones: ${data.habitaciones || "N/A"}. Superficie: ${data.superficie || "N/A"} m². Ubicación: ${data.ubicacion || "Paraguay"}. Extras: ${data.extras || "ninguno"}. Estilo: ${data.estilo || "comercial"}.`;
+        userPrompt = `Genera descripciones para: Tipo: ${data.tipo || "propiedad"}. Habitaciones: ${data.habitaciones || "N/A"}. Superficie: ${data.superficie || "N/A"} m². Ubicación: ${data.ubicacion || "España"}. Extras: ${data.extras || "ninguno"}. Estilo: ${data.estilo || "comercial"}.`;
         break;
       }
       case "consultor-legal": {
-        systemPrompt = `Eres un consultor jurídico inmobiliario especializado en la legislación de Paraguay.
-Responde con lenguaje claro y accesible. Incluye referencias a leyes paraguayas cuando sea posible.
+        systemPrompt = `Eres un consultor jurídico inmobiliario especializado en la legislación española.
+Conoces en profundidad el Código Civil español, la Ley de Arrendamientos Urbanos (LAU), la Ley de Propiedad Horizontal (LPH), la Ley del Suelo, la normativa hipotecaria (Ley 5/2019), el ITP, IVA, IRPF, plusvalía municipal y toda la normativa fiscal y registral española.
+Responde con lenguaje claro y accesible. Incluye referencias a leyes españolas cuando sea posible.
 IMPORTANTE: Aclara que tus respuestas son orientativas y no sustituyen asesoramiento legal profesional.
 Responde en formato JSON: {"respuesta": "texto principal", "resumen": "resumen en 2-3 puntos", "recomendaciones": ["recomendación 1", "recomendación 2"]}`;
         userPrompt = data.consulta;
         break;
       }
       case "anuncios": {
-        systemPrompt = `Eres un experto en marketing inmobiliario digital en Paraguay.
-Genera anuncios adaptados a cada plataforma. Responde en JSON:
-{"facebook": "texto para Facebook Ads", "instagram": "caption para Instagram con emojis y hashtags", "portal": "descripción para portales inmobiliarios profesional"}`;
+        systemPrompt = `Eres un experto en marketing inmobiliario digital en España.
+Genera anuncios adaptados a cada plataforma, con referencias al mercado español. Responde en JSON:
+{"facebook": "texto para Facebook Ads", "instagram": "caption para Instagram con emojis y hashtags", "portal": "descripción para portales inmobiliarios (Idealista, Fotocasa) profesional"}`;
         userPrompt = `Genera anuncios para: Tipo: ${data.tipo}. Precio: ${data.precio}. Ubicación: ${data.ubicacion}. Características: ${data.caracteristicas}. Público objetivo: ${data.publico || "general"}.`;
         break;
       }
       case "entorno": {
-        systemPrompt = `Eres un experto en el mercado inmobiliario de Paraguay. Conoces bien las zonas, barrios y ciudades.
+        systemPrompt = `Eres un experto en el mercado inmobiliario de España. Conoces bien las zonas, barrios y ciudades españolas.
 Genera una descripción atractiva del entorno/zona para uso inmobiliario.
-Incluye también un análisis de precios estimados de la zona.
+Incluye también un análisis de precios estimados de la zona en euros (€).
 Responde en JSON: {
   "descripcion": "texto descriptivo del entorno",
   "servicios": ["servicio 1", "servicio 2"],
@@ -51,9 +52,9 @@ Responde en JSON: {
   "precios_zona": {
     "resumen": "descripción general de los precios en la zona",
     "rangos": [
-      {"tipo": "Casa", "rango_min": 80000, "rango_max": 150000, "moneda": "USD"},
-      {"tipo": "Departamento", "rango_min": 50000, "rango_max": 100000, "moneda": "USD"},
-      {"tipo": "Terreno (m²)", "rango_min": 200, "rango_max": 600, "moneda": "USD"}
+      {"tipo": "Piso", "rango_min": 150000, "rango_max": 300000, "moneda": "EUR"},
+      {"tipo": "Casa / Chalet", "rango_min": 250000, "rango_max": 500000, "moneda": "EUR"},
+      {"tipo": "Terreno (m²)", "rango_min": 100, "rango_max": 500, "moneda": "EUR"}
     ],
     "tendencia": "alza|estable|baja",
     "nivel": "economico|medio|medio-alto|alto|premium"
@@ -63,29 +64,29 @@ Responde en JSON: {
         break;
       }
       case "guiones": {
-        systemPrompt = `Eres un creador de contenido inmobiliario para redes sociales en Paraguay.
+        systemPrompt = `Eres un creador de contenido inmobiliario para redes sociales en España.
 Genera guiones profesionales y dinámicos. Responde en JSON:
 {"reel": "guión para Instagram Reel (30-60 seg)", "tiktok": "guión para TikTok (15-60 seg)", "youtube": "guión para YouTube (2-3 min con intro, desarrollo y cierre)"}`;
         userPrompt = `Guión para inmueble: Tipo: ${data.tipo}. Ubicación: ${data.ubicacion}. Precio: ${data.precio || "consultar"}. Características: ${data.caracteristicas}. Tono: ${data.tono || "profesional y cercano"}.`;
         break;
       }
       case "captacion": {
-        systemPrompt = `Eres un experto en captación inmobiliaria en Paraguay. Conoces las mejores técnicas para captar propietarios.
+        systemPrompt = `Eres un experto en captación inmobiliaria en España. Conoces las mejores técnicas para captar propietarios en el mercado español.
 Responde en JSON:
 {"script_llamada": "guión para llamada telefónica", "script_puerta": "guión para visita puerta a puerta", "argumentario": "argumentos de venta principales", "objeciones": [{"objecion": "texto objeción", "respuesta": "cómo manejarla"}]}`;
         userPrompt = `Genera material de captación para: Zona: ${data.zona}. Tipo de inmueble: ${data.tipo || "general"}. Contexto: ${data.contexto || "captación general"}.`;
         break;
       }
       case "contratos": {
-        systemPrompt = `Eres un abogado especializado en derecho inmobiliario paraguayo. Genera contratos completos, profesionales y legalmente válidos según la legislación de Paraguay.
-Debes fundamentar cada contrato en el Código Civil Paraguayo (Ley 1183/85), la Ley de Locaciones, normativa catastral, tributaria (IVA, IRP, IMI) y cualquier otra norma aplicable.
-El contrato debe incluir: encabezado con lugar y fecha, identificación completa de las partes, descripción detallada del inmueble (finca, padrón, CUC si aplica), cláusulas numeradas, condiciones de pago, obligaciones de las partes, penalidades, jurisdicción competente y espacio para firmas.
+        systemPrompt = `Eres un abogado especializado en derecho inmobiliario español. Genera contratos completos, profesionales y legalmente válidos según la legislación de España.
+Debes fundamentar cada contrato en el Código Civil español, la Ley de Arrendamientos Urbanos (LAU 29/1994), la Ley de Propiedad Horizontal (LPH 49/1960), la Ley Hipotecaria, la Ley 5/2019 reguladora de los contratos de crédito inmobiliario, normativa registral, y la legislación fiscal aplicable (ITP, IVA, IRPF, plusvalía municipal).
+El contrato debe incluir: encabezado con lugar y fecha, identificación completa de las partes (DNI/NIE), descripción detallada del inmueble (referencia catastral, registro de la propiedad), cláusulas numeradas, condiciones de pago, obligaciones de las partes, penalidades, jurisdicción competente y espacio para firmas.
 IMPORTANTE: Aclara siempre que el contrato es un modelo orientativo y debe ser revisado por un profesional del derecho antes de su firma.
 Responde SIEMPRE en formato JSON con esta estructura exacta:
 {
   "contrato": "texto completo del contrato con cláusulas numeradas",
   "clausulas_clave": ["cláusula importante 1", "cláusula importante 2"],
-  "base_legal": ["Artículo X del Código Civil Paraguayo - descripción", "Ley Y - descripción"],
+  "base_legal": ["Artículo X del Código Civil - descripción", "Ley Y - descripción"],
   "advertencias": ["advertencia legal 1", "advertencia 2"],
   "resumen": "resumen ejecutivo del contrato en 2-3 líneas"
 }`;
@@ -97,13 +98,13 @@ Detalles adicionales: ${data.detalles || "ninguno"}.`;
         break;
       }
       case "informes": {
-        systemPrompt = `Eres un tasador inmobiliario profesional en Paraguay. Genera informes de valoración detallados y fundamentados.
-Utiliza metodología comparativa de mercado y análisis de características del inmueble.
+        systemPrompt = `Eres un tasador inmobiliario profesional en España. Genera informes de valoración detallados y fundamentados según la normativa española (Orden ECO/805/2003).
+Utiliza metodología comparativa de mercado y análisis de características del inmueble. Los precios deben expresarse en euros (€).
 Responde en JSON con esta estructura exacta:
 {
   "resumen_ejecutivo": "resumen del informe en 3-4 líneas",
   "analisis_mercado": "análisis de la zona y mercado actual en 4-6 líneas",
-  "valoracion_estimada": "rango de valoración con justificación (ej: 'Entre 120.000 y 140.000 USD, basado en...')",
+  "valoracion_estimada": "rango de valoración con justificación (ej: 'Entre 180.000 € y 220.000 €, basado en...')",
   "factores_positivos": ["factor 1", "factor 2", "factor 3"],
   "factores_negativos": ["factor 1", "factor 2"],
   "recomendaciones": ["recomendación 1", "recomendación 2", "recomendación 3"],
