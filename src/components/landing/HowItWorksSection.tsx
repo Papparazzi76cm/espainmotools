@@ -7,20 +7,20 @@ import step3Img from "@/assets/steps/step-3-result.png";
 const steps = [
   {
     number: "01",
-    title: "Registrate gratis",
-    description: "Creá tu cuenta en segundos y accedé a todas las herramientas con 30 días de prueba gratuita.",
+    title: "Regístrate gratis",
+    description: "Crea tu cuenta en segundos y accede a todas las herramientas con 30 días de prueba gratuita.",
     image: step1Img,
   },
   {
     number: "02",
-    title: "Elegí tu herramienta",
-    description: "Seleccioná la herramienta que necesitás: descripciones, análisis legal, anuncios, costes y más.",
+    title: "Elige tu herramienta",
+    description: "Selecciona la herramienta que necesitas: descripciones, análisis legal, anuncios, costes y más.",
     image: step2Img,
   },
   {
     number: "03",
-    title: "Obtené resultados al instante",
-    description: "La IA genera contenido profesional en segundos. Copiá, descargá o compartí directamente.",
+    title: "Obtén resultados al instante",
+    description: "La IA genera contenido profesional en segundos. Copia, descarga o comparte directamente.",
     image: step3Img,
   },
 ];
