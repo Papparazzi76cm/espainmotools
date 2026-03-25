@@ -57,7 +57,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
       name: "Agencia Anual",
       price: "37",
       period: "/mes",
-      badge: "Ahorrá 20%",
+      badge: "Ahorra un 20%",
       icon: Users,
       features: [
         "Máximo 10 usuarios",
