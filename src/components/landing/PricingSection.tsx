@@ -32,7 +32,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
         "Generaciones ilimitadas con IA",
         "Soporte prioritario",
         "Nuevas herramientas primero",
-        "Facturación anual: $120/año",
+        "Facturación anual: 120€/año",
       ],
       popular: true,
     },
@@ -64,7 +64,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
         "Todo del plan mensual de agencia",
         "Soporte dedicado",
         "Nuevas herramientas primero",
-        "Facturación anual: $444/año",
+        "Facturación anual: 444€/año",
       ],
       popular: true,
     },
@@ -166,7 +166,7 @@ function PlanCard({ plan, index, onGetStarted }: { plan: any; index: number; onG
         <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
       </div>
       <div className="mb-6">
-        <span className="text-4xl font-bold text-foreground">${plan.price}</span>
+        <span className="text-4xl font-bold text-foreground">{plan.price}€</span>
         <span className="text-muted-foreground">{plan.period}</span>
       </div>
       <ul className="space-y-3 mb-8">
