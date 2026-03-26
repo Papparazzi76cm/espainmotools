@@ -46,7 +46,7 @@ const AnunciosPage = () => {
           <CardHeader><CardTitle className="text-base">Datos del Inmueble</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <div><Label>Tipo</Label><Input placeholder="Casa, departamento..." value={tipo} onChange={(e) => setTipo(e.target.value)} /></div>
-            <div><Label>Precio</Label><Input placeholder="USD 85.000" value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
+            <div><Label>Precio</Label><Input placeholder="85.000 €" value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
             <div><Label>Ubicación</Label><Input placeholder="Barrio, ciudad..." value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} /></div>
             <div><Label>Características</Label><Textarea placeholder="3 hab, 2 baños, piscina..." value={caracteristicas} onChange={(e) => setCaracteristicas(e.target.value)} rows={3} /></div>
             <Button onClick={generar} className="w-full" disabled={loading}>
