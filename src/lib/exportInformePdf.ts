@@ -131,7 +131,7 @@ export async function exportInformePdf(informe: InformeData, inmueble: InmuebleD
     doc.text(agency.agency_email, rightX, 26, { align: "right" });
   }
   if (!agency?.agency_name && !agency?.agency_phone) {
-    doc.text("Generado por Pynmo Tools", rightX, 20, { align: "right" });
+    doc.text("Generado por Espainmo Tools", rightX, 20, { align: "right" });
   }
 
   y = 52;
@@ -211,7 +211,7 @@ export async function exportInformePdf(informe: InformeData, inmueble: InmuebleD
 
   // === FOOTER on every page ===
   const totalPages = doc.getNumberOfPages();
-  const footerText = agency?.agency_name || "Pynmo Tools";
+  const footerText = agency?.agency_name || "Espainmo Tools";
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);
     doc.setFontSize(7);
