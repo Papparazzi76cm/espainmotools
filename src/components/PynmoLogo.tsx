@@ -1,6 +1,6 @@
-import logoSrc from "@/assets/logo-pynmotools.png";
+import logoSrc from "@/assets/logo_espainmotools.png";
 
-interface PynmoLogoProps {
+interface EspainnmoLogoProps {
   size?: "sm" | "md" | "lg";
   className?: string;
 }
@@ -11,10 +11,10 @@ const sizes = {
   lg: "h-40",
 };
 
-const PynmoLogo = ({ size = "md", className = "" }: PynmoLogoProps) => {
+const EspainmoLogo = ({ size = "md", className = "" }: EspainmoLogoProps) => {
   return (
-    <img src={logoSrc} alt="Pynmotools" className={`${sizes[size]} w-auto object-contain ${className}`} />
+    <img src={logoSrc} alt="Espainmotools" className={`${sizes[size]} w-auto object-contain ${className}`} />
   );
 };
 
-export default PynmoLogo;
+export default EspainmoLogo;
