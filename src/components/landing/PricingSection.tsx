@@ -64,7 +64,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
         "Todo del plan mensual de agencia",
         "Soporte dedicado",
         "Nuevas herramientas primero",
-        "Facturación anual: $444/año",
+        "Facturación anual: 444€/año",
       ],
       popular: true,
     },
