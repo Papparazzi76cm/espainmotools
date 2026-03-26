@@ -1,0 +1,1 @@
+ALTER TABLE public.user_trials ALTER COLUMN trial_end SET DEFAULT (now() + interval '14 days');
