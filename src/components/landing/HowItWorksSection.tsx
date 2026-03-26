@@ -8,7 +8,7 @@ const steps = [
   {
     number: "01",
     title: "Regístrate gratis",
-    description: "Crea tu cuenta en segundos y accede a todas las herramientas con 30 días de prueba gratuita.",
+    description: "Crea tu cuenta en segundos y accede a todas las herramientas con 14 días de prueba gratuita.",
     image: step1Img,
   },
   {
