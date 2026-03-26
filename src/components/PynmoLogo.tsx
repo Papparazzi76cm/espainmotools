@@ -1,4 +1,4 @@
-import logoSrc from "@/assets/logo-pynmotools.png";
+import logoSrc from "@/assets/logo-espainmotools.png";
 
 interface PynmoLogoProps {
   size?: "sm" | "md" | "lg";
@@ -13,7 +13,7 @@ const sizes = {
 
 const PynmoLogo = ({ size = "md", className = "" }: PynmoLogoProps) => {
   return (
-    <img src={logoSrc} alt="Pynmotools" className={`${sizes[size]} w-auto object-contain ${className}`} />
+    <img src={logoSrc} alt="Espainmotools" className={`${sizes[size]} w-auto object-contain ${className}`} />
   );
 };
 

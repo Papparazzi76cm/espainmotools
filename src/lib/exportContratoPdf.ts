@@ -210,7 +210,7 @@ export async function exportContratoPdf(
 
   // === FOOTER ===
   const totalPages = doc.getNumberOfPages();
-  const footerText = agency?.agency_name || "Pynmo Tools";
+  const footerText = agency?.agency_name || "Espainmo Tools";
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);
     doc.setFontSize(7);
