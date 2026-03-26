@@ -10,7 +10,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
   const individualPlans = [
     {
       name: "Mensual",
-      price: "25",
+      price: "15",
       period: "/mes",
       icon: Zap,
       features: [
@@ -23,16 +23,16 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
     },
     {
       name: "Anual",
-      price: "16",
+      price: "10",
       period: "/mes",
-      badge: "Ahorrá 37%",
+      badge: "Ahorra un 37%",
       icon: Crown,
       features: [
         "Todo del plan mensual",
         "Generaciones ilimitadas con IA",
         "Soporte prioritario",
         "Nuevas herramientas primero",
-        "Facturación anual: €192/año",
+        "Facturación anual: $120/año",
       ],
       popular: true,
     },
@@ -41,7 +41,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
   const agencyPlans = [
     {
       name: "Agencia Mensual",
-      price: "69",
+      price: "49",
       period: "/mes",
       icon: Building2,
       features: [
@@ -55,16 +55,16 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
     },
     {
       name: "Agencia Anual",
-      price: "47",
+      price: "37",
       period: "/mes",
-      badge: "Ahorrá 20%",
+      badge: "Ahorra un 20%",
       icon: Users,
       features: [
         "Máximo 10 usuarios",
         "Todo del plan mensual de agencia",
         "Soporte dedicado",
         "Nuevas herramientas primero",
-        "Facturación anual: €564/año",
+        "Facturación anual: $444/año",
       ],
       popular: true,
     },
@@ -128,9 +128,9 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
           viewport={{ once: true }}
           className="text-center text-sm text-muted-foreground"
         >
-          ¿Más de 10 usuarios?{" "}
+        ¿Más de 20 usuarios?{" "}
           <button onClick={onGetStarted} className="text-primary hover:underline font-medium">
-            Contactanos para un plan personalizado
+            Contáctanos para un plan personalizado
           </button>
         </motion.p>
       </div>
