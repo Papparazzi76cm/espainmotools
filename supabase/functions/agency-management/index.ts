@@ -56,7 +56,7 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: "No agency assigned to your account" }), { status: 400, headers: corsHeaders });
     }
 
-    /* moved below effectiveAgencyId */
+    const { action, ...params } = await req.json();
 
     // Admin can specify agency_id to view any agency; non-admins always use their own
     const effectiveAgencyId = isAdmin && params.agency_id ? params.agency_id : callerAgencyId;
