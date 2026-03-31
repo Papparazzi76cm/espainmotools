@@ -153,7 +153,7 @@ function PlanCard({ plan, index, onGetStarted }: { plan: any; index: number; onG
       }`}
     >
       {plan.badge && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 via-primary to-cyan-500 text-primary-foreground text-xs font-semibold shadow-lg shadow-primary/30">
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold shadow-lg shadow-primary/30">
           {plan.badge}
         </span>
       )}
