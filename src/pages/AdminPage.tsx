@@ -340,6 +340,15 @@ export default function AdminPage() {
         </TabsContent>
         {/* METRICS TAB */}
         <TabsContent value="metrics" className="space-y-6">
+          {/* Header with export */}
+          <div className="flex items-center justify-between">
+            <div />
+            <Button variant="outline" size="sm" onClick={() => { exportCSV(); toast.success("CSV exportado"); }} className="gap-2">
+              <Download className="h-4 w-4" /> Exportar CSV
+            </Button>
+          </div>
+
+          {/* Summary cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Card className="bg-card border-border">
               <CardContent className="p-4">
@@ -379,36 +388,97 @@ export default function AdminPage() {
             </Card>
           </div>
 
-          {/* Tool usage */}
+          {/* Daily usage chart */}
+          <Card className="border-border">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-primary" /> Evolución de uso
+              </CardTitle>
+              <div className="flex gap-1">
+                <Button size="sm" variant={chartDays === 7 ? "default" : "outline"} onClick={() => setChartDays(7)} className="text-xs h-7 px-3">
+                  7 días
+                </Button>
+                <Button size="sm" variant={chartDays === 30 ? "default" : "outline"} onClick={() => setChartDays(30)} className="text-xs h-7 px-3">
+                  30 días
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {metricsLoading ? (
+                <p className="text-muted-foreground text-sm text-center py-8">Cargando...</p>
+              ) : (
+                <ResponsiveContainer width="100%" height={280}>
+                  <LineChart data={dailyUsage.slice(-chartDays)}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis
+                      dataKey="date"
+                      tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+                      tickFormatter={(v: string) => { const d = new Date(v); return `${d.getDate()}/${d.getMonth() + 1}`; }}
+                    />
+                    <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }}
+                      labelFormatter={(v: string) => new Date(v).toLocaleDateString("es-ES")}
+                    />
+                    <Line type="monotone" dataKey="total" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} name="Total" />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Usage by tool bar chart */}
           <Card className="border-border">
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
                 <BarChart3 className="h-4 w-4 text-primary" /> Uso por herramienta
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent>
               {metricsLoading ? (
-                <p className="text-muted-foreground text-sm text-center py-4">Cargando métricas...</p>
+                <p className="text-muted-foreground text-sm text-center py-4">Cargando...</p>
               ) : toolStats.length === 0 ? (
-                <p className="text-muted-foreground text-sm text-center py-4">Sin datos de uso todavía</p>
+                <p className="text-muted-foreground text-sm text-center py-4">Sin datos</p>
               ) : (
-                toolStats.map(t => {
-                  const maxUses = toolStats[0]?.total_uses || 1;
-                  const pct = (t.total_uses / maxUses) * 100;
-                  return (
-                    <div key={t.tool_id} className="space-y-1">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium">{t.tool_name}</span>
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                          <span>{t.total_uses} usos</span>
-                          <span>{t.unique_users} usuarios</span>
-                          <Badge variant="outline" className="text-[10px]">{t.today_uses} hoy</Badge>
+                <>
+                  <ResponsiveContainer width="100%" height={Math.max(200, toolStats.length * 36)}>
+                    <BarChart data={toolStats} layout="vertical" margin={{ left: 120 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" horizontal={false} />
+                      <XAxis type="number" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} />
+                      <YAxis
+                        type="category"
+                        dataKey="tool_name"
+                        tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+                        width={110}
+                      />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }}
+                      />
+                      <Bar dataKey="total_uses" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} name="Usos totales" />
+                    </BarChart>
+                  </ResponsiveContainer>
+
+                  {/* Detailed stats below chart */}
+                  <div className="mt-4 space-y-3">
+                    {toolStats.map(t => {
+                      const maxUses = toolStats[0]?.total_uses || 1;
+                      const pct = (t.total_uses / maxUses) * 100;
+                      return (
+                        <div key={t.tool_id} className="space-y-1">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="font-medium">{t.tool_name}</span>
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                              <span>{t.total_uses} usos</span>
+                              <span>{t.unique_users} usuarios</span>
+                              <Badge variant="outline" className="text-[10px]">{t.today_uses} hoy</Badge>
+                            </div>
+                          </div>
+                          <Progress value={pct} className="h-2" />
                         </div>
-                      </div>
-                      <Progress value={pct} className="h-2" />
-                    </div>
-                  );
-                })
+                      );
+                    })}
+                  </div>
+                </>
               )}
             </CardContent>
           </Card>
