@@ -21,7 +21,7 @@ const GuionesPage = () => {
   const { generate, loading } = useInmoAI();
 
   const generar = async () => {
-    const result = await generate("guiones", { tipo, ubicacion, precio, caracteristicas, tono });
+    const result = await generate("guiones", { tipo, ubicacion, precio, caracteristicas, tono, duracion: `${duracion} segundos` });
     if (result) setResultado({ reel: result.reel || "", tiktok: result.tiktok || "", youtube: result.youtube || "" });
   };
 
