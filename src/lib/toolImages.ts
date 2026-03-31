@@ -4,7 +4,7 @@ import consultorLegalImg from "@/assets/tools/consultor-legal.jpg";
 import costesImg from "@/assets/tools/costes.jpg";
 import rentabilidadImg from "@/assets/tools/rentabilidad.jpg";
 import informesImg from "@/assets/tools/informes.jpg";
-import anunciosImg from "@/assets/tools/anuncios.jpg";
+
 import entornoImg from "@/assets/tools/entorno.jpg";
 import guionesImg from "@/assets/tools/guiones.jpg";
 import captacionImg from "@/assets/tools/captacion.jpg";
@@ -18,7 +18,7 @@ export const toolImages: Record<string, string> = {
   costes: costesImg,
   rentabilidad: rentabilidadImg,
   informes: informesImg,
-  anuncios: anunciosImg,
+  
   entorno: entornoImg,
   guiones: guionesImg,
   captacion: captacionImg,
