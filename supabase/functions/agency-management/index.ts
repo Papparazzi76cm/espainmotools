@@ -195,8 +195,8 @@ serve(async (req) => {
           .eq("user_id", user_id)
           .single();
 
-        if (agentProfile?.agency_id !== callerAgencyId) {
-          throw new Error("Este agente no pertenece a tu agencia");
+        if (agentProfile?.agency_id !== effectiveAgencyId) {
+          throw new Error("Este agente no pertenece a esta agencia");
         }
 
         // Remove from agency (don't delete user, just unassign)
