@@ -264,6 +264,7 @@ export default function AdminPage() {
                           </span>
                         </TableCell>
                         <TableCell>
+                          <Badge variant="outline" className="text-xs border-primary/30 text-primary">
                             {ROLE_LABELS[u.role] || u.role}
                           </Badge>
                         </TableCell>
