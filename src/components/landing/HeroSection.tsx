@@ -12,7 +12,7 @@ const HeroSection = ({ onGetStarted }: HeroSectionProps) => {
       {/* Gradient orbs with pulse */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-[128px] glow-pulse bg-primary/30" />
       <div
-        className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full blur-[100px] glow-pulse bg-blue-400/20"
+        className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full blur-[100px] glow-pulse bg-yellow-400/20"
         style={{ animationDelay: "1.5s" }}
       />
       <div
@@ -20,8 +20,8 @@ const HeroSection = ({ onGetStarted }: HeroSectionProps) => {
         style={{ animationDelay: "0.75s" }}
       />
 
-      {/* Radial vignette to black edges */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,hsl(215_45%_12%)_80%)]" />
+      {/* Radial vignette */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,hsl(240_12%_24%)_80%)]" />
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
         <motion.div
