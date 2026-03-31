@@ -13,8 +13,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Shield, Users, Building2, Trash2, Edit, Search, AlertTriangle, BarChart3, TrendingUp, Activity } from "lucide-react";
+import { Shield, Users, Building2, Trash2, Edit, Search, AlertTriangle, BarChart3, TrendingUp, Activity, Download } from "lucide-react";
 import { toast } from "sonner";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
+import { tools } from "@/lib/tools";
 
 const ROLE_LABELS: Record<string, string> = {
   admin: "Admin",
