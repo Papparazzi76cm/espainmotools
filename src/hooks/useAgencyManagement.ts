@@ -121,7 +121,8 @@ export function useAgencyManagement() {
 
   return {
     agency, agents, loading,
-    fetchAgencyInfo, fetchAgents,
+    allAgencies, selectedAgencyId, setSelectedAgencyId,
+    fetchAllAgencies, fetchAgencyInfo, fetchAgents,
     inviteAgent, removeAgent, updateAgentPermissions,
   };
 }
