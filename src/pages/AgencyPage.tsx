@@ -7,19 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Building2, UserPlus, Users, Trash2, Settings2, Copy, AlertTriangle } from "lucide-react";
+import { Building2, UserPlus, Users, Trash2, Settings2, Copy, AlertTriangle, Shield } from "lucide-react";
 import { toast } from "sonner";
 import { tools } from "@/lib/tools";
 
 export default function AgencyPage() {
   const { role, loading: roleLoading } = useUserRole();
   const isAgency = role === "agencia" || role === "agencia_xl" || role === "admin";
+  const isAdmin = role === "admin";
   const {
     agency, agents, loading,
-    fetchAgencyInfo, fetchAgents,
+    allAgencies, selectedAgencyId, setSelectedAgencyId,
+    fetchAllAgencies, fetchAgencyInfo, fetchAgents,
     inviteAgent, removeAgent, updateAgentPermissions,
   } = useAgencyManagement();
 
@@ -37,11 +40,17 @@ export default function AgencyPage() {
   const [removeConfirm, setRemoveConfirm] = useState<Agent | null>(null);
 
   useEffect(() => {
-    if (isAgency) {
+    if (isAdmin) {
+      fetchAllAgencies();
+    }
+  }, [isAdmin, fetchAllAgencies]);
+
+  useEffect(() => {
+    if (isAgency && (selectedAgencyId || !isAdmin)) {
       fetchAgencyInfo();
       fetchAgents();
     }
-  }, [isAgency, fetchAgencyInfo, fetchAgents]);
+  }, [isAgency, selectedAgencyId, fetchAgencyInfo, fetchAgents]);
 
   if (roleLoading) return <div className="text-muted-foreground p-8">Cargando...</div>;
   if (!isAgency) return <Navigate to="/" replace />;
@@ -79,11 +88,36 @@ export default function AgencyPage() {
 
   return (
     <div className="space-y-6">
+      {/* Admin agency selector */}
+      {isAdmin && (
+        <Card className="bg-card border-primary/30">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <Shield className="h-5 w-5 text-primary" />
+              <div className="flex-1">
+                <Label className="text-xs text-muted-foreground">Vista de administrador — Selecciona una agencia</Label>
+                <Select value={selectedAgencyId || ""} onValueChange={(v) => setSelectedAgencyId(v)}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Selecciona una agencia..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {allAgencies.map(a => (
+                      <SelectItem key={a.id} value={a.id}>{a.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {(!isAdmin || selectedAgencyId) && (<>
       <div className="flex items-center gap-3">
         <Building2 className="h-7 w-7 text-primary" />
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Mi Agencia</h1>
-          <p className="text-sm text-muted-foreground">Gestiona los agentes de tu equipo</p>
+          <h1 className="text-2xl font-bold text-foreground">{isAdmin ? agency?.name || "Agencia" : "Mi Agencia"}</h1>
+          <p className="text-sm text-muted-foreground">Gestiona los agentes del equipo</p>
         </div>
       </div>
 
@@ -322,6 +356,16 @@ export default function AgencyPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      </>)}
+
+      {isAdmin && !selectedAgencyId && (
+        <Card className="bg-card border-border">
+          <CardContent className="p-8 text-center text-muted-foreground">
+            <Building2 className="h-10 w-10 mx-auto mb-3 opacity-30" />
+            <p className="text-sm">Selecciona una agencia del desplegable para ver su panel de gestión.</p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

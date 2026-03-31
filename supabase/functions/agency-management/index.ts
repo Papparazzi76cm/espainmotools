@@ -51,18 +51,38 @@ serve(async (req) => {
       .maybeSingle();
 
     const callerAgencyId = callerProfile?.agency_id;
-    if (!callerAgencyId && roleData.role !== "admin") {
+    const isAdmin = roleData.role === "admin";
+    if (!callerAgencyId && !isAdmin) {
       return new Response(JSON.stringify({ error: "No agency assigned to your account" }), { status: 400, headers: corsHeaders });
     }
 
     const { action, ...params } = await req.json();
 
+    // Admin can specify agency_id to view any agency; non-admins always use their own
+    const effectiveAgencyId = isAdmin && params.agency_id ? params.agency_id : callerAgencyId;
+
     switch (action) {
+      case "list_agencies": {
+        // Admin-only: list all agencies
+        if (!isAdmin) {
+          return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403, headers: corsHeaders });
+        }
+        const { data, error } = await adminClient
+          .from("agencies")
+          .select("id, name, status, max_agents, contact_email")
+          .order("name");
+        if (error) throw error;
+        return new Response(JSON.stringify({ agencies: data }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+
       case "get_agency_info": {
+        if (!effectiveAgencyId) {
+          return new Response(JSON.stringify({ error: "No agency_id specified" }), { status: 400, headers: corsHeaders });
+        }
         const { data, error } = await adminClient
           .from("agencies")
           .select("*")
-          .eq("id", callerAgencyId)
+          .eq("id", effectiveAgencyId)
           .single();
         if (error) throw error;
         return new Response(JSON.stringify({ agency: data }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
@@ -73,7 +93,7 @@ serve(async (req) => {
         const { data: profiles, error } = await adminClient
           .from("profiles")
           .select("*")
-          .eq("agency_id", callerAgencyId)
+          .eq("agency_id", effectiveAgencyId)
           .order("created_at", { ascending: false });
         if (error) throw error;
 
@@ -112,13 +132,13 @@ serve(async (req) => {
         const { data: agency } = await adminClient
           .from("agencies")
           .select("max_agents")
-          .eq("id", callerAgencyId)
+          .eq("id", effectiveAgencyId)
           .single();
 
         const { count } = await adminClient
           .from("profiles")
           .select("*", { count: "exact", head: true })
-          .eq("agency_id", callerAgencyId);
+          .eq("agency_id", effectiveAgencyId);
 
         if (agency && count !== null && count >= agency.max_agents) {
           throw new Error(`Límite de agentes alcanzado (${agency.max_agents}). Contacta con soporte para ampliar.`);
@@ -132,7 +152,7 @@ serve(async (req) => {
           // Assign to agency
           const { error: profileError } = await adminClient
             .from("profiles")
-            .update({ agency_id: callerAgencyId })
+            .update({ agency_id: effectiveAgencyId })
             .eq("user_id", existingUser.id);
           if (profileError) throw profileError;
 
@@ -153,7 +173,7 @@ serve(async (req) => {
           if (createError) throw createError;
 
           // Assign agency and role
-          await adminClient.from("profiles").update({ agency_id: callerAgencyId }).eq("user_id", newUser.user.id);
+          await adminClient.from("profiles").update({ agency_id: effectiveAgencyId }).eq("user_id", newUser.user.id);
           await adminClient.from("user_roles").insert({ user_id: newUser.user.id, role: "agente" });
 
           return new Response(JSON.stringify({ 
@@ -175,8 +195,8 @@ serve(async (req) => {
           .eq("user_id", user_id)
           .single();
 
-        if (agentProfile?.agency_id !== callerAgencyId) {
-          throw new Error("Este agente no pertenece a tu agencia");
+        if (agentProfile?.agency_id !== effectiveAgencyId) {
+          throw new Error("Este agente no pertenece a esta agencia");
         }
 
         // Remove from agency (don't delete user, just unassign)
@@ -195,8 +215,8 @@ serve(async (req) => {
           .eq("user_id", user_id)
           .single();
 
-        if (agentProfile?.agency_id !== callerAgencyId) {
-          throw new Error("Este agente no pertenece a tu agencia");
+        if (agentProfile?.agency_id !== effectiveAgencyId) {
+          throw new Error("Este agente no pertenece a esta agencia");
         }
 
         // Get permission IDs

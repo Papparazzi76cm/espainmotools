@@ -40,35 +40,56 @@ async function callAgency(action: string, params: Record<string, unknown> = {}) 
   return res.data;
 }
 
+export interface AgencyListItem {
+  id: string;
+  name: string;
+  status: string;
+  max_agents: number;
+  contact_email: string | null;
+}
+
 export function useAgencyManagement() {
   const [agency, setAgency] = useState<AgencyInfo | null>(null);
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(false);
+  const [allAgencies, setAllAgencies] = useState<AgencyListItem[]>([]);
+  const [selectedAgencyId, setSelectedAgencyId] = useState<string | null>(null);
+
+  const fetchAllAgencies = useCallback(async () => {
+    try {
+      const data = await callAgency("list_agencies");
+      setAllAgencies(data.agencies || []);
+    } catch {
+      // Not admin or other error, ignore
+    }
+  }, []);
+
+  const agencyParam = selectedAgencyId ? { agency_id: selectedAgencyId } : {};
 
   const fetchAgencyInfo = useCallback(async () => {
     try {
-      const data = await callAgency("get_agency_info");
+      const data = await callAgency("get_agency_info", agencyParam);
       setAgency(data.agency);
     } catch (e: any) {
       toast.error("Error al cargar info de agencia: " + e.message);
     }
-  }, []);
+  }, [selectedAgencyId]);
 
   const fetchAgents = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await callAgency("list_agents");
+      const data = await callAgency("list_agents", agencyParam);
       setAgents(data.agents || []);
     } catch (e: any) {
       toast.error("Error al cargar agentes: " + e.message);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [selectedAgencyId]);
 
   const inviteAgent = async (email: string, full_name?: string) => {
     try {
-      const data = await callAgency("invite_agent", { email, full_name });
+      const data = await callAgency("invite_agent", { email, full_name, ...agencyParam });
       toast.success(data.message || "Agente invitado");
       await fetchAgents();
       return data;
@@ -80,7 +101,7 @@ export function useAgencyManagement() {
 
   const removeAgent = async (user_id: string) => {
     try {
-      await callAgency("remove_agent", { user_id });
+      await callAgency("remove_agent", { user_id, ...agencyParam });
       toast.success("Agente eliminado de la agencia");
       await fetchAgents();
     } catch (e: any) {
@@ -90,7 +111,7 @@ export function useAgencyManagement() {
 
   const updateAgentPermissions = async (user_id: string, permission_names: string[]) => {
     try {
-      await callAgency("update_agent_permissions", { user_id, permission_names });
+      await callAgency("update_agent_permissions", { user_id, permission_names, ...agencyParam });
       toast.success("Permisos actualizados");
       await fetchAgents();
     } catch (e: any) {
@@ -100,7 +121,8 @@ export function useAgencyManagement() {
 
   return {
     agency, agents, loading,
-    fetchAgencyInfo, fetchAgents,
+    allAgencies, selectedAgencyId, setSelectedAgencyId,
+    fetchAllAgencies, fetchAgencyInfo, fetchAgents,
     inviteAgent, removeAgent, updateAgentPermissions,
   };
 }
