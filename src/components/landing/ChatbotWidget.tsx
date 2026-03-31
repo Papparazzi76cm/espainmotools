@@ -11,7 +11,7 @@ const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chatbot`;
 const ChatbotWidget = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
-    { role: "assistant", content: "¡Hola! 👋 Soy el asistente de Pynmo. ¿En qué puedo ayudarte? Puedo contarte sobre nuestras herramientas, precios o cómo funciona la plataforma." },
+    { role: "assistant", content: "¡Hola! 👋 Soy el asistente de Ace-Inmotools. ¿En qué puedo ayudarte? Puedo contarte sobre nuestras herramientas, precios o cómo funciona la plataforma." },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
