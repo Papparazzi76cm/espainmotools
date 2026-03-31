@@ -5,7 +5,7 @@ const FooterSection = () => (
     <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
       <PynmoLogo size="sm" />
       <p className="text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Espainmotools. Hecho con IA para agentes inmobiliarios en España.
+        © {new Date().getFullYear()} Ace-inmotools. Hecho con IA para agentes inmobiliarios en España.
       </p>
     </div>
   </footer>
