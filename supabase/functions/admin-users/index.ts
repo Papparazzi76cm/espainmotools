@@ -79,7 +79,7 @@ serve(async (req) => {
         const users = profiles?.map((p) => {
           const role = roles?.find((r) => r.user_id === p.user_id);
           const trial = trials?.find((t) => t.user_id === p.user_id);
-          const authUser = authUsers?.users?.find((u) => u.id === p.user_id);
+          const authUser = allAuthUsers.find((u) => u.id === p.user_id);
           return {
             ...p,
             email: authUser?.email || p.agency_email,
