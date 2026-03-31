@@ -45,7 +45,7 @@ const HeroSection = ({ onGetStarted }: HeroSectionProps) => {
           <span className="text-foreground">Tu suite completa</span>
           <br />
           <span
-            className="bg-gradient-to-r from-blue-400 via-primary to-cyan-400 bg-clip-text text-transparent"
+            className="bg-gradient-to-r from-yellow-300 via-primary to-amber-400 bg-clip-text text-transparent"
             style={{ animation: "text-glow-pulse 3s ease-in-out infinite" }}
           >
             inmobiliaria con IA
