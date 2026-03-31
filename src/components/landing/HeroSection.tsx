@@ -71,7 +71,7 @@ const HeroSection = ({ onGetStarted }: HeroSectionProps) => {
           <Button
             size="lg"
             onClick={onGetStarted}
-            className="group text-base px-8 py-6 rounded-xl bg-gradient-to-r from-blue-600 via-primary to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 border-0 shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 glow-pulse"
+            className="group text-base px-8 py-6 rounded-xl bg-gradient-to-r from-yellow-500 via-primary to-amber-400 hover:from-yellow-400 hover:via-yellow-300 hover:to-amber-300 border-0 shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 glow-pulse text-gray-900 font-semibold"
           >
             <Sparkles className="h-5 w-5 mr-2" />
             Empezar Gratis
