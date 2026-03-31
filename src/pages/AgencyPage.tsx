@@ -88,11 +88,36 @@ export default function AgencyPage() {
 
   return (
     <div className="space-y-6">
+      {/* Admin agency selector */}
+      {isAdmin && (
+        <Card className="bg-card border-primary/30">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <Shield className="h-5 w-5 text-primary" />
+              <div className="flex-1">
+                <Label className="text-xs text-muted-foreground">Vista de administrador — Selecciona una agencia</Label>
+                <Select value={selectedAgencyId || ""} onValueChange={(v) => setSelectedAgencyId(v)}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Selecciona una agencia..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {allAgencies.map(a => (
+                      <SelectItem key={a.id} value={a.id}>{a.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {(!isAdmin || selectedAgencyId) && (<>
       <div className="flex items-center gap-3">
         <Building2 className="h-7 w-7 text-primary" />
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Mi Agencia</h1>
-          <p className="text-sm text-muted-foreground">Gestiona los agentes de tu equipo</p>
+          <h1 className="text-2xl font-bold text-foreground">{isAdmin ? agency?.name || "Agencia" : "Mi Agencia"}</h1>
+          <p className="text-sm text-muted-foreground">Gestiona los agentes del equipo</p>
         </div>
       </div>
 
