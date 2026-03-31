@@ -24,6 +24,7 @@ import ToolPlaceholder from "./pages/ToolPlaceholder";
 import AdminPage from "./pages/AdminPage";
 import AgencyPage from "./pages/AgencyPage";
 import NotFound from "./pages/NotFound";
+import { ToolGuard } from "@/components/ToolGuard";
 
 const queryClient = new QueryClient();
 
