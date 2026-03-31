@@ -42,13 +42,17 @@ const HeroSection = ({ onGetStarted }: HeroSectionProps) => {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6"
         >
-          <span className="text-foreground">Tu suite completa</span>
+          <span className="text-foreground">Automatiza tu negocio</span>
+          <br />
+          <span className="text-foreground">inmobiliario con IA</span>
           <br />
           <span
             className="text-primary"
             style={{ animation: "text-glow-pulse 3s ease-in-out infinite" }}
           >
-            inmobiliaria con IA
+            Convierte más leads
+            <br />
+            inmobiliarios en clientes
           </span>
         </motion.h1>
 
