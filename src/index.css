@@ -6,45 +6,45 @@
 
 @layer base {
   :root {
-    --background: 215 45% 12%;
-    --foreground: 210 40% 93%;
+    --background: 240 12% 24%;
+    --foreground: 0 0% 100%;
 
-    --card: 215 40% 16%;
-    --card-foreground: 210 40% 93%;
+    --card: 240 12% 28%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 215 40% 16%;
-    --popover-foreground: 210 40% 93%;
+    --popover: 240 12% 28%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 210 100% 55%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 51 83% 60%;
+    --primary-foreground: 240 12% 18%;
 
-    --secondary: 215 35% 22%;
-    --secondary-foreground: 210 40% 93%;
+    --secondary: 240 12% 32%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 215 35% 20%;
-    --muted-foreground: 215 25% 62%;
+    --muted: 240 10% 30%;
+    --muted-foreground: 240 10% 68%;
 
-    --accent: 210 60% 22%;
-    --accent-foreground: 210 100% 75%;
+    --accent: 51 50% 30%;
+    --accent-foreground: 51 83% 70%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 215 30% 24%;
-    --input: 215 30% 24%;
-    --ring: 210 100% 55%;
+    --border: 240 10% 34%;
+    --input: 240 10% 34%;
+    --ring: 51 83% 60%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 215 45% 10%;
-    --sidebar-foreground: 215 30% 78%;
-    --sidebar-primary: 210 100% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 35% 18%;
-    --sidebar-accent-foreground: 210 40% 93%;
-    --sidebar-border: 215 30% 20%;
-    --sidebar-ring: 210 100% 55%;
-    --sidebar-muted: 215 20% 38%;
+    --sidebar-background: 240 12% 20%;
+    --sidebar-foreground: 240 10% 78%;
+    --sidebar-primary: 51 83% 60%;
+    --sidebar-primary-foreground: 240 12% 18%;
+    --sidebar-accent: 240 12% 28%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 10% 30%;
+    --sidebar-ring: 51 83% 60%;
+    --sidebar-muted: 240 10% 50%;
 
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
@@ -53,7 +53,7 @@
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --glow-blue: 210 100% 55%;
+    --glow-primary: 51 83% 60%;
   }
 }
 
