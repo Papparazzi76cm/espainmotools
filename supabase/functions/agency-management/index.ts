@@ -173,7 +173,7 @@ serve(async (req) => {
           if (createError) throw createError;
 
           // Assign agency and role
-          await adminClient.from("profiles").update({ agency_id: callerAgencyId }).eq("user_id", newUser.user.id);
+          await adminClient.from("profiles").update({ agency_id: effectiveAgencyId }).eq("user_id", newUser.user.id);
           await adminClient.from("user_roles").insert({ user_id: newUser.user.id, role: "agente" });
 
           return new Response(JSON.stringify({ 
