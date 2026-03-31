@@ -12,7 +12,7 @@ import DescripcionesPage from "./pages/DescripcionesPage";
 import CostesPage from "./pages/CostesPage";
 import RentabilidadPage from "./pages/RentabilidadPage";
 import ConsultorLegalPage from "./pages/ConsultorLegalPage";
-import AnunciosPage from "./pages/AnunciosPage";
+
 import EntornoPage from "./pages/EntornoPage";
 import GuionesPage from "./pages/GuionesPage";
 import CaptacionPage from "./pages/CaptacionPage";
