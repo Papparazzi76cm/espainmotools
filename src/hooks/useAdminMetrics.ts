@@ -18,9 +18,16 @@ interface UserUsageStat {
   last_used: string | null;
 }
 
+export interface DailyUsage {
+  date: string;
+  total: number;
+  [toolId: string]: number | string;
+}
+
 export function useAdminMetrics() {
   const [toolStats, setToolStats] = useState<ToolUsageStat[]>([]);
   const [userStats, setUserStats] = useState<UserUsageStat[]>([]);
+  const [dailyUsage, setDailyUsage] = useState<DailyUsage[]>([]);
   const [totalGenerations, setTotalGenerations] = useState(0);
   const [todayGenerations, setTodayGenerations] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -33,14 +40,12 @@ export function useAdminMetrics() {
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
 
-    // Fetch all usage logs
     const { data: allLogs } = await supabase
       .from("usage_logs")
       .select("tool_id, user_id, used_at");
 
     if (!allLogs) { setLoading(false); return; }
 
-    // Total & today
     setTotalGenerations(allLogs.length);
     const todayLogs = allLogs.filter(l => new Date(l.used_at) >= todayStart);
     setTodayGenerations(todayLogs.length);
@@ -65,6 +70,28 @@ export function useAdminMetrics() {
       .sort((a, b) => b.total_uses - a.total_uses);
     setToolStats(tStats);
 
+    // Daily usage (last 30 days)
+    const days: DailyUsage[] = [];
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split("T")[0];
+      const entry: DailyUsage = { date: dateStr, total: 0 };
+      days.push(entry);
+    }
+
+    const dateMap = Object.fromEntries(days.map((d, i) => [d.date, i]));
+    allLogs.forEach(l => {
+      const dateStr = l.used_at.split("T")[0];
+      const idx = dateMap[dateStr];
+      if (idx !== undefined) {
+        days[idx].total++;
+        const toolKey = l.tool_id;
+        days[idx][toolKey] = ((days[idx][toolKey] as number) || 0) + 1;
+      }
+    });
+    setDailyUsage(days);
+
     // User stats
     const userMap: Record<string, { total: number; last: string | null }> = {};
     allLogs.forEach(l => {
@@ -75,13 +102,11 @@ export function useAdminMetrics() {
       }
     });
 
-    // Fetch profiles for these users
     const userIds = Object.keys(userMap);
     const { data: profiles } = await supabase
       .from("profiles")
       .select("user_id, full_name");
 
-    // We need emails from admin-users edge function, but for simplicity use profiles
     const profileMap = Object.fromEntries((profiles || []).map(p => [p.user_id, p]));
 
     const uStats: UserUsageStat[] = userIds
@@ -99,7 +124,34 @@ export function useAdminMetrics() {
     setLoading(false);
   }, []);
 
+  const exportCSV = useCallback(() => {
+    // Build CSV from tool stats + user stats
+    let csv = "MÉTRICAS POR HERRAMIENTA\n";
+    csv += "Herramienta,Usos totales,Usuarios únicos,Usos hoy\n";
+    toolStats.forEach(t => {
+      csv += `"${t.tool_name}",${t.total_uses},${t.unique_users},${t.today_uses}\n`;
+    });
+    csv += "\nTOP USUARIOS\n";
+    csv += "Usuario,Generaciones,Último uso\n";
+    userStats.forEach(u => {
+      csv += `"${u.full_name}",${u.total_uses},"${u.last_used ? new Date(u.last_used).toLocaleDateString("es-ES") : "—"}"\n`;
+    });
+    csv += "\nUSO DIARIO (últimos 30 días)\n";
+    csv += "Fecha,Total\n";
+    dailyUsage.forEach(d => {
+      csv += `${d.date},${d.total}\n`;
+    });
+
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `metricas-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [toolStats, userStats, dailyUsage]);
+
   useEffect(() => { fetchMetrics(); }, [fetchMetrics]);
 
-  return { toolStats, userStats, totalGenerations, todayGenerations, loading, refetch: fetchMetrics };
+  return { toolStats, userStats, dailyUsage, totalGenerations, todayGenerations, loading, refetch: fetchMetrics, exportCSV };
 }
