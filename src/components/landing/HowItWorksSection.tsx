@@ -43,7 +43,7 @@ const HowItWorksSection = () => {
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Tres pasos para{" "}
-            <span className="bg-gradient-to-r from-blue-400 via-primary to-cyan-400 bg-clip-text text-transparent">
+            <span className="text-primary">
               transformar tu trabajo
             </span>
           </h2>
