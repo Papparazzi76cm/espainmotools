@@ -18,10 +18,10 @@ serve(async (req) => {
 
     switch (tool) {
       case "descripciones": {
-        systemPrompt = `Eres un experto copywriter inmobiliario en España. Genera descripciones profesionales de inmuebles adaptadas al mercado español.
+        systemPrompt = `Eres un experto copywriter y especialista en marketing inmobiliario digital en España. Genera descripciones profesionales de inmuebles y anuncios optimizados para cada plataforma.
 Siempre responde en formato JSON con esta estructura exacta:
-{"corta": "descripción corta de 1-2 líneas", "larga": "descripción detallada de 4-6 líneas", "redes": "copy para redes sociales con emojis y hashtags"}`;
-        userPrompt = `Genera descripciones para: Tipo: ${data.tipo || "propiedad"}. Habitaciones: ${data.habitaciones || "N/A"}. Superficie: ${data.superficie || "N/A"} m². Ubicación: ${data.ubicacion || "España"}. Extras: ${data.extras || "ninguno"}. Estilo: ${data.estilo || "comercial"}.`;
+{"corta": "descripción corta de 1-2 líneas", "larga": "descripción detallada de 4-6 líneas", "redes": "copy para redes sociales con emojis y hashtags", "facebook": "texto optimizado para Facebook Ads", "instagram": "caption para Instagram con emojis y hashtags relevantes", "portal": "descripción profesional para portales inmobiliarios (Idealista, Fotocasa)"}`;
+        userPrompt = `Genera descripciones y anuncios para: Tipo: ${data.tipo || "propiedad"}. Habitaciones: ${data.habitaciones || "N/A"}. Superficie: ${data.superficie || "N/A"} m². Ubicación: ${data.ubicacion || "España"}. Precio: ${data.precio || "consultar"}. Extras: ${data.extras || "ninguno"}. Estilo: ${data.estilo || "comercial"}.`;
         break;
       }
       case "consultor-legal": {
