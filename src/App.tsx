@@ -57,6 +57,7 @@ function ProtectedRoutes() {
           <Route path="/herramientas/informes" element={<InformesPage />} />
           <Route path="/herramientas/roleplay" element={<RolePlayPage />} />
           <Route path="/herramientas/:toolId" element={<ToolPlaceholder />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AppLayout>
