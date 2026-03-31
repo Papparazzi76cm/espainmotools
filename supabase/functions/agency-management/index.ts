@@ -152,7 +152,7 @@ serve(async (req) => {
           // Assign to agency
           const { error: profileError } = await adminClient
             .from("profiles")
-            .update({ agency_id: callerAgencyId })
+            .update({ agency_id: effectiveAgencyId })
             .eq("user_id", existingUser.id);
           if (profileError) throw profileError;
 
