@@ -138,7 +138,7 @@ serve(async (req) => {
         const { count } = await adminClient
           .from("profiles")
           .select("*", { count: "exact", head: true })
-          .eq("agency_id", callerAgencyId);
+          .eq("agency_id", effectiveAgencyId);
 
         if (agency && count !== null && count >= agency.max_agents) {
           throw new Error(`Límite de agentes alcanzado (${agency.max_agents}). Contacta con soporte para ampliar.`);
