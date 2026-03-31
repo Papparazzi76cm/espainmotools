@@ -186,6 +186,9 @@ export default function AdminPage() {
           <TabsTrigger value="agencies" className="gap-1.5">
             <Building2 className="h-4 w-4" /> Agencias
           </TabsTrigger>
+          <TabsTrigger value="metrics" className="gap-1.5">
+            <BarChart3 className="h-4 w-4" /> Métricas
+          </TabsTrigger>
         </TabsList>
 
         {/* USERS TAB */}
