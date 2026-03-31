@@ -41,7 +41,8 @@ export default function AdminPage() {
     assignAgency, deleteUser,
     createAgency, updateAgency, deleteAgency,
   } = useAdminUsers();
-  const { toolStats, userStats, totalGenerations, todayGenerations, loading: metricsLoading } = useAdminMetrics();
+  const { toolStats, userStats, dailyUsage, totalGenerations, todayGenerations, loading: metricsLoading, exportCSV } = useAdminMetrics();
+  const [chartDays, setChartDays] = useState<7 | 30>(7);
 
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
