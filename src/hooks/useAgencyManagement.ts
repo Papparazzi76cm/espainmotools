@@ -40,6 +40,14 @@ async function callAgency(action: string, params: Record<string, unknown> = {}) 
   return res.data;
 }
 
+export interface AgencyListItem {
+  id: string;
+  name: string;
+  status: string;
+  max_agents: number;
+  contact_email: string | null;
+}
+
 export function useAgencyManagement() {
   const [agency, setAgency] = useState<AgencyInfo | null>(null);
   const [agents, setAgents] = useState<Agent[]>([]);
