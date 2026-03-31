@@ -8,6 +8,8 @@ import { Copy, UserPlus, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useInmoAI } from "@/hooks/useInmoAI";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
+import { useToolHistory } from "@/hooks/useToolHistory";
+import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
 
 const CaptacionPage = () => {
   const [zona, setZona] = useState("");
@@ -20,11 +22,15 @@ const CaptacionPage = () => {
     objeciones: { objecion: string; respuesta: string }[];
   } | null>(null);
   const { generate, loading } = useInmoAI();
+  const { history, loading: histLoading, saveResult, deleteEntry } = useToolHistory("captacion");
 
   const generar = async () => {
     if (!zona.trim()) return;
     const result = await generate("captacion", { zona, tipo, contexto });
-    if (result) setResultado(result);
+    if (result) {
+      setResultado(result);
+      await saveResult(zona, { zona, tipo, contexto }, result);
+    }
   };
 
   const copiar = (text: string, label: string) => { navigator.clipboard.writeText(text); toast.success(`${label} copiado`); };
@@ -38,17 +44,20 @@ const CaptacionPage = () => {
         <Sparkles className="h-4 w-4 text-primary" />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="glass-card">
-          <CardHeader><CardTitle className="text-base">Contexto de Captación</CardTitle></CardHeader>
-          <CardContent className="space-y-4">
-            <div><Label>Zona objetivo</Label><Input placeholder="Chamberí, Madrid..." value={zona} onChange={(e) => setZona(e.target.value)} /></div>
-            <div><Label>Tipo de inmueble (opcional)</Label><Input placeholder="Casas, departamentos..." value={tipo} onChange={(e) => setTipo(e.target.value)} /></div>
-            <div><Label>Contexto adicional</Label><Textarea placeholder="Propietarios que quieren vender, zona en crecimiento..." value={contexto} onChange={(e) => setContexto(e.target.value)} rows={3} /></div>
-            <Button onClick={generar} className="w-full" disabled={loading || !zona.trim()}>
-              {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Generando...</> : "Generar Material con IA"}
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="space-y-4">
+          <Card className="glass-card">
+            <CardHeader><CardTitle className="text-base">Contexto de Captación</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <div><Label>Zona objetivo</Label><Input placeholder="Chamberí, Madrid..." value={zona} onChange={(e) => setZona(e.target.value)} /></div>
+              <div><Label>Tipo de inmueble (opcional)</Label><Input placeholder="Casas, departamentos..." value={tipo} onChange={(e) => setTipo(e.target.value)} /></div>
+              <div><Label>Contexto adicional</Label><Textarea placeholder="Propietarios que quieren vender, zona en crecimiento..." value={contexto} onChange={(e) => setContexto(e.target.value)} rows={3} /></div>
+              <Button onClick={generar} className="w-full" disabled={loading || !zona.trim()}>
+                {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Generando...</> : "Generar Material con IA"}
+              </Button>
+            </CardContent>
+          </Card>
+          <ToolHistoryPanel history={history} loading={histLoading} onLoad={(e) => setResultado(e.result_data)} onDelete={deleteEntry} />
+        </div>
         <div className="space-y-4">
           {resultado ? (
             <>
