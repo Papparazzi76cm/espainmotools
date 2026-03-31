@@ -64,8 +64,16 @@ serve(async (req) => {
         // Get all user_trials
         const { data: trials } = await adminClient.from("user_trials").select("*");
 
-        // Get auth users for email
-        const { data: authUsers } = await adminClient.auth.admin.listUsers();
+        // Get auth users for email (paginate to get all)
+        let allAuthUsers: any[] = [];
+        let page = 1;
+        while (true) {
+          const { data } = await adminClient.auth.admin.listUsers({ page, perPage: 1000 });
+          if (!data?.users?.length) break;
+          allAuthUsers = allAuthUsers.concat(data.users);
+          if (data.users.length < 1000) break;
+          page++;
+        }
 
         // Merge data
         const users = profiles?.map((p) => {
