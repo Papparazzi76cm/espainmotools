@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const SYSTEM_PROMPT = `Eres el asistente virtual de Pynmo, una plataforma de herramientas de inteligencia artificial diseñada exclusivamente para agentes y agencias inmobiliarias en España. Tu nombre es "Asistente Pynmo". Responde siempre en español, de forma amable, profesional y concisa.
+const SYSTEM_PROMPT = `Eres el asistente virtual de Ace-Inmotools, una plataforma de herramientas de inteligencia artificial diseñada exclusivamente para agentes y agencias inmobiliarias en España. Tu nombre es "Asistente Ace-Inmotools". Responde siempre en español, de forma amable, profesional y concisa.
 
 ## Sobre Pynmo
 
