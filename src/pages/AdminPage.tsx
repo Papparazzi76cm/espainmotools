@@ -335,6 +335,121 @@ export default function AdminPage() {
             )}
           </div>
         </TabsContent>
+        {/* METRICS TAB */}
+        <TabsContent value="metrics" className="space-y-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Card className="bg-card border-border">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <TrendingUp className="h-4 w-4 text-primary" />
+                  <span className="text-xs text-muted-foreground">Total generaciones</span>
+                </div>
+                <div className="text-2xl font-bold text-primary">{totalGenerations}</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-card border-border">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <Activity className="h-4 w-4 text-green-500" />
+                  <span className="text-xs text-muted-foreground">Hoy</span>
+                </div>
+                <div className="text-2xl font-bold text-green-500">{todayGenerations}</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-card border-border">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <BarChart3 className="h-4 w-4 text-primary" />
+                  <span className="text-xs text-muted-foreground">Herramientas activas</span>
+                </div>
+                <div className="text-2xl font-bold text-primary">{toolStats.length}</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-card border-border">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <Users className="h-4 w-4 text-primary" />
+                  <span className="text-xs text-muted-foreground">Usuarios activos</span>
+                </div>
+                <div className="text-2xl font-bold text-primary">{userStats.length}</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Tool usage */}
+          <Card className="border-border">
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-2">
+                <BarChart3 className="h-4 w-4 text-primary" /> Uso por herramienta
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {metricsLoading ? (
+                <p className="text-muted-foreground text-sm text-center py-4">Cargando métricas...</p>
+              ) : toolStats.length === 0 ? (
+                <p className="text-muted-foreground text-sm text-center py-4">Sin datos de uso todavía</p>
+              ) : (
+                toolStats.map(t => {
+                  const maxUses = toolStats[0]?.total_uses || 1;
+                  const pct = (t.total_uses / maxUses) * 100;
+                  return (
+                    <div key={t.tool_id} className="space-y-1">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="font-medium">{t.tool_name}</span>
+                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                          <span>{t.total_uses} usos</span>
+                          <span>{t.unique_users} usuarios</span>
+                          <Badge variant="outline" className="text-[10px]">{t.today_uses} hoy</Badge>
+                        </div>
+                      </div>
+                      <Progress value={pct} className="h-2" />
+                    </div>
+                  );
+                })
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Top users */}
+          <Card className="border-border">
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-2">
+                <Users className="h-4 w-4 text-primary" /> Top usuarios por uso
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>#</TableHead>
+                    <TableHead>Usuario</TableHead>
+                    <TableHead>Generaciones</TableHead>
+                    <TableHead>Último uso</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {userStats.map((u, i) => (
+                    <TableRow key={u.user_id}>
+                      <TableCell className="text-muted-foreground text-sm">{i + 1}</TableCell>
+                      <TableCell className="text-sm font-medium">{u.full_name}</TableCell>
+                      <TableCell>
+                        <Badge variant="secondary" className="text-xs">{u.total_uses}</Badge>
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">
+                        {u.last_used ? new Date(u.last_used).toLocaleDateString("es-ES") : "—"}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {userStats.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={4} className="text-center py-6 text-muted-foreground text-sm">Sin datos</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
       </Tabs>
 
       {/* EDIT USER DIALOG */}
