@@ -7,19 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Building2, UserPlus, Users, Trash2, Settings2, Copy, AlertTriangle } from "lucide-react";
+import { Building2, UserPlus, Users, Trash2, Settings2, Copy, AlertTriangle, Shield } from "lucide-react";
 import { toast } from "sonner";
 import { tools } from "@/lib/tools";
 
 export default function AgencyPage() {
   const { role, loading: roleLoading } = useUserRole();
   const isAgency = role === "agencia" || role === "agencia_xl" || role === "admin";
+  const isAdmin = role === "admin";
   const {
     agency, agents, loading,
-    fetchAgencyInfo, fetchAgents,
+    allAgencies, selectedAgencyId, setSelectedAgencyId,
+    fetchAllAgencies, fetchAgencyInfo, fetchAgents,
     inviteAgent, removeAgent, updateAgentPermissions,
   } = useAgencyManagement();
 
@@ -37,11 +40,17 @@ export default function AgencyPage() {
   const [removeConfirm, setRemoveConfirm] = useState<Agent | null>(null);
 
   useEffect(() => {
-    if (isAgency) {
+    if (isAdmin) {
+      fetchAllAgencies();
+    }
+  }, [isAdmin, fetchAllAgencies]);
+
+  useEffect(() => {
+    if (isAgency && (selectedAgencyId || !isAdmin)) {
       fetchAgencyInfo();
       fetchAgents();
     }
-  }, [isAgency, fetchAgencyInfo, fetchAgents]);
+  }, [isAgency, selectedAgencyId, fetchAgencyInfo, fetchAgents]);
 
   if (roleLoading) return <div className="text-muted-foreground p-8">Cargando...</div>;
   if (!isAgency) return <Navigate to="/" replace />;
