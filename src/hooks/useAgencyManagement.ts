@@ -101,7 +101,7 @@ export function useAgencyManagement() {
 
   const removeAgent = async (user_id: string) => {
     try {
-      await callAgency("remove_agent", { user_id });
+      await callAgency("remove_agent", { user_id, ...agencyParam });
       toast.success("Agente eliminado de la agencia");
       await fetchAgents();
     } catch (e: any) {
