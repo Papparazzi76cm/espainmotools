@@ -259,7 +259,11 @@ export default function AdminPage() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Badge variant="outline" className="text-xs border-primary/30 text-primary">
+                          <span className="text-sm text-muted-foreground">
+                            {u.agency_name || agencies.find(a => a.id === u.agency_id)?.name || "Freelance"}
+                          </span>
+                        </TableCell>
+                        <TableCell>
                             {ROLE_LABELS[u.role] || u.role}
                           </Badge>
                         </TableCell>
