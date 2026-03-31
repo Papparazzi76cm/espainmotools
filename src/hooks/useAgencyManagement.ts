@@ -111,7 +111,7 @@ export function useAgencyManagement() {
 
   const updateAgentPermissions = async (user_id: string, permission_names: string[]) => {
     try {
-      await callAgency("update_agent_permissions", { user_id, permission_names });
+      await callAgency("update_agent_permissions", { user_id, permission_names, ...agencyParam });
       toast.success("Permisos actualizados");
       await fetchAgents();
     } catch (e: any) {
