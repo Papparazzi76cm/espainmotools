@@ -22,6 +22,7 @@ import InformesPage from "./pages/InformesPage";
 import RolePlayPage from "./pages/RolePlayPage";
 import ToolPlaceholder from "./pages/ToolPlaceholder";
 import AdminPage from "./pages/AdminPage";
+import AgencyPage from "./pages/AgencyPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
