@@ -4,7 +4,7 @@ import { tools, dashboardItem } from "@/lib/tools";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserRole } from "@/hooks/useUserRole";
 import { TrialCountdown } from "@/components/TrialCountdown";
-import { LogOut, Shield } from "lucide-react";
+import { LogOut, Shield, Building2 } from "lucide-react";
 import PynmoLogo from "@/components/PynmoLogo";
 import {
   Sidebar,
@@ -27,7 +27,8 @@ export function AppSidebar() {
   const collapsed = state === "collapsed";
   const location = useLocation();
   const { signOut, user } = useAuth();
-  const { isAdmin } = useUserRole();
+  const { isAdmin, role } = useUserRole();
+  const isAgency = role === "agencia" || role === "agencia_xl";
 
   return (
     <Sidebar collapsible="icon">
@@ -112,6 +113,30 @@ export function AppSidebar() {
                     >
                       <Shield className="h-4 w-4 flex-shrink-0" />
                       {!collapsed && <span>Panel Admin</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {isAgency && (
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-sidebar-muted text-[10px] uppercase tracking-wider">
+              Mi Agencia
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/mi-agencia"
+                      className="hover:bg-sidebar-accent/50"
+                      activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                    >
+                      <Building2 className="h-4 w-4 flex-shrink-0" />
+                      {!collapsed && <span>Gestión Agentes</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
