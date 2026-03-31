@@ -80,15 +80,6 @@ export const tools: Tool[] = [
     ready: true,
   },
   {
-    id: "anuncios",
-    title: "Generador de Anuncios",
-    description: "Crea anuncios para redes sociales y portales",
-    icon: Megaphone,
-    path: "/herramientas/anuncios",
-    category: "contenido",
-    ready: true,
-  },
-  {
     id: "entorno",
     title: "Descripción de Entorno",
     description: "Describe la zona y servicios cercanos al inmueble",
