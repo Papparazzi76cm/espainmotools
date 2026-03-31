@@ -13,7 +13,7 @@ const Dashboard = () => {
         <div className="flex items-center gap-3 mb-1">
           <PynmoLogo size="lg" />
           <h1 className="text-2xl font-semibold text-foreground">
-            Bienvenido a <span className="text-foreground">Ace</span>
+            Bienvenido a <span className="text-foreground">Ace-</span>
             <span className="text-primary">Inmotools</span>
           </h1>
         </div>
