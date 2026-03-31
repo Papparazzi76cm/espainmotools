@@ -16,6 +16,7 @@ const GuionesPage = () => {
   const [precio, setPrecio] = useState("");
   const [caracteristicas, setCaracteristicas] = useState("");
   const [tono, setTono] = useState("profesional");
+  const [duracion, setDuracion] = useState("60");
   const [resultado, setResultado] = useState<{ reel: string; tiktok: string; youtube: string } | null>(null);
   const { generate, loading } = useInmoAI();
 
