@@ -18,7 +18,7 @@ export const toolImages: Record<string, string> = {
   costes: costesImg,
   rentabilidad: rentabilidadImg,
   informes: informesImg,
-  anuncios: anunciosImg,
+  
   entorno: entornoImg,
   guiones: guionesImg,
   captacion: captacionImg,
