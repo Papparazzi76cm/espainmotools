@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, FileText, Sparkles, Loader2 } from "lucide-react";
+import { Copy, FileText, Sparkles, Loader2, ImagePlus, X } from "lucide-react";
 import { toast } from "sonner";
 import { useInmoAI } from "@/hooks/useInmoAI";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
@@ -27,6 +27,8 @@ interface Resultado {
   portal: string;
 }
 
+const MAX_IMAGES = 20;
+
 const DescripcionesPage = () => {
   const [tipo, setTipo] = useState("");
   const [estilo, setEstilo] = useState("comercial");
@@ -36,12 +38,52 @@ const DescripcionesPage = () => {
   const [precio, setPrecio] = useState("");
   const [extras, setExtras] = useState("");
   const [resultado, setResultado] = useState<Resultado | null>(null);
+  const [images, setImages] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { generate, loading } = useInmoAI();
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const remaining = MAX_IMAGES - images.length;
+    if (remaining <= 0) {
+      toast.error(`Máximo ${MAX_IMAGES} imágenes permitidas`);
+      return;
+    }
+
+    const filesToProcess = Array.from(files).slice(0, remaining);
+    if (files.length > remaining) {
+      toast.warning(`Solo se añadieron ${remaining} imagen(es). Máximo ${MAX_IMAGES}.`);
+    }
+
+    filesToProcess.forEach((file) => {
+      if (!file.type.startsWith("image/")) return;
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error(`${file.name} es demasiado grande (máx 5MB)`);
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImages((prev) => {
+          if (prev.length >= MAX_IMAGES) return prev;
+          return [...prev, reader.result as string];
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const removeImage = (index: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const generar = async () => {
     const result = await generate("descripciones", {
       tipo, estilo, habitaciones, superficie, ubicacion, precio, extras,
-    });
+    }, images.length > 0 ? images : undefined);
     if (result) {
       setResultado({
         corta: result.corta || "",
@@ -111,6 +153,54 @@ const DescripcionesPage = () => {
               <Label>Extras / Características</Label>
               <Textarea placeholder="Piscina, garaje doble, vista panorámica..." value={extras} onChange={(e) => setExtras(e.target.value)} rows={3} />
             </div>
+
+            {/* Image Upload Section */}
+            <div>
+              <Label className="flex items-center gap-1.5 mb-2">
+                <ImagePlus className="h-3.5 w-3.5" />
+                Fotos del inmueble ({images.length}/{MAX_IMAGES})
+              </Label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+              {images.length > 0 && (
+                <div className="grid grid-cols-4 gap-1.5 mb-2">
+                  {images.map((img, i) => (
+                    <div key={i} className="relative group aspect-square rounded-md overflow-hidden border border-border">
+                      <img src={img} alt={`Foto ${i + 1}`} className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(i)}
+                        className="absolute top-0.5 right-0.5 bg-destructive text-destructive-foreground rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {images.length < MAX_IMAGES && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-full text-xs"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <ImagePlus className="h-3.5 w-3.5 mr-1.5" />
+                  Añadir fotos
+                </Button>
+              )}
+              <p className="text-[10px] text-muted-foreground mt-1">
+                La IA analizará las fotos para generar descripciones más precisas.
+              </p>
+            </div>
+
             <Button onClick={generar} className="w-full" disabled={loading}>
               {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Generando con IA...</> : "Generar con IA"}
             </Button>
