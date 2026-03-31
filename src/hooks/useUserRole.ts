@@ -21,5 +21,6 @@ export function useUserRole() {
       });
   }, [user]);
 
-  return { role, isAdmin: role === "admin", isTester: role === "tester", loading };
+  const isAgency = role === "agencia" || role === "agencia_xl";
+  return { role, isAdmin: role === "admin", isTester: role === "tester", isAgency, loading };
 }

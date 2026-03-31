@@ -59,6 +59,7 @@ function ProtectedRoutes() {
           <Route path="/herramientas/roleplay" element={<RolePlayPage />} />
           <Route path="/herramientas/:toolId" element={<ToolPlaceholder />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/mi-agencia" element={<AgencyPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AppLayout>
