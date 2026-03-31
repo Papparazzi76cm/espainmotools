@@ -60,9 +60,9 @@ Responde en JSON: {
       }
       case "guiones": {
         systemPrompt = `Eres un creador de contenido inmobiliario para redes sociales en España.
-Genera guiones profesionales y dinámicos. Responde en JSON:
-{"reel": "guión para Instagram Reel (30-60 seg)", "tiktok": "guión para TikTok (15-60 seg)", "youtube": "guión para YouTube (2-3 min con intro, desarrollo y cierre)"}`;
-        userPrompt = `Guión para inmueble: Tipo: ${data.tipo}. Ubicación: ${data.ubicacion}. Precio: ${data.precio || "consultar"}. Características: ${data.caracteristicas}. Tono: ${data.tono || "profesional y cercano"}.`;
+Genera guiones profesionales y dinámicos adaptados a la duración indicada. Responde en JSON:
+{"reel": "guión para Instagram Reel", "tiktok": "guión para TikTok", "youtube": "guión para YouTube con intro, desarrollo y cierre"}`;
+        userPrompt = `Guión para inmueble: Tipo: ${data.tipo}. Ubicación: ${data.ubicacion}. Precio: ${data.precio || "consultar"}. Características: ${data.caracteristicas}. Tono: ${data.tono || "profesional y cercano"}. Duración objetivo: ${data.duracion || "60 segundos"}.`;
         break;
       }
       case "captacion": {
@@ -106,7 +106,7 @@ Responde en JSON con esta estructura exacta:
   "metodologia": "descripción breve de la metodología utilizada",
   "disclaimer": "nota legal sobre el carácter orientativo de la valoración"
 }`;
-        userPrompt = `Genera un informe de valoración para: Tipo: ${data.tipo || "propiedad"}. Ubicación: ${data.ubicacion}. Superficie construida: ${data.superficie || "N/A"} m². Superficie terreno: ${data.superficieTerreno || "N/A"} m². Habitaciones: ${data.habitaciones || "N/A"}. Baños: ${data.banos || "N/A"}. Antigüedad: ${data.antiguedad || "N/A"} años. Estado: ${data.estado || "bueno"}. Extras: ${data.extras || "ninguno"}. Precio referencia: ${data.precioReferencia || "no indicado"}.`;
+        userPrompt = `Genera un informe de valoración para: Tipo: ${data.tipo || "propiedad"}. Ubicación: ${data.ubicacion}. Superficie construida: ${data.superficie || "N/A"} m². Superficie terreno: ${data.superficieTerreno || "N/A"} m². Habitaciones: ${data.habitaciones || "N/A"}. Baños: ${data.banos || "N/A"}. Antigüedad: ${data.antiguedad || "N/A"} años. Estado: ${data.estado || "bueno"}. Extras: ${data.extras || "ninguno"}. Precio referencia: ${data.precioReferencia || "no indicado"}.${data.descripcion_inmueble ? `\n\nDESCRIPCIÓN DETALLADA DEL INMUEBLE (generada previamente por el agente, úsala para enriquecer significativamente el informe con detalles precisos sobre el inmueble):\n${data.descripcion_inmueble}` : ""}`;
         break;
       }
       default:

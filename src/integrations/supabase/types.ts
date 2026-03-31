@@ -133,6 +133,36 @@ export type Database = {
           },
         ]
       }
+      tool_history: {
+        Row: {
+          created_at: string
+          id: string
+          input_data: Json | null
+          result_data: Json | null
+          title: string
+          tool_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          input_data?: Json | null
+          result_data?: Json | null
+          title?: string
+          tool_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          input_data?: Json | null
+          result_data?: Json | null
+          title?: string
+          tool_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       usage_logs: {
         Row: {
           created_at: string
