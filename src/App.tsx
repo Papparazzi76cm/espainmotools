@@ -21,6 +21,7 @@ import HomeStagingPage from "./pages/HomeStagingPage";
 import InformesPage from "./pages/InformesPage";
 import RolePlayPage from "./pages/RolePlayPage";
 import ToolPlaceholder from "./pages/ToolPlaceholder";
+import AdminPage from "./pages/AdminPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ function ProtectedRoutes() {
           <Route path="/herramientas/informes" element={<InformesPage />} />
           <Route path="/herramientas/roleplay" element={<RolePlayPage />} />
           <Route path="/herramientas/:toolId" element={<ToolPlaceholder />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AppLayout>
