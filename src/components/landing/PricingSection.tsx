@@ -148,12 +148,12 @@ function PlanCard({ plan, index, onGetStarted }: { plan: any; index: number; onG
       whileHover={{ y: -4 }}
       className={`relative rounded-2xl border p-8 transition-all duration-300 ${
         plan.popular
-          ? "border-primary/50 bg-gradient-to-b from-primary/10 to-card shadow-2xl shadow-primary/15 scale-[1.02]"
+          ? "border-primary/50 bg-primary/10 shadow-2xl shadow-primary/15 scale-[1.02]"
           : "border-border/40 bg-card/50 backdrop-blur-xl"
       }`}
     >
       {plan.badge && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 via-primary to-cyan-500 text-primary-foreground text-xs font-semibold shadow-lg shadow-primary/30">
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold shadow-lg shadow-primary/30">
           {plan.badge}
         </span>
       )}
@@ -181,7 +181,7 @@ function PlanCard({ plan, index, onGetStarted }: { plan: any; index: number; onG
         onClick={onGetStarted}
         className={`w-full rounded-xl py-5 transition-all duration-300 ${
           plan.popular
-            ? "bg-gradient-to-r from-blue-600 via-primary to-cyan-500 hover:from-blue-500 hover:to-cyan-400 shadow-lg shadow-primary/25 border-0"
+            ? "bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 border-0"
             : "border-primary/30 hover:bg-primary/10 hover:border-primary/50"
         }`}
         variant={plan.popular ? "default" : "outline"}
