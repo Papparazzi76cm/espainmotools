@@ -148,7 +148,7 @@ function PlanCard({ plan, index, onGetStarted }: { plan: any; index: number; onG
       whileHover={{ y: -4 }}
       className={`relative rounded-2xl border p-8 transition-all duration-300 ${
         plan.popular
-          ? "border-primary/50 bg-gradient-to-b from-primary/10 to-card shadow-2xl shadow-primary/15 scale-[1.02]"
+          ? "border-primary/50 bg-primary/10 shadow-2xl shadow-primary/15 scale-[1.02]"
           : "border-border/40 bg-card/50 backdrop-blur-xl"
       }`}
     >
