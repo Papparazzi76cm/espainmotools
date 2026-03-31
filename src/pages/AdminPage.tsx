@@ -236,6 +236,7 @@ export default function AdminPage() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Usuario</TableHead>
+                    <TableHead>Agencia</TableHead>
                     <TableHead>Rol</TableHead>
                     <TableHead>Estado</TableHead>
                     <TableHead>Plan</TableHead>
@@ -245,9 +246,9 @@ export default function AdminPage() {
                 </TableHeader>
                 <TableBody>
                   {loading ? (
-                    <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">Cargando...</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">Cargando...</TableCell></TableRow>
                   ) : filteredUsers.length === 0 ? (
-                    <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No se encontraron usuarios</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">No se encontraron usuarios</TableCell></TableRow>
                   ) : (
                     filteredUsers.map((u) => (
                       <TableRow key={u.user_id}>
@@ -256,6 +257,11 @@ export default function AdminPage() {
                             <div className="font-medium text-sm">{u.full_name || "Sin nombre"}</div>
                             <div className="text-xs text-muted-foreground">{u.email}</div>
                           </div>
+                        </TableCell>
+                        <TableCell>
+                          <span className="text-sm text-muted-foreground">
+                            {u.agency_name || agencies.find(a => a.id === u.agency_id)?.name || "Freelance"}
+                          </span>
                         </TableCell>
                         <TableCell>
                           <Badge variant="outline" className="text-xs border-primary/30 text-primary">
