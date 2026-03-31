@@ -36,8 +36,8 @@ export const tools: Tool[] = [
   },
   {
     id: "descripciones",
-    title: "Generador de Descripciones",
-    description: "Crea y optimiza textos inmobiliarios profesionales",
+    title: "Generador de Textos",
+    description: "Crea descripciones y anuncios profesionales para inmuebles",
     icon: FileText,
     path: "/herramientas/descripciones",
     category: "comercializacion",
