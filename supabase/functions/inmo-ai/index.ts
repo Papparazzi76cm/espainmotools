@@ -9,7 +9,7 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { tool, data } = await req.json();
+    const { tool, data, images } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -18,7 +18,9 @@ serve(async (req) => {
 
     switch (tool) {
       case "descripciones": {
+        const hasImages = images && Array.isArray(images) && images.length > 0;
         systemPrompt = `Eres un experto copywriter y especialista en marketing inmobiliario digital en España. Genera descripciones profesionales de inmuebles y anuncios optimizados para cada plataforma.
+${hasImages ? "Se te proporcionan fotografías del inmueble. Analízalas detalladamente para identificar: estilo arquitectónico, acabados, materiales, luminosidad, distribución, vistas, estado de conservación y cualquier detalle relevante. Usa esta información visual para enriquecer significativamente las descripciones generadas." : ""}
 Siempre responde en formato JSON con esta estructura exacta:
 {"corta": "descripción corta de 1-2 líneas", "larga": "descripción detallada de 4-6 líneas", "redes": "copy para redes sociales con emojis y hashtags", "facebook": "texto optimizado para Facebook Ads", "instagram": "caption para Instagram con emojis y hashtags relevantes", "portal": "descripción profesional para portales inmobiliarios (Idealista, Fotocasa)"}`;
         userPrompt = `Genera descripciones y anuncios para: Tipo: ${data.tipo || "propiedad"}. Habitaciones: ${data.habitaciones || "N/A"}. Superficie: ${data.superficie || "N/A"} m². Ubicación: ${data.ubicacion || "España"}. Precio: ${data.precio || "consultar"}. Extras: ${data.extras || "ninguno"}. Estilo: ${data.estilo || "comercial"}.`;
@@ -114,6 +116,27 @@ Responde en JSON con esta estructura exacta:
         });
     }
 
+    // Build messages - support multimodal content for descripciones with images
+    const messages: any[] = [
+      { role: "system", content: systemPrompt },
+    ];
+
+    if (tool === "descripciones" && images && Array.isArray(images) && images.length > 0) {
+      // Build multimodal user message with text + images
+      const contentParts: any[] = [
+        { type: "text", text: userPrompt + `\n\nSe adjuntan ${images.length} fotografía(s) del inmueble. Analízalas para enriquecer las descripciones con detalles visuales reales.` },
+      ];
+      for (const img of images.slice(0, 20)) {
+        contentParts.push({
+          type: "image_url",
+          image_url: { url: img },
+        });
+      }
+      messages.push({ role: "user", content: contentParts });
+    } else {
+      messages.push({ role: "user", content: userPrompt });
+    }
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -121,11 +144,8 @@ Responde en JSON con esta estructura exacta:
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
-        ],
+        model: "google/gemini-2.5-flash",
+        messages,
         response_format: { type: "json_object" },
       }),
     });

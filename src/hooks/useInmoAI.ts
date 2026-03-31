@@ -7,7 +7,7 @@ export function useInmoAI() {
   const [loading, setLoading] = useState(false);
   const { canUseTool, logUsage, trial } = useTrialContext();
 
-  const generate = async (tool: string, data: Record<string, string>) => {
+  const generate = async (tool: string, data: Record<string, string>, images?: string[]) => {
     // Check trial limits
     if (!trial.isPaid) {
       const check = canUseTool(tool);
@@ -23,8 +23,13 @@ export function useInmoAI() {
 
     setLoading(true);
     try {
+      const body: Record<string, any> = { tool, data };
+      if (images && images.length > 0) {
+        body.images = images;
+      }
+
       const { data: result, error } = await supabase.functions.invoke("inmo-ai", {
-        body: { tool, data },
+        body,
       });
 
       if (error) throw error;
