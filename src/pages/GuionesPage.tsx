@@ -16,11 +16,12 @@ const GuionesPage = () => {
   const [precio, setPrecio] = useState("");
   const [caracteristicas, setCaracteristicas] = useState("");
   const [tono, setTono] = useState("profesional");
+  const [duracion, setDuracion] = useState("60");
   const [resultado, setResultado] = useState<{ reel: string; tiktok: string; youtube: string } | null>(null);
   const { generate, loading } = useInmoAI();
 
   const generar = async () => {
-    const result = await generate("guiones", { tipo, ubicacion, precio, caracteristicas, tono });
+    const result = await generate("guiones", { tipo, ubicacion, precio, caracteristicas, tono, duracion: `${duracion} segundos` });
     if (result) setResultado({ reel: result.reel || "", tiktok: result.tiktok || "", youtube: result.youtube || "" });
   };
 
@@ -51,6 +52,24 @@ const GuionesPage = () => {
                   <SelectItem value="cercano">Cercano y amigable</SelectItem>
                   <SelectItem value="energetico">Enérgico</SelectItem>
                   <SelectItem value="lujo">Lujo / Exclusivo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Duración del vídeo</Label>
+              <Select value={duracion} onValueChange={setDuracion}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="30">30 segundos</SelectItem>
+                  <SelectItem value="60">1 minuto</SelectItem>
+                  <SelectItem value="90">1 min 30 seg</SelectItem>
+                  <SelectItem value="120">2 minutos</SelectItem>
+                  <SelectItem value="150">2 min 30 seg</SelectItem>
+                  <SelectItem value="180">3 minutos</SelectItem>
+                  <SelectItem value="210">3 min 30 seg</SelectItem>
+                  <SelectItem value="240">4 minutos</SelectItem>
+                  <SelectItem value="270">4 min 30 seg</SelectItem>
+                  <SelectItem value="300">5 minutos</SelectItem>
                 </SelectContent>
               </Select>
             </div>
