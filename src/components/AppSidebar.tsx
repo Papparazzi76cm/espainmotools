@@ -2,8 +2,9 @@ import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import { tools, dashboardItem } from "@/lib/tools";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
 import { TrialCountdown } from "@/components/TrialCountdown";
-import { LogOut } from "lucide-react";
+import { LogOut, Shield } from "lucide-react";
 import PynmoLogo from "@/components/PynmoLogo";
 import {
   Sidebar,
