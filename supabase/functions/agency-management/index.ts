@@ -93,7 +93,7 @@ serve(async (req) => {
         const { data: profiles, error } = await adminClient
           .from("profiles")
           .select("*")
-          .eq("agency_id", callerAgencyId)
+          .eq("agency_id", effectiveAgencyId)
           .order("created_at", { ascending: false });
         if (error) throw error;
 
