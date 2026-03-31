@@ -52,15 +52,28 @@ export function useAgencyManagement() {
   const [agency, setAgency] = useState<AgencyInfo | null>(null);
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(false);
+  const [allAgencies, setAllAgencies] = useState<AgencyListItem[]>([]);
+  const [selectedAgencyId, setSelectedAgencyId] = useState<string | null>(null);
+
+  const fetchAllAgencies = useCallback(async () => {
+    try {
+      const data = await callAgency("list_agencies");
+      setAllAgencies(data.agencies || []);
+    } catch {
+      // Not admin or other error, ignore
+    }
+  }, []);
+
+  const agencyParam = selectedAgencyId ? { agency_id: selectedAgencyId } : {};
 
   const fetchAgencyInfo = useCallback(async () => {
     try {
-      const data = await callAgency("get_agency_info");
+      const data = await callAgency("get_agency_info", agencyParam);
       setAgency(data.agency);
     } catch (e: any) {
       toast.error("Error al cargar info de agencia: " + e.message);
     }
-  }, []);
+  }, [selectedAgencyId]);
 
   const fetchAgents = useCallback(async () => {
     setLoading(true);
