@@ -157,6 +157,7 @@ const AuthPage = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <ChatbotWidget />
     </div>
   );
 };
