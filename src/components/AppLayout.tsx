@@ -1,5 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import { ChangePasswordDialog } from "@/components/ChangePasswordDialog";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -11,8 +12,9 @@ export function AppLayout({ children }: AppLayoutProps) {
       <div className="min-h-screen flex w-full">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="h-14 flex items-center border-b border-border bg-card px-4 flex-shrink-0">
+          <header className="h-14 flex items-center justify-between border-b border-border bg-card px-4 flex-shrink-0">
             <SidebarTrigger className="mr-4" />
+            <ChangePasswordDialog />
           </header>
           <main className="flex-1 overflow-auto p-6">
             {children}
