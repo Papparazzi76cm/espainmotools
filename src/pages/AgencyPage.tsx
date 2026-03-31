@@ -356,6 +356,16 @@ export default function AgencyPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      </>)}
+
+      {isAdmin && !selectedAgencyId && (
+        <Card className="bg-card border-border">
+          <CardContent className="p-8 text-center text-muted-foreground">
+            <Building2 className="h-10 w-10 mx-auto mb-3 opacity-30" />
+            <p className="text-sm">Selecciona una agencia del desplegable para ver su panel de gestión.</p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
