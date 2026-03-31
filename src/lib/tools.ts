@@ -5,7 +5,6 @@ import {
   Calculator,
   BarChart3,
   FileSpreadsheet,
-  Megaphone,
   MapPin,
   Video,
   UserPlus,

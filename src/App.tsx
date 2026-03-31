@@ -47,7 +47,7 @@ function ProtectedRoutes() {
           <Route path="/herramientas/costes" element={<CostesPage />} />
           <Route path="/herramientas/rentabilidad" element={<RentabilidadPage />} />
           <Route path="/herramientas/consultor-legal" element={<ConsultorLegalPage />} />
-          <Route path="/herramientas/anuncios" element={<AnunciosPage />} />
+          <Route path="/herramientas/anuncios" element={<Navigate to="/herramientas/descripciones" replace />} />
           <Route path="/herramientas/entorno" element={<EntornoPage />} />
           <Route path="/herramientas/guiones" element={<GuionesPage />} />
           <Route path="/herramientas/captacion" element={<CaptacionPage />} />
