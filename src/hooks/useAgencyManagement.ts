@@ -78,14 +78,14 @@ export function useAgencyManagement() {
   const fetchAgents = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await callAgency("list_agents");
+      const data = await callAgency("list_agents", agencyParam);
       setAgents(data.agents || []);
     } catch (e: any) {
       toast.error("Error al cargar agentes: " + e.message);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [selectedAgencyId]);
 
   const inviteAgent = async (email: string, full_name?: string) => {
     try {
