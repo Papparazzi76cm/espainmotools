@@ -24,6 +24,7 @@ import ToolPlaceholder from "./pages/ToolPlaceholder";
 import AdminPage from "./pages/AdminPage";
 import AgencyPage from "./pages/AgencyPage";
 import NotFound from "./pages/NotFound";
+import { ToolGuard } from "@/components/ToolGuard";
 
 const queryClient = new QueryClient();
 
@@ -45,18 +46,18 @@ function ProtectedRoutes() {
       <AppLayout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/herramientas/descripciones" element={<DescripcionesPage />} />
-          <Route path="/herramientas/costes" element={<CostesPage />} />
-          <Route path="/herramientas/rentabilidad" element={<RentabilidadPage />} />
-          <Route path="/herramientas/consultor-legal" element={<ConsultorLegalPage />} />
+          <Route path="/herramientas/descripciones" element={<ToolGuard toolId="descripciones"><DescripcionesPage /></ToolGuard>} />
+          <Route path="/herramientas/costes" element={<ToolGuard toolId="costes"><CostesPage /></ToolGuard>} />
+          <Route path="/herramientas/rentabilidad" element={<ToolGuard toolId="rentabilidad"><RentabilidadPage /></ToolGuard>} />
+          <Route path="/herramientas/consultor-legal" element={<ToolGuard toolId="consultor-legal"><ConsultorLegalPage /></ToolGuard>} />
           <Route path="/herramientas/anuncios" element={<Navigate to="/herramientas/descripciones" replace />} />
-          <Route path="/herramientas/entorno" element={<EntornoPage />} />
-          <Route path="/herramientas/guiones" element={<GuionesPage />} />
-          <Route path="/herramientas/captacion" element={<CaptacionPage />} />
-          <Route path="/herramientas/contratos" element={<ContratosPage />} />
-          <Route path="/herramientas/home-staging" element={<HomeStagingPage />} />
-          <Route path="/herramientas/informes" element={<InformesPage />} />
-          <Route path="/herramientas/roleplay" element={<RolePlayPage />} />
+          <Route path="/herramientas/entorno" element={<ToolGuard toolId="entorno"><EntornoPage /></ToolGuard>} />
+          <Route path="/herramientas/guiones" element={<ToolGuard toolId="guiones"><GuionesPage /></ToolGuard>} />
+          <Route path="/herramientas/captacion" element={<ToolGuard toolId="captacion"><CaptacionPage /></ToolGuard>} />
+          <Route path="/herramientas/contratos" element={<ToolGuard toolId="contratos"><ContratosPage /></ToolGuard>} />
+          <Route path="/herramientas/home-staging" element={<ToolGuard toolId="home-staging"><HomeStagingPage /></ToolGuard>} />
+          <Route path="/herramientas/informes" element={<ToolGuard toolId="informes"><InformesPage /></ToolGuard>} />
+          <Route path="/herramientas/roleplay" element={<ToolGuard toolId="roleplay"><RolePlayPage /></ToolGuard>} />
           <Route path="/herramientas/:toolId" element={<ToolPlaceholder />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/mi-agencia" element={<AgencyPage />} />

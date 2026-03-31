@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import { tools, dashboardItem } from "@/lib/tools";
@@ -6,6 +7,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { TrialCountdown } from "@/components/TrialCountdown";
 import { LogOut, Shield, Building2 } from "lucide-react";
 import PynmoLogo from "@/components/PynmoLogo";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Sidebar,
   SidebarContent,
@@ -27,8 +29,30 @@ export function AppSidebar() {
   const collapsed = state === "collapsed";
   const location = useLocation();
   const { signOut, user } = useAuth();
-  const { isAdmin, role } = useUserRole();
+  const { isAdmin, isTester, role } = useUserRole();
   const isAgency = role === "agencia" || role === "agencia_xl";
+
+  // For agents, filter tools by permissions
+  const [allowedTools, setAllowedTools] = useState<string[] | null>(null);
+
+  useEffect(() => {
+    if (role !== "agente" || !user) {
+      setAllowedTools(null);
+      return;
+    }
+    (async () => {
+      const { data } = await supabase
+        .from("user_permissions")
+        .select("permission_id, permissions:permission_id(name)")
+        .eq("user_id", user.id);
+      const names = data?.map((d: any) => d.permissions?.name).filter(Boolean) || [];
+      setAllowedTools(names);
+    })();
+  }, [role, user]);
+
+  const visibleTools = allowedTools !== null
+    ? tools.filter(t => allowedTools.includes(t.id))
+    : tools;
 
   return (
     <Sidebar collapsible="icon">
@@ -70,7 +94,7 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {tools.map((tool) => (
+              {visibleTools.map((tool) => (
                 <SidebarMenuItem key={tool.id}>
                   <SidebarMenuButton asChild>
                     <NavLink
