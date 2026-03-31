@@ -89,7 +89,7 @@ export function useAgencyManagement() {
 
   const inviteAgent = async (email: string, full_name?: string) => {
     try {
-      const data = await callAgency("invite_agent", { email, full_name });
+      const data = await callAgency("invite_agent", { email, full_name, ...agencyParam });
       toast.success(data.message || "Agente invitado");
       await fetchAgents();
       return data;
