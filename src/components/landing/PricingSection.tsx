@@ -82,10 +82,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Precios{" "}
-            <span className="text-primary">
-              simples y transparentes
-            </span>
+            Precios <span className="text-primary">simples y transparentes</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
             Sin sorpresas. Acceso completo a todas las herramientas desde el primer día.
@@ -128,7 +125,7 @@ const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
           viewport={{ once: true }}
           className="text-center text-sm text-muted-foreground"
         >
-        ¿Más de 20 usuarios?{" "}
+          ¿Más de 10 usuarios?{" "}
           <button onClick={onGetStarted} className="text-primary hover:underline font-medium">
             Contáctanos para un plan personalizado
           </button>
