@@ -14,41 +14,124 @@ export type Database = {
   }
   public: {
     Tables: {
+      agencies: {
+        Row: {
+          contact_email: string | null
+          contract_end: string | null
+          contract_start: string
+          created_at: string
+          id: string
+          logo_url: string | null
+          max_agents: number
+          name: string
+          phone: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          contact_email?: string | null
+          contract_end?: string | null
+          contract_start?: string
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          max_agents?: number
+          name: string
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          contact_email?: string | null
+          contract_end?: string | null
+          contract_start?: string
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          max_agents?: number
+          name?: string
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      permissions: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          access_end: string | null
+          access_start: string | null
           agency_email: string | null
+          agency_id: string | null
           agency_logo_url: string | null
           agency_name: string | null
           agency_phone: string | null
           created_at: string
           full_name: string | null
           id: string
+          status: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          access_end?: string | null
+          access_start?: string | null
           agency_email?: string | null
+          agency_id?: string | null
           agency_logo_url?: string | null
           agency_name?: string | null
           agency_phone?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          status?: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          access_end?: string | null
+          access_start?: string | null
           agency_email?: string | null
+          agency_id?: string | null
           agency_logo_url?: string | null
           agency_name?: string | null
           agency_phone?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          status?: string
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       usage_logs: {
         Row: {
@@ -70,6 +153,56 @@ export type Database = {
           id?: string
           tool_id?: string
           used_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_permissions: {
+        Row: {
+          created_at: string
+          id: string
+          permission_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          permission_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          permission_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_permissions_permission_id_fkey"
+            columns: ["permission_id"]
+            isOneToOne: false
+            referencedRelation: "permissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
         }
         Relationships: []
@@ -106,10 +239,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_agency_id: { Args: { _user_id: string }; Returns: string }
+      get_user_role: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "tester" | "agencia" | "agencia_xl" | "agente"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -236,6 +380,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "tester", "agencia", "agencia_xl", "agente"],
+    },
   },
 } as const
