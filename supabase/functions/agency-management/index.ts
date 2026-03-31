@@ -51,18 +51,38 @@ serve(async (req) => {
       .maybeSingle();
 
     const callerAgencyId = callerProfile?.agency_id;
-    if (!callerAgencyId && roleData.role !== "admin") {
+    const isAdmin = roleData.role === "admin";
+    if (!callerAgencyId && !isAdmin) {
       return new Response(JSON.stringify({ error: "No agency assigned to your account" }), { status: 400, headers: corsHeaders });
     }
 
     const { action, ...params } = await req.json();
 
+    // Admin can specify agency_id to view any agency; non-admins always use their own
+    const effectiveAgencyId = isAdmin && params.agency_id ? params.agency_id : callerAgencyId;
+
     switch (action) {
+      case "list_agencies": {
+        // Admin-only: list all agencies
+        if (!isAdmin) {
+          return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403, headers: corsHeaders });
+        }
+        const { data, error } = await adminClient
+          .from("agencies")
+          .select("id, name, status, max_agents, contact_email")
+          .order("name");
+        if (error) throw error;
+        return new Response(JSON.stringify({ agencies: data }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+
       case "get_agency_info": {
+        if (!effectiveAgencyId) {
+          return new Response(JSON.stringify({ error: "No agency_id specified" }), { status: 400, headers: corsHeaders });
+        }
         const { data, error } = await adminClient
           .from("agencies")
           .select("*")
-          .eq("id", callerAgencyId)
+          .eq("id", effectiveAgencyId)
           .single();
         if (error) throw error;
         return new Response(JSON.stringify({ agency: data }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
