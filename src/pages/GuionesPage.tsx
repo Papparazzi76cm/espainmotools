@@ -55,6 +55,24 @@ const GuionesPage = () => {
                 </SelectContent>
               </Select>
             </div>
+            <div>
+              <Label>Duración del vídeo</Label>
+              <Select value={duracion} onValueChange={setDuracion}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="30">30 segundos</SelectItem>
+                  <SelectItem value="60">1 minuto</SelectItem>
+                  <SelectItem value="90">1 min 30 seg</SelectItem>
+                  <SelectItem value="120">2 minutos</SelectItem>
+                  <SelectItem value="150">2 min 30 seg</SelectItem>
+                  <SelectItem value="180">3 minutos</SelectItem>
+                  <SelectItem value="210">3 min 30 seg</SelectItem>
+                  <SelectItem value="240">4 minutos</SelectItem>
+                  <SelectItem value="270">4 min 30 seg</SelectItem>
+                  <SelectItem value="300">5 minutos</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <Button onClick={generar} className="w-full" disabled={loading}>
               {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Generando...</> : "Generar Guiones con IA"}
             </Button>
