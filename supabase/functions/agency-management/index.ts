@@ -132,7 +132,7 @@ serve(async (req) => {
         const { data: agency } = await adminClient
           .from("agencies")
           .select("max_agents")
-          .eq("id", callerAgencyId)
+          .eq("id", effectiveAgencyId)
           .single();
 
         const { count } = await adminClient
