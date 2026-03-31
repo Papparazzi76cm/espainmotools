@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useAdminUsers, AdminUser, Agency } from "@/hooks/useAdminUsers";
+import { useAdminMetrics } from "@/hooks/useAdminMetrics";
 import { Navigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogD
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
-import { Shield, Users, Building2, Trash2, Edit, Search, AlertTriangle } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Shield, Users, Building2, Trash2, Edit, Search, AlertTriangle, BarChart3, TrendingUp, Activity } from "lucide-react";
 import { toast } from "sonner";
 
 const ROLE_LABELS: Record<string, string> = {
