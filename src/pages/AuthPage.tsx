@@ -16,6 +16,7 @@ import FeatureCards from "@/components/landing/FeatureCards";
 import PricingSection from "@/components/landing/PricingSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
 import FooterSection from "@/components/landing/FooterSection";
+import ChatbotWidget from "@/components/landing/ChatbotWidget";
 
 const AuthPage = () => {
   const [showAuth, setShowAuth] = useState(false);
@@ -156,6 +157,7 @@ const AuthPage = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <ChatbotWidget />
     </div>
   );
 };
