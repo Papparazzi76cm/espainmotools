@@ -485,7 +485,11 @@ function AffiliateSignupForm() {
                 className="mt-0.5"
               />
               <label htmlFor="terms" className="text-sm text-muted-foreground leading-snug cursor-pointer">
-                Acepto las condiciones del programa de afiliados y la política de privacidad
+                Acepto las{" "}
+                <a href="/terminos-afiliados" target="_blank" className="underline hover:text-foreground" style={{ color: ORANGE }}>
+                  condiciones del programa de afiliados
+                </a>{" "}
+                y la política de privacidad
               </label>
             </div>
             <Button
