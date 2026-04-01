@@ -5,6 +5,7 @@ const FooterSection = () => (
     <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
       <PynmoLogo size="sm" />
       <div className="flex items-center gap-6 text-sm text-muted-foreground">
+        <a href="/terminos" className="hover:text-foreground transition-colors">Términos y Condiciones</a>
         <a href="/afiliados" className="hover:text-foreground transition-colors">Programa de Afiliados</a>
         <a href="/politica-privacidad" className="hover:text-foreground transition-colors">Política de Privacidad</a>
         <a href="/politica-cookies" className="hover:text-foreground transition-colors">Política de Cookies</a>

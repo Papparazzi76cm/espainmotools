@@ -220,7 +220,7 @@ const AuthPage = () => {
                         />
                         <label htmlFor="terms" className="text-xs text-muted-foreground leading-tight cursor-pointer">
                           Acepto los{" "}
-                          <a href="/terminos-afiliados" target="_blank" className="text-primary underline hover:text-primary/80">
+                          <a href="/terminos" target="_blank" className="text-primary underline hover:text-primary/80">
                             términos y condiciones de uso
                           </a>
                         </label>
