@@ -93,6 +93,7 @@ const App = () => (
             <Route path="/afiliados" element={<AffiliateLandingPage />} />
             <Route path="/terminos-afiliados" element={<AffiliateTermsPage />} />
             <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
+            <Route path="/politica-cookies" element={<CookiesPolicyPage />} />
             <Route path="/*" element={<ProtectedRoutes />} />
           </Routes>
         </BrowserRouter>
