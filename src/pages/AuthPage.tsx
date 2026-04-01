@@ -157,6 +157,35 @@ const AuthPage = () => {
                           required={!isLogin}
                         />
                       </div>
+                      <div>
+                        <Label className="mb-2 block">Tipo de cuenta</Label>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setUserType("agente")}
+                            className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all text-sm ${
+                              userType === "agente"
+                                ? "border-primary bg-primary/10 text-primary"
+                                : "border-border hover:border-primary/50"
+                            }`}
+                          >
+                            <User className="h-5 w-5" />
+                            Agente
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setUserType("agencia")}
+                            className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all text-sm ${
+                              userType === "agencia"
+                                ? "border-primary bg-primary/10 text-primary"
+                                : "border-border hover:border-primary/50"
+                            }`}
+                          >
+                            <Building2 className="h-5 w-5" />
+                            Agencia
+                          </button>
+                        </div>
+                      </div>
                     )}
                     <div>
                       <Label>Email</Label>
