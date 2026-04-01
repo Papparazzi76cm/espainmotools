@@ -566,6 +566,11 @@ export default function AdminPage() {
             </CardContent>
           </Card>
         </TabsContent>
+
+        {/* COMMISSIONS TAB */}
+        <TabsContent value="commissions">
+          <AdminCommissionsTab />
+        </TabsContent>
       </Tabs>
 
       {/* EDIT USER DIALOG */}
