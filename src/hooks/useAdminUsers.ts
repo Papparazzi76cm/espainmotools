@@ -16,6 +16,16 @@ export interface AdminUser {
   trial_start: string | null;
   is_paid: boolean;
   created_at: string;
+  is_affiliate: boolean;
+  affiliate_id: string | null;
+}
+
+export interface Affiliate {
+  user_id: string;
+  affiliate_id: string;
+  is_active: boolean;
+  activated_at: string;
+  deactivated_at: string | null;
 }
 
 export interface Agency {
@@ -47,11 +57,35 @@ export function useAdminUsers() {
   const [agencies, setAgencies] = useState<Agency[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [affiliates, setAffiliates] = useState<Affiliate[]>([]);
+
+  const fetchAffiliates = useCallback(async () => {
+    try {
+      const data = await callAdmin("list_affiliates");
+      setAffiliates(data.affiliates || []);
+    } catch (e: any) {
+      console.error("Error fetching affiliates:", e.message);
+    }
+  }, []);
+
   const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await callAdmin("list_users");
-      setUsers(data.users || []);
+      const [usersData, affData] = await Promise.all([
+        callAdmin("list_users"),
+        callAdmin("list_affiliates"),
+      ]);
+      const affs: Affiliate[] = affData.affiliates || [];
+      setAffiliates(affs);
+      const enriched = (usersData.users || []).map((u: any) => {
+        const aff = affs.find((a) => a.user_id === u.user_id);
+        return {
+          ...u,
+          is_affiliate: aff?.is_active || false,
+          affiliate_id: aff?.affiliate_id || null,
+        };
+      });
+      setUsers(enriched);
     } catch (e: any) {
       toast.error("Error al cargar usuarios: " + e.message);
     } finally {
@@ -139,6 +173,16 @@ export function useAdminUsers() {
     }
   };
 
+  const toggleAffiliate = async (user_id: string, activate: boolean) => {
+    try {
+      await callAdmin("toggle_affiliate", { user_id, activate });
+      toast.success(activate ? "Afiliado activado" : "Afiliado desactivado");
+      await fetchUsers();
+    } catch (e: any) {
+      toast.error("Error: " + e.message);
+    }
+  };
+
   const deleteAgency = async (agency_id: string) => {
     try {
       await callAdmin("delete_agency", { agency_id });
@@ -150,10 +194,10 @@ export function useAdminUsers() {
   };
 
   return {
-    users, agencies, loading,
-    fetchUsers, fetchAgencies,
+    users, agencies, affiliates, loading,
+    fetchUsers, fetchAgencies, fetchAffiliates,
     updateUserRole, updateUserStatus, updateUserAccess,
-    assignAgency, deleteUser,
+    assignAgency, deleteUser, toggleAffiliate,
     createAgency, updateAgency, deleteAgency,
   };
 }

@@ -13,7 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Shield, Users, Building2, Trash2, Edit, Search, AlertTriangle, BarChart3, TrendingUp, Activity, Download } from "lucide-react";
+import { Shield, Users, Building2, Trash2, Edit, Search, AlertTriangle, BarChart3, TrendingUp, Activity, Download, Link2 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { tools } from "@/lib/tools";
@@ -38,7 +39,7 @@ export default function AdminPage() {
     users, agencies, loading,
     fetchUsers, fetchAgencies,
     updateUserRole, updateUserStatus, updateUserAccess,
-    assignAgency, deleteUser,
+    assignAgency, deleteUser, toggleAffiliate,
     createAgency, updateAgency, deleteAgency,
   } = useAdminUsers();
   const { toolStats, userStats, dailyUsage, totalGenerations, todayGenerations, loading: metricsLoading, exportCSV } = useAdminMetrics();
@@ -47,6 +48,7 @@ export default function AdminPage() {
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [affiliateFilter, setAffiliateFilter] = useState("all");
 
   // Edit user dialog
   const [editUser, setEditUser] = useState<AdminUser | null>(null);
@@ -83,7 +85,9 @@ export default function AdminPage() {
       u.full_name?.toLowerCase().includes(search.toLowerCase());
     const matchRole = roleFilter === "all" || u.role === roleFilter;
     const matchStatus = statusFilter === "all" || u.status === statusFilter;
-    return matchSearch && matchRole && matchStatus;
+    const matchAffiliate = affiliateFilter === "all" || 
+      (affiliateFilter === "yes" ? u.is_affiliate : !u.is_affiliate);
+    return matchSearch && matchRole && matchStatus && matchAffiliate;
   });
 
   const openEditUser = (u: AdminUser) => {
@@ -154,7 +158,7 @@ export default function AdminPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <Card className="bg-card border-border">
           <CardContent className="p-4">
             <div className="text-2xl font-bold text-primary">{users.length}</div>
@@ -177,6 +181,12 @@ export default function AdminPage() {
           <CardContent className="p-4">
             <div className="text-2xl font-bold text-primary">{users.filter(u => u.is_paid).length}</div>
             <div className="text-xs text-muted-foreground">De pago</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card border-border">
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-primary">{users.filter(u => u.is_affiliate).length}</div>
+            <div className="text-xs text-muted-foreground">Afiliados</div>
           </CardContent>
         </Card>
       </div>
@@ -228,6 +238,16 @@ export default function AdminPage() {
                 <SelectItem value="suspended">Suspendido</SelectItem>
               </SelectContent>
             </Select>
+            <Select value={affiliateFilter} onValueChange={setAffiliateFilter}>
+              <SelectTrigger className="w-[150px]">
+                <SelectValue placeholder="Afiliado" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos</SelectItem>
+                <SelectItem value="yes">Afiliados</SelectItem>
+                <SelectItem value="no">No afiliados</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <Card className="border-border">
@@ -238,6 +258,7 @@ export default function AdminPage() {
                     <TableHead>Usuario</TableHead>
                     <TableHead>Agencia</TableHead>
                     <TableHead>Rol</TableHead>
+                    <TableHead>Afiliado</TableHead>
                     <TableHead>Estado</TableHead>
                     <TableHead>Plan</TableHead>
                     <TableHead>Acceso hasta</TableHead>
@@ -246,9 +267,9 @@ export default function AdminPage() {
                 </TableHeader>
                 <TableBody>
                   {loading ? (
-                    <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">Cargando...</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">Cargando...</TableCell></TableRow>
                   ) : filteredUsers.length === 0 ? (
-                    <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground">No se encontraron usuarios</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">No se encontraron usuarios</TableCell></TableRow>
                   ) : (
                     filteredUsers.map((u) => (
                       <TableRow key={u.user_id}>
@@ -267,6 +288,18 @@ export default function AdminPage() {
                           <Badge variant="outline" className="text-xs border-primary/30 text-primary">
                             {ROLE_LABELS[u.role] || u.role}
                           </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {u.is_affiliate ? (
+                            <div className="space-y-0.5">
+                              <Badge variant="default" className="text-[10px]">
+                                <Link2 className="h-3 w-3 mr-1" /> Afiliado
+                              </Badge>
+                              <div className="text-[10px] text-muted-foreground font-mono">{u.affiliate_id}</div>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">—</span>
+                          )}
                         </TableCell>
                         <TableCell>
                           <Badge variant={STATUS_LABELS[u.status]?.variant || "secondary"} className="text-xs">
@@ -586,6 +619,22 @@ export default function AdminPage() {
                 className="rounded border-border"
               />
               <Label htmlFor="isPaid">Usuario de pago (Premium)</Label>
+            </div>
+            <div className="flex items-center justify-between rounded-lg border border-border p-3">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium">Rol de Afiliado</Label>
+                <p className="text-xs text-muted-foreground">
+                  {editUser?.is_affiliate 
+                    ? `Activo · ${editUser?.affiliate_id}` 
+                    : "Activar para generar un ID de afiliado único"}
+                </p>
+              </div>
+              <Switch
+                checked={editUser?.is_affiliate || false}
+                onCheckedChange={(checked) => {
+                  if (editUser) toggleAffiliate(editUser.user_id, checked);
+                }}
+              />
             </div>
           </div>
           <DialogFooter>

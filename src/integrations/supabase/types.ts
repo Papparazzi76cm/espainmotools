@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      affiliates: {
+        Row: {
+          activated_at: string
+          affiliate_id: string
+          created_at: string
+          deactivated_at: string | null
+          id: string
+          is_active: boolean
+          user_id: string
+        }
+        Insert: {
+          activated_at?: string
+          affiliate_id?: string
+          created_at?: string
+          deactivated_at?: string | null
+          id?: string
+          is_active?: boolean
+          user_id: string
+        }
+        Update: {
+          activated_at?: string
+          affiliate_id?: string
+          created_at?: string
+          deactivated_at?: string | null
+          id?: string
+          is_active?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
       agencies: {
         Row: {
           contact_email: string | null
