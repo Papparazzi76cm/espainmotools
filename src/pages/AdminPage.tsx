@@ -232,6 +232,16 @@ export default function AdminPage() {
                 <SelectItem value="suspended">Suspendido</SelectItem>
               </SelectContent>
             </Select>
+            <Select value={affiliateFilter} onValueChange={setAffiliateFilter}>
+              <SelectTrigger className="w-[150px]">
+                <SelectValue placeholder="Afiliado" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos</SelectItem>
+                <SelectItem value="yes">Afiliados</SelectItem>
+                <SelectItem value="no">No afiliados</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <Card className="border-border">
