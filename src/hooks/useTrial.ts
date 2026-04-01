@@ -55,6 +55,11 @@ interface UsageData {
   monthlyUsage: Record<string, number>;
 }
 
+// Daily limits for tester role (only home-staging)
+export const TESTER_DAILY_LIMITS: Record<string, number> = {
+  "home-staging": 10,
+};
+
 export function useTrial() {
   const { user } = useAuth();
   const [trial, setTrial] = useState<TrialData>({
