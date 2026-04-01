@@ -23,6 +23,7 @@ import RolePlayPage from "./pages/RolePlayPage";
 import ToolPlaceholder from "./pages/ToolPlaceholder";
 import AdminPage from "./pages/AdminPage";
 import AgencyPage from "./pages/AgencyPage";
+import AffiliatePage from "./pages/AffiliatePage";
 import NotFound from "./pages/NotFound";
 import { ToolGuard } from "@/components/ToolGuard";
 
