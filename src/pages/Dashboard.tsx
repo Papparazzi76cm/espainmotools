@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PynmoLogo from "@/components/PynmoLogo";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="max-w-5xl mx-auto animate-fade-in">
@@ -13,11 +15,11 @@ const Dashboard = () => {
         <div className="flex items-center gap-3 mb-1">
           <PynmoLogo size="lg" />
           <h1 className="text-2xl font-semibold text-foreground">
-            Bienvenido a <span className="text-foreground">Ace-</span>
+            {t("dashboard.welcome")} <span className="text-foreground">Ace-</span>
             <span className="text-primary">Inmotools</span>
           </h1>
         </div>
-        <p className="text-muted-foreground">Tu suite de herramientas con IA para el sector inmobiliario en España.</p>
+        <p className="text-muted-foreground">{t("dashboard.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -34,12 +36,12 @@ const Dashboard = () => {
                 </div>
                 {!tool.ready && (
                   <Badge variant="secondary" className="text-[10px]">
-                    Próximamente
+                    {t("dashboard.comingSoon")}
                   </Badge>
                 )}
               </div>
-              <h3 className="font-medium text-foreground text-sm mb-1">{tool.title}</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">{tool.description}</p>
+              <h3 className="font-medium text-foreground text-sm mb-1">{t(`tools.${tool.id}.title`)}</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">{t(`tools.${tool.id}.description`)}</p>
             </CardContent>
           </Card>
         ))}

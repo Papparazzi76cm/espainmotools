@@ -11,8 +11,13 @@ import { useInmoAI } from "@/hooks/useInmoAI";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
+import { useTranslation } from "react-i18next";
+
+const toneKeys = ["profesional", "cercano", "energetico", "lujo"] as const;
+const durationKeys = ["30", "60", "90", "120", "150", "180", "210", "240", "270", "300"] as const;
 
 const GuionesPage = () => {
+  const { t } = useTranslation();
   const [tipo, setTipo] = useState("");
   const [ubicacion, setUbicacion] = useState("");
   const [precio, setPrecio] = useState("");
@@ -28,62 +33,46 @@ const GuionesPage = () => {
     if (result) {
       const res = { reel: result.reel || "", tiktok: result.tiktok || "", youtube: result.youtube || "" };
       setResultado(res);
-      const title = [tipo, ubicacion].filter(Boolean).join(" — ") || "Guión";
+      const title = [tipo, ubicacion].filter(Boolean).join(" — ") || t("guiones.title");
       await saveResult(title, { tipo, ubicacion, precio, caracteristicas, tono, duracion }, res);
     }
   };
 
-  const copiar = (text: string, label: string) => { navigator.clipboard.writeText(text); toast.success(`${label} copiado`); };
+  const copiar = (text: string, label: string) => { navigator.clipboard.writeText(text); toast.success(t("common.copySuccess", { item: label })); };
 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in">
       <UsageLimitBanner toolId="guiones" />
       <div className="flex items-center gap-2 mb-6">
         <Video className="h-5 w-5 text-primary" />
-        <h1 className="text-2xl font-semibold">Guiones de Vídeo</h1>
+        <h1 className="text-2xl font-semibold">{t("guiones.title")}</h1>
         <Sparkles className="h-4 w-4 text-primary" />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <Card className="glass-card">
-            <CardHeader><CardTitle className="text-base">Datos del Inmueble</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="text-base">{t("guiones.propertyData")}</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <div><Label>Tipo</Label><Input placeholder="Casa, departamento..." value={tipo} onChange={(e) => setTipo(e.target.value)} /></div>
-              <div><Label>Ubicación</Label><Input placeholder="Barrio, ciudad..." value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} /></div>
-              <div><Label>Precio</Label><Input placeholder="USD 85.000" value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
-              <div><Label>Características</Label><Textarea placeholder="3 hab, 2 baños..." value={caracteristicas} onChange={(e) => setCaracteristicas(e.target.value)} rows={3} /></div>
+              <div><Label>{t("guiones.type")}</Label><Input placeholder={t("guiones.typePlaceholder")} value={tipo} onChange={(e) => setTipo(e.target.value)} /></div>
+              <div><Label>{t("guiones.location")}</Label><Input placeholder={t("guiones.locationPlaceholder")} value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} /></div>
+              <div><Label>{t("guiones.price")}</Label><Input placeholder={t("guiones.pricePlaceholder")} value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
+              <div><Label>{t("guiones.features")}</Label><Textarea placeholder={t("guiones.featuresPlaceholder")} value={caracteristicas} onChange={(e) => setCaracteristicas(e.target.value)} rows={3} /></div>
               <div>
-                <Label>Tono</Label>
+                <Label>{t("guiones.tone")}</Label>
                 <Select value={tono} onValueChange={setTono}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="profesional">Profesional</SelectItem>
-                    <SelectItem value="cercano">Cercano y amigable</SelectItem>
-                    <SelectItem value="energetico">Enérgico</SelectItem>
-                    <SelectItem value="lujo">Lujo / Exclusivo</SelectItem>
-                  </SelectContent>
+                  <SelectContent>{toneKeys.map((k) => (<SelectItem key={k} value={k}>{t(`guiones.tones.${k}`)}</SelectItem>))}</SelectContent>
                 </Select>
               </div>
               <div>
-                <Label>Duración del vídeo</Label>
+                <Label>{t("guiones.videoDuration")}</Label>
                 <Select value={duracion} onValueChange={setDuracion}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="30">30 segundos</SelectItem>
-                    <SelectItem value="60">1 minuto</SelectItem>
-                    <SelectItem value="90">1 min 30 seg</SelectItem>
-                    <SelectItem value="120">2 minutos</SelectItem>
-                    <SelectItem value="150">2 min 30 seg</SelectItem>
-                    <SelectItem value="180">3 minutos</SelectItem>
-                    <SelectItem value="210">3 min 30 seg</SelectItem>
-                    <SelectItem value="240">4 minutos</SelectItem>
-                    <SelectItem value="270">4 min 30 seg</SelectItem>
-                    <SelectItem value="300">5 minutos</SelectItem>
-                  </SelectContent>
+                  <SelectContent>{durationKeys.map((k) => (<SelectItem key={k} value={k}>{t(`guiones.durations.${k}`)}</SelectItem>))}</SelectContent>
                 </Select>
               </div>
               <Button onClick={generar} className="w-full" disabled={loading}>
-                {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Generando...</> : "Generar Guiones con IA"}
+                {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> {t("common.generating")}</> : t("guiones.generateButton")}
               </Button>
             </CardContent>
           </Card>
@@ -92,13 +81,13 @@ const GuionesPage = () => {
         <div className="space-y-4">
           {resultado ? (
             <>
-              <ResultBlock title="📱 Instagram Reel" text={resultado.reel} onCopy={() => copiar(resultado.reel, "Reel")} />
-              <ResultBlock title="🎵 TikTok" text={resultado.tiktok} onCopy={() => copiar(resultado.tiktok, "TikTok")} />
-              <ResultBlock title="▶️ YouTube" text={resultado.youtube} onCopy={() => copiar(resultado.youtube, "YouTube")} />
+              <ResultBlock title={t("guiones.reelTitle")} text={resultado.reel} onCopy={() => copiar(resultado.reel, "Reel")} />
+              <ResultBlock title={t("guiones.tiktokTitle")} text={resultado.tiktok} onCopy={() => copiar(resultado.tiktok, "TikTok")} />
+              <ResultBlock title={t("guiones.youtubeTitle")} text={resultado.youtube} onCopy={() => copiar(resultado.youtube, "YouTube")} />
             </>
           ) : (
             <Card className="glass-card"><CardContent className="p-8 text-center text-muted-foreground">
-              <Video className="h-10 w-10 mx-auto mb-3 opacity-30" /><p className="text-sm">Genera guiones para tus vídeos inmobiliarios.</p>
+              <Video className="h-10 w-10 mx-auto mb-3 opacity-30" /><p className="text-sm">{t("guiones.emptyDesc")}</p>
             </CardContent></Card>
           )}
         </div>
