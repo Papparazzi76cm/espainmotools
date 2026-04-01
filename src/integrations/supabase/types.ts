@@ -22,6 +22,7 @@ export type Database = {
           deactivated_at: string | null
           id: string
           is_active: boolean
+          link_afiliado: string | null
           user_id: string
         }
         Insert: {
@@ -31,6 +32,7 @@ export type Database = {
           deactivated_at?: string | null
           id?: string
           is_active?: boolean
+          link_afiliado?: string | null
           user_id: string
         }
         Update: {
@@ -40,6 +42,7 @@ export type Database = {
           deactivated_at?: string | null
           id?: string
           is_active?: boolean
+          link_afiliado?: string | null
           user_id?: string
         }
         Relationships: []
@@ -119,6 +122,7 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          referred_by: string | null
           status: string
           updated_at: string
           user_id: string
@@ -134,6 +138,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          referred_by?: string | null
           status?: string
           updated_at?: string
           user_id: string
@@ -149,6 +154,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          referred_by?: string | null
           status?: string
           updated_at?: string
           user_id?: string
