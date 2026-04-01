@@ -91,9 +91,11 @@ const HomeStagingPage = () => {
     }
 
     // Check usage limits (trial or paid monthly)
-    const check = canUseTool("home-staging", usageCost);
+    const check = canUseTool("home-staging", usageCost, role);
     if (!check.allowed) {
-      if (!trial.isPaid && trial.isTrialExpired) {
+      if (isTester) {
+        toast.error(`Has alcanzado el límite diario de Home Staging (${check.used}/${check.max}).`);
+      } else if (!trial.isPaid && trial.isTrialExpired) {
         toast.error("Tu período de prueba ha expirado. Activá tu plan para seguir usando las herramientas.");
       } else if (trial.isPaid) {
         toast.error(`Has alcanzado el límite mensual de Home Staging (${check.used}/${check.max} usos).`);
