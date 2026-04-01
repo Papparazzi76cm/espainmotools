@@ -99,6 +99,7 @@ const App = () => (
             <Route path="/politica-cookies" element={<CookiesPolicyPage />} />
             <Route path="/*" element={<ProtectedRoutes />} />
           </Routes>
+          <CookieConsentBanner />
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
