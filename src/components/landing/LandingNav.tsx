@@ -4,9 +4,10 @@ import PynmoLogo from "@/components/PynmoLogo";
 
 interface LandingNavProps {
   onGetStarted: () => void;
+  onLogin: () => void;
 }
 
-const LandingNav = ({ onGetStarted }: LandingNavProps) => {
+const LandingNav = ({ onGetStarted, onLogin }: LandingNavProps) => {
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
