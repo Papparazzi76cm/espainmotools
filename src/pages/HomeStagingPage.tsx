@@ -57,6 +57,7 @@ const HomeStagingPage = () => {
   const [showComparison, setShowComparison] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { canUseTool, logUsage, trial } = useTrialContext();
+  const { role, isTester } = useUserRole();
 
   const usageCost = quality === "premium" ? 3 : 1;
 
