@@ -4,9 +4,10 @@ import PynmoLogo from "@/components/PynmoLogo";
 
 interface LandingNavProps {
   onGetStarted: () => void;
+  onLogin: () => void;
 }
 
-const LandingNav = ({ onGetStarted }: LandingNavProps) => {
+const LandingNav = ({ onGetStarted, onLogin }: LandingNavProps) => {
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
@@ -18,7 +19,7 @@ const LandingNav = ({ onGetStarted }: LandingNavProps) => {
         <div className="flex items-center justify-between w-full sm:w-auto">
           <PynmoLogo size="sm" className="flex-shrink-0" />
           <div className="flex items-center gap-1.5 sm:hidden">
-            <Button variant="ghost" size="sm" onClick={onGetStarted} className="text-xs px-2 h-8">
+            <Button variant="ghost" size="sm" onClick={onLogin} className="text-xs px-2 h-8">
               Iniciar Sesión
             </Button>
             <Button size="sm" onClick={onGetStarted} className="rounded-lg shadow-sm shadow-primary/20 text-xs px-2.5 h-8">
@@ -34,7 +35,7 @@ const LandingNav = ({ onGetStarted }: LandingNavProps) => {
         </div>
 
         <div className="hidden sm:flex items-center gap-3">
-          <Button variant="ghost" size="sm" onClick={onGetStarted}>
+          <Button variant="ghost" size="sm" onClick={onLogin}>
             Iniciar Sesión
           </Button>
           <Button size="sm" onClick={onGetStarted} className="rounded-lg shadow-sm shadow-primary/20">
