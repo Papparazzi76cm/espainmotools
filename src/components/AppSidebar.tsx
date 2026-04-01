@@ -5,7 +5,7 @@ import { tools, dashboardItem } from "@/lib/tools";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserRole } from "@/hooks/useUserRole";
 import { TrialCountdown } from "@/components/TrialCountdown";
-import { LogOut, Shield, Building2 } from "lucide-react";
+import { LogOut, Shield, Building2, Link2 } from "lucide-react";
 import PynmoLogo from "@/components/PynmoLogo";
 import { supabase } from "@/integrations/supabase/client";
 import {
