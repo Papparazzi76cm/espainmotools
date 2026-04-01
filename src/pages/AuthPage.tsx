@@ -53,9 +53,16 @@ const AuthPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isLogin && !acceptTerms) {
+      toast.error("Debes aceptar los términos y condiciones");
+      return;
+    }
+    if (!isLogin && !userType) {
+      toast.error("Selecciona si eres agente o agencia");
+      return;
+    }
     setLoading(true);
 
-    // Retrieve persisted affiliate ref (cookie → localStorage fallback)
     const affiliateRef = getAffiliateRef();
 
     try {
@@ -71,13 +78,13 @@ const AuthPage = () => {
           options: {
             data: {
               full_name: fullName,
+              user_type: userType,
               referred_by: affiliateRef || undefined,
             },
             emailRedirectTo: window.location.origin,
           },
         });
         if (error) throw error;
-        // Clear cookie after successful signup so it doesn't persist
         if (affiliateRef) clearAffiliateRef();
         toast.success("Revisa tu email para confirmar tu cuenta");
       }
