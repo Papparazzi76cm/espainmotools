@@ -57,11 +57,35 @@ export function useAdminUsers() {
   const [agencies, setAgencies] = useState<Agency[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [affiliates, setAffiliates] = useState<Affiliate[]>([]);
+
+  const fetchAffiliates = useCallback(async () => {
+    try {
+      const data = await callAdmin("list_affiliates");
+      setAffiliates(data.affiliates || []);
+    } catch (e: any) {
+      console.error("Error fetching affiliates:", e.message);
+    }
+  }, []);
+
   const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await callAdmin("list_users");
-      setUsers(data.users || []);
+      const [usersData, affData] = await Promise.all([
+        callAdmin("list_users"),
+        callAdmin("list_affiliates"),
+      ]);
+      const affs: Affiliate[] = affData.affiliates || [];
+      setAffiliates(affs);
+      const enriched = (usersData.users || []).map((u: any) => {
+        const aff = affs.find((a) => a.user_id === u.user_id);
+        return {
+          ...u,
+          is_affiliate: aff?.is_active || false,
+          affiliate_id: aff?.affiliate_id || null,
+        };
+      });
+      setUsers(enriched);
     } catch (e: any) {
       toast.error("Error al cargar usuarios: " + e.message);
     } finally {
