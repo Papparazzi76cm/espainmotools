@@ -158,7 +158,7 @@ export default function AdminPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <Card className="bg-card border-border">
           <CardContent className="p-4">
             <div className="text-2xl font-bold text-primary">{users.length}</div>
