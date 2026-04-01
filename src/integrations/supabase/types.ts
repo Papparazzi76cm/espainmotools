@@ -122,6 +122,7 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          referred_at: string | null
           referred_by: string | null
           status: string
           updated_at: string
@@ -138,6 +139,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          referred_at?: string | null
           referred_by?: string | null
           status?: string
           updated_at?: string
@@ -154,6 +156,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          referred_at?: string | null
           referred_by?: string | null
           status?: string
           updated_at?: string

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,6 +17,7 @@ import PricingSection from "@/components/landing/PricingSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
 import FooterSection from "@/components/landing/FooterSection";
 import ChatbotWidget from "@/components/landing/ChatbotWidget";
+import { storeAffiliateRef, getAffiliateRef, clearAffiliateRef } from "@/lib/affiliateTracking";
 
 const AuthPage = () => {
   const [showAuth, setShowAuth] = useState(false);
@@ -27,12 +28,33 @@ const AuthPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Capture ref param for affiliate tracking
-  const refParam = new URLSearchParams(window.location.search).get("ref");
+  // On mount: capture ref param → validate → store in cookie+localStorage
+  useEffect(() => {
+    const refParam = new URLSearchParams(window.location.search).get("ref");
+    if (!refParam) return;
+
+    // Validate affiliate exists and is active
+    (async () => {
+      const { data } = await supabase
+        .from("affiliates")
+        .select("affiliate_id, is_active")
+        .eq("affiliate_id", refParam)
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (data) {
+        // Last-click model: always overwrite
+        storeAffiliateRef(data.affiliate_id);
+      }
+    })();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    // Retrieve persisted affiliate ref (cookie → localStorage fallback)
+    const affiliateRef = getAffiliateRef();
 
     try {
       if (isLogin) {
@@ -45,11 +67,16 @@ const AuthPage = () => {
           email,
           password,
           options: {
-            data: { full_name: fullName, referred_by: refParam || undefined },
+            data: {
+              full_name: fullName,
+              referred_by: affiliateRef || undefined,
+            },
             emailRedirectTo: window.location.origin,
           },
         });
         if (error) throw error;
+        // Clear cookie after successful signup so it doesn't persist
+        if (affiliateRef) clearAffiliateRef();
         toast.success("Revisa tu email para confirmar tu cuenta");
       }
     } catch (error: any) {
