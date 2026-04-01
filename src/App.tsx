@@ -31,6 +31,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import CookiesPolicyPage from "./pages/CookiesPolicyPage";
 import TermsOfUsePage from "./pages/TermsOfUsePage";
 import { ToolGuard } from "@/components/ToolGuard";
+import CookieConsentBanner from "@/components/CookieConsentBanner";
 
 const queryClient = new QueryClient();
 
@@ -98,6 +99,7 @@ const App = () => (
             <Route path="/politica-cookies" element={<CookiesPolicyPage />} />
             <Route path="/*" element={<ProtectedRoutes />} />
           </Routes>
+          <CookieConsentBanner />
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
