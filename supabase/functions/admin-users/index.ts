@@ -218,9 +218,9 @@ serve(async (req) => {
       case "toggle_affiliate": {
         const { user_id, activate } = params;
         if (!user_id) throw new Error("user_id required");
+        const BASE_URL = "https://es-ace-inmotools.lovable.app/auth";
 
         if (activate) {
-          // Upsert: create or reactivate
           const { data: existing } = await adminClient
             .from("affiliates")
             .select("*")
@@ -234,13 +234,19 @@ serve(async (req) => {
               .eq("user_id", user_id);
             if (error) throw error;
           } else {
-            const { error } = await adminClient
+            // Insert and then update link_afiliado with the generated affiliate_id
+            const { data: newAff, error } = await adminClient
               .from("affiliates")
-              .insert({ user_id, is_active: true });
+              .insert({ user_id, is_active: true })
+              .select("affiliate_id")
+              .single();
             if (error) throw error;
+            await adminClient
+              .from("affiliates")
+              .update({ link_afiliado: `${BASE_URL}?ref=${newAff.affiliate_id}` })
+              .eq("user_id", user_id);
           }
         } else {
-          // Deactivate (keep record)
           const { error } = await adminClient
             .from("affiliates")
             .update({ is_active: false, deactivated_at: new Date().toISOString() })
@@ -249,6 +255,22 @@ serve(async (req) => {
         }
 
         return new Response(JSON.stringify({ success: true }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+
+      case "regenerate_affiliate": {
+        const { user_id } = params;
+        if (!user_id) throw new Error("user_id required");
+        const BASE_URL_REGEN = "https://es-ace-inmotools.lovable.app/auth";
+
+        // Generate new affiliate_id
+        const newId = "AFF-" + crypto.randomUUID().replace(/-/g, "").slice(0, 10);
+        const { error } = await adminClient
+          .from("affiliates")
+          .update({ affiliate_id: newId, link_afiliado: `${BASE_URL_REGEN}?ref=${newId}` })
+          .eq("user_id", user_id);
+        if (error) throw error;
+
+        return new Response(JSON.stringify({ success: true, affiliate_id: newId }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
       }
 
       case "list_affiliates": {

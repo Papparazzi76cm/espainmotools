@@ -207,7 +207,7 @@ export function useAdminUsers() {
     users, agencies, affiliates, loading,
     fetchUsers, fetchAgencies, fetchAffiliates,
     updateUserRole, updateUserStatus, updateUserAccess,
-    assignAgency, deleteUser, toggleAffiliate,
+    assignAgency, deleteUser, toggleAffiliate, regenerateAffiliate,
     createAgency, updateAgency, deleteAgency,
   };
 }
