@@ -173,6 +173,16 @@ export function useAdminUsers() {
     }
   };
 
+  const toggleAffiliate = async (user_id: string, activate: boolean) => {
+    try {
+      await callAdmin("toggle_affiliate", { user_id, activate });
+      toast.success(activate ? "Afiliado activado" : "Afiliado desactivado");
+      await fetchUsers();
+    } catch (e: any) {
+      toast.error("Error: " + e.message);
+    }
+  };
+
   const deleteAgency = async (agency_id: string) => {
     try {
       await callAdmin("delete_agency", { agency_id });
@@ -184,10 +194,10 @@ export function useAdminUsers() {
   };
 
   return {
-    users, agencies, loading,
-    fetchUsers, fetchAgencies,
+    users, agencies, affiliates, loading,
+    fetchUsers, fetchAgencies, fetchAffiliates,
     updateUserRole, updateUserStatus, updateUserAccess,
-    assignAgency, deleteUser,
+    assignAgency, deleteUser, toggleAffiliate,
     createAgency, updateAgency, deleteAgency,
   };
 }
