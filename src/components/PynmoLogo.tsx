@@ -13,7 +13,7 @@ const sizes = {
 
 const PynmoLogo = ({ size = "md", className = "" }: PynmoLogoProps) => {
   return (
-    <img src={logoSrc} alt="Espainmotools" className={`${sizes[size]} w-auto object-contain ${className}`} />
+    <img src={logoSrc} alt="Ace-Inmotools" className={`${sizes[size]} w-auto object-contain ${className}`} />
   );
 };
 
