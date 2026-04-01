@@ -221,23 +221,34 @@ serve(async (req) => {
         const BASE_URL = "https://es-ace-inmotools.lovable.app/auth";
 
         if (activate) {
+          // Use upsert to handle both new and existing records safely
           const { data: existing } = await adminClient
             .from("affiliates")
-            .select("*")
+            .select("affiliate_id")
             .eq("user_id", user_id)
             .maybeSingle();
 
           if (existing) {
+            // Reactivate existing
             const { error } = await adminClient
               .from("affiliates")
               .update({ is_active: true, deactivated_at: null })
               .eq("user_id", user_id);
             if (error) throw error;
+            // Ensure link is set
+            if (!existing.affiliate_id) return;
+            await adminClient
+              .from("affiliates")
+              .update({ link_afiliado: `${BASE_URL}?ref=${existing.affiliate_id}` })
+              .eq("user_id", user_id);
           } else {
-            // Insert and then update link_afiliado with the generated affiliate_id
+            // Insert new — use onConflict to avoid duplicate key errors
             const { data: newAff, error } = await adminClient
               .from("affiliates")
-              .insert({ user_id, is_active: true })
+              .upsert(
+                { user_id, is_active: true, deactivated_at: null },
+                { onConflict: "user_id" }
+              )
               .select("affiliate_id")
               .single();
             if (error) throw error;
