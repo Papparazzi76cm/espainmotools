@@ -27,6 +27,7 @@ import AffiliatePage from "./pages/AffiliatePage";
 import NotFound from "./pages/NotFound";
 import AffiliateLandingPage from "./pages/AffiliateLandingPage";
 import AffiliateTermsPage from "./pages/AffiliateTermsPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import { ToolGuard } from "@/components/ToolGuard";
 
 const queryClient = new QueryClient();
@@ -90,6 +91,7 @@ const App = () => (
             <Route path="/auth" element={<AuthRoute />} />
             <Route path="/afiliados" element={<AffiliateLandingPage />} />
             <Route path="/terminos-afiliados" element={<AffiliateTermsPage />} />
+            <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
             <Route path="/*" element={<ProtectedRoutes />} />
           </Routes>
         </BrowserRouter>
