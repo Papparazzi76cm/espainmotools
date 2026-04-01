@@ -16,6 +16,16 @@ export interface AdminUser {
   trial_start: string | null;
   is_paid: boolean;
   created_at: string;
+  is_affiliate: boolean;
+  affiliate_id: string | null;
+}
+
+export interface Affiliate {
+  user_id: string;
+  affiliate_id: string;
+  is_active: boolean;
+  activated_at: string;
+  deactivated_at: string | null;
 }
 
 export interface Agency {

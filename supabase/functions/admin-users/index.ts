@@ -215,6 +215,50 @@ serve(async (req) => {
         return new Response(JSON.stringify({ success: true }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
       }
 
+      case "toggle_affiliate": {
+        const { user_id, activate } = params;
+        if (!user_id) throw new Error("user_id required");
+
+        if (activate) {
+          // Upsert: create or reactivate
+          const { data: existing } = await adminClient
+            .from("affiliates")
+            .select("*")
+            .eq("user_id", user_id)
+            .maybeSingle();
+
+          if (existing) {
+            const { error } = await adminClient
+              .from("affiliates")
+              .update({ is_active: true, deactivated_at: null })
+              .eq("user_id", user_id);
+            if (error) throw error;
+          } else {
+            const { error } = await adminClient
+              .from("affiliates")
+              .insert({ user_id, is_active: true });
+            if (error) throw error;
+          }
+        } else {
+          // Deactivate (keep record)
+          const { error } = await adminClient
+            .from("affiliates")
+            .update({ is_active: false, deactivated_at: new Date().toISOString() })
+            .eq("user_id", user_id);
+          if (error) throw error;
+        }
+
+        return new Response(JSON.stringify({ success: true }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+
+      case "list_affiliates": {
+        const { data, error } = await adminClient
+          .from("affiliates")
+          .select("*");
+        if (error) throw error;
+        return new Response(JSON.stringify({ affiliates: data }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+
       default:
         return new Response(JSON.stringify({ error: `Unknown action: ${action}` }), { status: 400, headers: corsHeaders });
     }
