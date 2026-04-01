@@ -151,6 +151,9 @@ Responde en JSON con esta estructura exacta:
         });
     }
 
+    // Append language instruction to system prompt
+    systemPrompt += langInstruction;
+
     // Build messages - support multimodal content for descripciones with images
     const messages: any[] = [
       { role: "system", content: systemPrompt },
