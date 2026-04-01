@@ -183,6 +183,12 @@ export default function AdminPage() {
             <div className="text-xs text-muted-foreground">De pago</div>
           </CardContent>
         </Card>
+        <Card className="bg-card border-border">
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-primary">{users.filter(u => u.is_affiliate).length}</div>
+            <div className="text-xs text-muted-foreground">Afiliados</div>
+          </CardContent>
+        </Card>
       </div>
 
       <Tabs defaultValue="users">
