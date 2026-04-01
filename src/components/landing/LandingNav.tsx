@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import PynmoLogo from "@/components/PynmoLogo";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 interface LandingNavProps {
   onGetStarted: () => void;
@@ -8,6 +10,8 @@ interface LandingNavProps {
 }
 
 const LandingNav = ({ onGetStarted, onLogin }: LandingNavProps) => {
+  const { t } = useTranslation();
+
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
@@ -19,27 +23,29 @@ const LandingNav = ({ onGetStarted, onLogin }: LandingNavProps) => {
         <div className="flex items-center justify-between w-full sm:w-auto">
           <PynmoLogo size="sm" className="flex-shrink-0" />
           <div className="flex items-center gap-1.5 sm:hidden">
+            <LanguageSwitcher compact />
             <Button variant="ghost" size="sm" onClick={onLogin} className="text-xs px-2 h-8">
-              Iniciar Sesión
+              {t("nav.login")}
             </Button>
             <Button size="sm" onClick={onGetStarted} className="rounded-lg shadow-sm shadow-primary/20 text-xs px-2.5 h-8">
-              Registrarse
+              {t("nav.register")}
             </Button>
           </div>
         </div>
 
         <div className="hidden sm:flex items-center gap-6 text-sm text-muted-foreground">
-          <a href="#features" className="hover:text-foreground transition-colors">Herramientas</a>
-          <a href="#how-it-works" className="hover:text-foreground transition-colors">Cómo funciona</a>
-          <a href="#pricing" className="hover:text-foreground transition-colors">Precios</a>
+          <a href="#features" className="hover:text-foreground transition-colors">{t("nav.tools")}</a>
+          <a href="#how-it-works" className="hover:text-foreground transition-colors">{t("nav.howItWorks")}</a>
+          <a href="#pricing" className="hover:text-foreground transition-colors">{t("nav.pricing")}</a>
         </div>
 
         <div className="hidden sm:flex items-center gap-3">
+          <LanguageSwitcher />
           <Button variant="ghost" size="sm" onClick={onLogin}>
-            Iniciar Sesión
+            {t("nav.login")}
           </Button>
           <Button size="sm" onClick={onGetStarted} className="rounded-lg shadow-sm shadow-primary/20">
-            Registrarse
+            {t("nav.register")}
           </Button>
         </div>
       </div>

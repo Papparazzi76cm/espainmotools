@@ -9,9 +9,14 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { tool, data, images } = await req.json();
+    const { tool, data, images, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    const lang = language === "en" ? "en" : "es";
+    const langInstruction = lang === "en"
+      ? "\n\nIMPORTANT: You MUST respond entirely in English. All text, labels, descriptions and content must be in English."
+      : "";
 
     let systemPrompt = "";
     let userPrompt = "";
@@ -145,6 +150,9 @@ Responde en JSON con esta estructura exacta:
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
     }
+
+    // Append language instruction to system prompt
+    systemPrompt += langInstruction;
 
     // Build messages - support multimodal content for descripciones with images
     const messages: any[] = [
