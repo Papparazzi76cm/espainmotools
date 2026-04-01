@@ -91,6 +91,7 @@ const App = () => (
             <Route path="/auth" element={<AuthRoute />} />
             <Route path="/afiliados" element={<AffiliateLandingPage />} />
             <Route path="/terminos-afiliados" element={<AffiliateTermsPage />} />
+            <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
             <Route path="/*" element={<ProtectedRoutes />} />
           </Routes>
         </BrowserRouter>
