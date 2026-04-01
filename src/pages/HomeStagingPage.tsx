@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useTrialContext } from "@/contexts/TrialContext";
+import { useUserRole } from "@/hooks/useUserRole";
 
 const estilos = [
   { value: "moderno", label: "Moderno / Minimalista" },

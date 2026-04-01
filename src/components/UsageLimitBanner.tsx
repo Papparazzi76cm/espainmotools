@@ -1,5 +1,6 @@
 import { useTrialContext } from "@/contexts/TrialContext";
-import { TRIAL_LIMITS, PAID_MONTHLY_LIMITS, type TrialLimits } from "@/hooks/useTrial";
+import { TRIAL_LIMITS, PAID_MONTHLY_LIMITS, TESTER_DAILY_LIMITS, type TrialLimits } from "@/hooks/useTrial";
+import { useUserRole } from "@/hooks/useUserRole";
 import { Shield, Crown, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -9,6 +10,34 @@ interface UsageLimitBannerProps {
 
 export function UsageLimitBanner({ toolId }: UsageLimitBannerProps) {
   const { trial, canUseTool } = useTrialContext();
+  const { role, isTester } = useUserRole();
+
+  // Tester: only show banner for home-staging
+  if (isTester) {
+    const testerMax = TESTER_DAILY_LIMITS[toolId];
+    if (!testerMax) return null;
+
+    const { used, max } = canUseTool(toolId, 1, role);
+    const percentage = max > 0 ? (used / max) * 100 : 0;
+    const isNearLimit = percentage >= 66;
+
+    return (
+      <div className={`mb-4 p-3 rounded-xl border flex items-center justify-between ${isNearLimit ? "bg-warning/10 border-warning/30" : "bg-primary/5 border-primary/20"}`}>
+        <div className="flex items-center gap-3">
+          <Shield className={`h-4 w-4 ${isNearLimit ? "text-warning" : "text-primary"}`} />
+          <p className="text-xs font-medium text-foreground">
+            Tester — {used}/{max} usos hoy
+          </p>
+        </div>
+        <div className="w-20 h-1.5 rounded-full bg-muted overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all ${percentage >= 100 ? "bg-destructive" : isNearLimit ? "bg-warning" : "bg-primary"}`}
+            style={{ width: `${Math.min(percentage, 100)}%` }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   // For paid users, show banner only if tool has monthly limit
   if (trial.isPaid) {
@@ -77,7 +106,6 @@ export function UsageLimitBanner({ toolId }: UsageLimitBannerProps) {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        {/* Progress bar */}
         <div className="w-20 h-1.5 rounded-full bg-muted overflow-hidden">
           <div
             className={`h-full rounded-full transition-all ${percentage >= 100 ? "bg-destructive" : isNearLimit ? "bg-warning" : "bg-primary"}`}
