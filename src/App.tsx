@@ -30,6 +30,7 @@ import AffiliateTermsPage from "./pages/AffiliateTermsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import CookiesPolicyPage from "./pages/CookiesPolicyPage";
 import TermsOfUsePage from "./pages/TermsOfUsePage";
+import LegalNoticePage from "./pages/LegalNoticePage";
 import { ToolGuard } from "@/components/ToolGuard";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 
@@ -97,6 +98,7 @@ const App = () => (
             <Route path="/terminos" element={<TermsOfUsePage />} />
             <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
             <Route path="/politica-cookies" element={<CookiesPolicyPage />} />
+            <Route path="/aviso-legal" element={<LegalNoticePage />} />
             <Route path="/*" element={<ProtectedRoutes />} />
           </Routes>
           <CookieConsentBanner />
