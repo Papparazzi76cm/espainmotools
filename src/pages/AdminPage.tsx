@@ -284,6 +284,18 @@ export default function AdminPage() {
                           </Badge>
                         </TableCell>
                         <TableCell>
+                          {u.is_affiliate ? (
+                            <div className="space-y-0.5">
+                              <Badge variant="default" className="text-[10px]">
+                                <Link2 className="h-3 w-3 mr-1" /> Afiliado
+                              </Badge>
+                              <div className="text-[10px] text-muted-foreground font-mono">{u.affiliate_id}</div>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">—</span>
+                          )}
+                        </TableCell>
+                        <TableCell>
                           <Badge variant={STATUS_LABELS[u.status]?.variant || "secondary"} className="text-xs">
                             {STATUS_LABELS[u.status]?.label || u.status}
                           </Badge>
