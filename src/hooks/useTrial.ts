@@ -55,6 +55,11 @@ interface UsageData {
   monthlyUsage: Record<string, number>;
 }
 
+// Daily limits for tester role (only home-staging)
+export const TESTER_DAILY_LIMITS: Record<string, number> = {
+  "home-staging": 10,
+};
+
 export function useTrial() {
   const { user } = useAuth();
   const [trial, setTrial] = useState<TrialData>({
@@ -181,7 +186,17 @@ export function useTrial() {
     fetchUsage();
   }, [fetchTrial, fetchUsage]);
 
-  const canUseTool = (toolId: string, cost: number = 1): { allowed: boolean; used: number; max: number; limitType: string } => {
+  const canUseTool = (toolId: string, cost: number = 1, userRole?: string | null): { allowed: boolean; used: number; max: number; limitType: string } => {
+    // Tester: unlimited except home-staging (10/day)
+    if (userRole === "tester") {
+      const testerMax = TESTER_DAILY_LIMITS[toolId];
+      if (testerMax) {
+        const used = usage.todayUsage[toolId] || 0;
+        return { allowed: used + cost <= testerMax, used, max: testerMax, limitType: "daily" };
+      }
+      return { allowed: true, used: 0, max: Infinity, limitType: "none" };
+    }
+
     // Paid users: only home-staging has a monthly limit
     if (trial.isPaid) {
       const monthlyMax = PAID_MONTHLY_LIMITS[toolId];
