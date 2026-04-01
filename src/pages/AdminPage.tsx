@@ -85,7 +85,9 @@ export default function AdminPage() {
       u.full_name?.toLowerCase().includes(search.toLowerCase());
     const matchRole = roleFilter === "all" || u.role === roleFilter;
     const matchStatus = statusFilter === "all" || u.status === statusFilter;
-    return matchSearch && matchRole && matchStatus;
+    const matchAffiliate = affiliateFilter === "all" || 
+      (affiliateFilter === "yes" ? u.is_affiliate : !u.is_affiliate);
+    return matchSearch && matchRole && matchStatus && matchAffiliate;
   });
 
   const openEditUser = (u: AdminUser) => {
