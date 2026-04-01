@@ -27,6 +27,9 @@ const AuthPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Capture ref param for affiliate tracking
+  const refParam = new URLSearchParams(window.location.search).get("ref");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -42,7 +45,7 @@ const AuthPage = () => {
           email,
           password,
           options: {
-            data: { full_name: fullName },
+            data: { full_name: fullName, referred_by: refParam || undefined },
             emailRedirectTo: window.location.origin,
           },
         });

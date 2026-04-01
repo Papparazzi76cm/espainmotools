@@ -183,6 +183,16 @@ export function useAdminUsers() {
     }
   };
 
+  const regenerateAffiliate = async (user_id: string) => {
+    try {
+      await callAdmin("regenerate_affiliate", { user_id });
+      toast.success("Enlace de afiliado regenerado");
+      await fetchUsers();
+    } catch (e: any) {
+      toast.error("Error: " + e.message);
+    }
+  };
+
   const deleteAgency = async (agency_id: string) => {
     try {
       await callAdmin("delete_agency", { agency_id });
@@ -197,7 +207,7 @@ export function useAdminUsers() {
     users, agencies, affiliates, loading,
     fetchUsers, fetchAgencies, fetchAffiliates,
     updateUserRole, updateUserStatus, updateUserAccess,
-    assignAgency, deleteUser, toggleAffiliate,
+    assignAgency, deleteUser, toggleAffiliate, regenerateAffiliate,
     createAgency, updateAgency, deleteAgency,
   };
 }

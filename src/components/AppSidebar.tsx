@@ -5,7 +5,7 @@ import { tools, dashboardItem } from "@/lib/tools";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserRole } from "@/hooks/useUserRole";
 import { TrialCountdown } from "@/components/TrialCountdown";
-import { LogOut, Shield, Building2 } from "lucide-react";
+import { LogOut, Shield, Building2, Link2 } from "lucide-react";
 import PynmoLogo from "@/components/PynmoLogo";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -31,6 +31,21 @@ export function AppSidebar() {
   const { signOut, user } = useAuth();
   const { isAdmin, isTester, role } = useUserRole();
   const isAgency = role === "agencia" || role === "agencia_xl";
+
+  // Check if user is an affiliate
+  const [isAffiliate, setIsAffiliate] = useState(false);
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      const { data } = await supabase
+        .from("affiliates")
+        .select("is_active")
+        .eq("user_id", user.id)
+        .eq("is_active", true)
+        .maybeSingle();
+      setIsAffiliate(!!data);
+    })();
+  }, [user]);
 
   // For agents, filter tools by permissions
   const [allowedTools, setAllowedTools] = useState<string[] | null>(null);
@@ -161,6 +176,30 @@ export function AppSidebar() {
                     >
                       <Building2 className="h-4 w-4 flex-shrink-0" />
                       {!collapsed && <span>Gestión Agentes</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {isAffiliate && (
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-sidebar-muted text-[10px] uppercase tracking-wider">
+              Afiliado
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/mi-afiliado"
+                      className="hover:bg-sidebar-accent/50"
+                      activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                    >
+                      <Link2 className="h-4 w-4 flex-shrink-0" />
+                      {!collapsed && <span>Mi Enlace</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
