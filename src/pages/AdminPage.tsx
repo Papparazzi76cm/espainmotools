@@ -18,6 +18,7 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { tools } from "@/lib/tools";
+import AdminCommissionsTab from "@/components/AdminCommissionsTab";
 
 const ROLE_LABELS: Record<string, string> = {
   admin: "Admin",
