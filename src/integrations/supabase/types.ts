@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      affiliate_settings: {
+        Row: {
+          commission_percentage: number
+          commission_type: string
+          id: string
+          min_payout: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          commission_percentage?: number
+          commission_type?: string
+          id?: string
+          min_payout?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          commission_percentage?: number
+          commission_type?: string
+          id?: string
+          min_payout?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       affiliates: {
         Row: {
           activated_at: string
@@ -86,6 +113,51 @@ export type Database = {
           phone?: string | null
           status?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      commissions: {
+        Row: {
+          affiliate_id: string
+          approved_at: string | null
+          commission_amount: number
+          commission_percentage: number
+          created_at: string
+          id: string
+          notes: string | null
+          paid_at: string | null
+          payment_amount: number
+          payment_reference: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          affiliate_id: string
+          approved_at?: string | null
+          commission_amount: number
+          commission_percentage: number
+          created_at?: string
+          id?: string
+          notes?: string | null
+          paid_at?: string | null
+          payment_amount: number
+          payment_reference?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          affiliate_id?: string
+          approved_at?: string | null
+          commission_amount?: number
+          commission_percentage?: number
+          created_at?: string
+          id?: string
+          notes?: string | null
+          paid_at?: string | null
+          payment_amount?: number
+          payment_reference?: string | null
+          status?: string
+          user_id?: string
         }
         Relationships: []
       }

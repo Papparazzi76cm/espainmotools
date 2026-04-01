@@ -13,11 +13,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Shield, Users, Building2, Trash2, Edit, Search, AlertTriangle, BarChart3, TrendingUp, Activity, Download, Link2 } from "lucide-react";
+import { Shield, Users, Building2, Trash2, Edit, Search, AlertTriangle, BarChart3, TrendingUp, Activity, Download, Link2, DollarSign } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { tools } from "@/lib/tools";
+import AdminCommissionsTab from "@/components/AdminCommissionsTab";
 
 const ROLE_LABELS: Record<string, string> = {
   admin: "Admin",
@@ -201,6 +202,9 @@ export default function AdminPage() {
           </TabsTrigger>
           <TabsTrigger value="metrics" className="gap-1.5">
             <BarChart3 className="h-4 w-4" /> Métricas
+          </TabsTrigger>
+          <TabsTrigger value="commissions" className="gap-1.5">
+            <DollarSign className="h-4 w-4" /> Comisiones
           </TabsTrigger>
         </TabsList>
 
@@ -561,6 +565,11 @@ export default function AdminPage() {
               </Table>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* COMMISSIONS TAB */}
+        <TabsContent value="commissions">
+          <AdminCommissionsTab />
         </TabsContent>
       </Tabs>
 
