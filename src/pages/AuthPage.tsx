@@ -148,44 +148,46 @@ const AuthPage = () => {
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     {!isLogin && (
-                      <div>
-                        <Label>Nombre completo</Label>
-                        <Input
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
-                          placeholder="Tu nombre"
-                          required={!isLogin}
-                        />
-                      </div>
-                      <div>
-                        <Label className="mb-2 block">Tipo de cuenta</Label>
-                        <div className="grid grid-cols-2 gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setUserType("agente")}
-                            className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all text-sm ${
-                              userType === "agente"
-                                ? "border-primary bg-primary/10 text-primary"
-                                : "border-border hover:border-primary/50"
-                            }`}
-                          >
-                            <User className="h-5 w-5" />
-                            Agente
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setUserType("agencia")}
-                            className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all text-sm ${
-                              userType === "agencia"
-                                ? "border-primary bg-primary/10 text-primary"
-                                : "border-border hover:border-primary/50"
-                            }`}
-                          >
-                            <Building2 className="h-5 w-5" />
-                            Agencia
-                          </button>
+                      <>
+                        <div>
+                          <Label>Nombre completo</Label>
+                          <Input
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            placeholder="Tu nombre"
+                            required={!isLogin}
+                          />
                         </div>
-                      </div>
+                        <div>
+                          <Label className="mb-2 block">Tipo de cuenta</Label>
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setUserType("agente")}
+                              className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all text-sm ${
+                                userType === "agente"
+                                  ? "border-primary bg-primary/10 text-primary"
+                                  : "border-border hover:border-primary/50"
+                              }`}
+                            >
+                              <User className="h-5 w-5" />
+                              Agente
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setUserType("agencia")}
+                              className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all text-sm ${
+                                userType === "agencia"
+                                  ? "border-primary bg-primary/10 text-primary"
+                                  : "border-border hover:border-primary/50"
+                              }`}
+                            >
+                              <Building2 className="h-5 w-5" />
+                              Agencia
+                            </button>
+                          </div>
+                        </div>
+                      </>
                     )}
                     <div>
                       <Label>Email</Label>
@@ -208,7 +210,23 @@ const AuthPage = () => {
                         minLength={6}
                       />
                     </div>
-                    <Button type="submit" className="w-full rounded-xl shadow-sm shadow-primary/20" disabled={loading}>
+                    {!isLogin && (
+                      <div className="flex items-start gap-2">
+                        <Checkbox
+                          id="terms"
+                          checked={acceptTerms}
+                          onCheckedChange={(v) => setAcceptTerms(v === true)}
+                          className="mt-0.5"
+                        />
+                        <label htmlFor="terms" className="text-xs text-muted-foreground leading-tight cursor-pointer">
+                          Acepto los{" "}
+                          <a href="/terminos-afiliados" target="_blank" className="text-primary underline hover:text-primary/80">
+                            términos y condiciones de uso
+                          </a>
+                        </label>
+                      </div>
+                    )}
+                    <Button type="submit" className="w-full rounded-xl shadow-sm shadow-primary/20" disabled={loading || (!isLogin && !acceptTerms)}>
                       {loading ? "Cargando..." : isLogin ? "Iniciar Sesión" : "Crear Cuenta"}
                     </Button>
                   </form>
