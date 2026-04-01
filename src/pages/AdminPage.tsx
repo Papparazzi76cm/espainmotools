@@ -39,7 +39,7 @@ export default function AdminPage() {
     users, agencies, loading,
     fetchUsers, fetchAgencies,
     updateUserRole, updateUserStatus, updateUserAccess,
-    assignAgency, deleteUser,
+    assignAgency, deleteUser, toggleAffiliate,
     createAgency, updateAgency, deleteAgency,
   } = useAdminUsers();
   const { toolStats, userStats, dailyUsage, totalGenerations, todayGenerations, loading: metricsLoading, exportCSV } = useAdminMetrics();
