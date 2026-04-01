@@ -7,14 +7,12 @@ import { useInmoAI } from "@/hooks/useInmoAI";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
+import { useTranslation } from "react-i18next";
 
 const ConsultorLegalPage = () => {
+  const { t } = useTranslation();
   const [consulta, setConsulta] = useState("");
-  const [resultado, setResultado] = useState<{
-    respuesta: string;
-    resumen: string;
-    recomendaciones: string[];
-  } | null>(null);
+  const [resultado, setResultado] = useState<{ respuesta: string; resumen: string; recomendaciones: string[] } | null>(null);
   const { generate, loading } = useInmoAI();
   const { history, loading: histLoading, saveResult, deleteEntry } = useToolHistory("consultor-legal");
 
@@ -33,19 +31,19 @@ const ConsultorLegalPage = () => {
       <UsageLimitBanner toolId="consultor-legal" />
       <div className="flex items-center gap-2 mb-6">
         <Scale className="h-5 w-5 text-primary" />
-        <h1 className="text-2xl font-semibold">Consultor Jurídico</h1>
+        <h1 className="text-2xl font-semibold">{t("consultorLegal.title")}</h1>
         <Sparkles className="h-4 w-4 text-primary" />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <Card className="glass-card">
-            <CardHeader><CardTitle className="text-base">Tu Consulta</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="text-base">{t("consultorLegal.yourQuery")}</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <Textarea placeholder="Escribe tu duda legal inmobiliaria..." value={consulta} onChange={(e) => setConsulta(e.target.value)} rows={8} />
+              <Textarea placeholder={t("consultorLegal.queryPlaceholder")} value={consulta} onChange={(e) => setConsulta(e.target.value)} rows={8} />
               <Button onClick={consultar} className="w-full" disabled={loading || !consulta.trim()}>
-                {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Consultando...</> : <><Send className="h-4 w-4 mr-2" /> Consultar</>}
+                {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> {t("consultorLegal.consultingButton")}</> : <><Send className="h-4 w-4 mr-2" /> {t("consultorLegal.consultButton")}</>}
               </Button>
-              <p className="text-[11px] text-muted-foreground">⚠️ Las respuestas son orientativas y no sustituyen asesoramiento legal profesional.</p>
+              <p className="text-[11px] text-muted-foreground">{t("consultorLegal.disclaimer")}</p>
             </CardContent>
           </Card>
           <ToolHistoryPanel history={history} loading={histLoading} onLoad={(e) => setResultado(e.result_data)} onDelete={deleteEntry} />
@@ -54,18 +52,18 @@ const ConsultorLegalPage = () => {
           {resultado ? (
             <>
               <Card className="glass-card">
-                <CardHeader className="pb-2"><CardTitle className="text-sm">Respuesta</CardTitle></CardHeader>
+                <CardHeader className="pb-2"><CardTitle className="text-sm">{t("consultorLegal.response")}</CardTitle></CardHeader>
                 <CardContent><p className="text-sm whitespace-pre-line leading-relaxed">{resultado.respuesta}</p></CardContent>
               </Card>
               {resultado.resumen && (
                 <Card className="glass-card">
-                  <CardHeader className="pb-2"><CardTitle className="text-sm">Resumen</CardTitle></CardHeader>
+                  <CardHeader className="pb-2"><CardTitle className="text-sm">{t("consultorLegal.summary")}</CardTitle></CardHeader>
                   <CardContent><p className="text-sm text-muted-foreground whitespace-pre-line">{resultado.resumen}</p></CardContent>
                 </Card>
               )}
               {resultado.recomendaciones.length > 0 && (
                 <Card className="glass-card border-primary/20">
-                  <CardHeader className="pb-2"><CardTitle className="text-sm">Recomendaciones</CardTitle></CardHeader>
+                  <CardHeader className="pb-2"><CardTitle className="text-sm">{t("consultorLegal.recommendations")}</CardTitle></CardHeader>
                   <CardContent><ul className="space-y-2">{resultado.recomendaciones.map((r, i) => (<li key={i} className="text-sm flex gap-2"><span className="text-primary">→</span> {r}</li>))}</ul></CardContent>
                 </Card>
               )}
@@ -74,7 +72,7 @@ const ConsultorLegalPage = () => {
             <Card className="glass-card">
               <CardContent className="p-8 text-center text-muted-foreground">
                 <Scale className="h-10 w-10 mx-auto mb-3 opacity-30" />
-                <p className="text-sm">Escribe tu consulta legal inmobiliaria y recibirás orientación adaptada a la legislación española.</p>
+                <p className="text-sm">{t("consultorLegal.emptyDesc")}</p>
               </CardContent>
             </Card>
           )}

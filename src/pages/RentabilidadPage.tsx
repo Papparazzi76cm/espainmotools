@@ -8,8 +8,10 @@ import { Separator } from "@/components/ui/separator";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
+import { useTranslation } from "react-i18next";
 
 const RentabilidadPage = () => {
+  const { t } = useTranslation();
   const [precioCompra, setPrecioCompra] = useState("");
   const [alquilerTradicional, setAlquilerTradicional] = useState("");
   const [alquilerTemporal, setAlquilerTemporal] = useState("");
@@ -37,11 +39,7 @@ const RentabilidadPage = () => {
     const netaTrad = trad ? ((ingresoTradAnual - gastos) / precio) * 100 : 0;
     const brutaTemp = temp ? (ingresoTempAnual / precio) * 100 : 0;
     const netaTemp = temp ? ((ingresoTempAnual - gastos * 1.3) / precio) * 100 : 0;
-
-    const res = {
-      tradicional: { bruta: brutaTrad, neta: netaTrad, ingresoAnual: ingresoTradAnual },
-      temporal: { bruta: brutaTemp, neta: netaTemp, ingresoAnual: ingresoTempAnual },
-    };
+    const res = { tradicional: { bruta: brutaTrad, neta: netaTrad, ingresoAnual: ingresoTradAnual }, temporal: { bruta: brutaTemp, neta: netaTemp, ingresoAnual: ingresoTempAnual } };
     setResultado(res);
     saveResult(`${fmtEur(precio)}`, { precioCompra: precio, alquilerTradicional: trad, alquilerTemporal: temp, ocupacionTemporal: ocup, gastosAnuales: gastos }, res);
   };
@@ -51,24 +49,24 @@ const RentabilidadPage = () => {
       <UsageLimitBanner toolId="rentabilidad" />
       <div className="flex items-center gap-2 mb-6">
         <BarChart3 className="h-5 w-5 text-primary" />
-        <h1 className="text-2xl font-semibold">Calculadora de Rentabilidad</h1>
+        <h1 className="text-2xl font-semibold">{t("rentabilidad.title")}</h1>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <Card className="glass-card">
-            <CardHeader><CardTitle className="text-base">Datos de la Inversión</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="text-base">{t("rentabilidad.investmentData")}</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <div><Label>Precio de compra (€)</Label><Input type="number" placeholder="250.000" value={precioCompra} onChange={(e) => setPrecioCompra(e.target.value)} /></div>
+              <div><Label>{t("rentabilidad.purchasePrice")}</Label><Input type="number" placeholder="250.000" value={precioCompra} onChange={(e) => setPrecioCompra(e.target.value)} /></div>
               <Separator />
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground"><Home className="h-4 w-4" /> Alquiler Tradicional</div>
-              <div><Label>Alquiler mensual (€)</Label><Input type="number" placeholder="900" value={alquilerTradicional} onChange={(e) => setAlquilerTradicional(e.target.value)} /></div>
+              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground"><Home className="h-4 w-4" /> {t("rentabilidad.traditionalRental")}</div>
+              <div><Label>{t("rentabilidad.monthlyRent")}</Label><Input type="number" placeholder="900" value={alquilerTradicional} onChange={(e) => setAlquilerTradicional(e.target.value)} /></div>
               <Separator />
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground"><Building className="h-4 w-4" /> Alquiler Temporal (Airbnb)</div>
-              <div><Label>Precio por noche (€)</Label><Input type="number" placeholder="80" value={alquilerTemporal} onChange={(e) => setAlquilerTemporal(e.target.value)} /></div>
-              <div><Label>Ocupación estimada (%)</Label><Input type="number" placeholder="60" value={ocupacionTemporal} onChange={(e) => setOcupacionTemporal(e.target.value)} /></div>
+              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground"><Building className="h-4 w-4" /> {t("rentabilidad.temporaryRental")}</div>
+              <div><Label>{t("rentabilidad.nightlyPrice")}</Label><Input type="number" placeholder="80" value={alquilerTemporal} onChange={(e) => setAlquilerTemporal(e.target.value)} /></div>
+              <div><Label>{t("rentabilidad.estimatedOccupancy")}</Label><Input type="number" placeholder="60" value={ocupacionTemporal} onChange={(e) => setOcupacionTemporal(e.target.value)} /></div>
               <Separator />
-              <div><Label>Gastos anuales estimados (€)</Label><Input type="number" placeholder="3.000" value={gastosAnuales} onChange={(e) => setGastosAnuales(e.target.value)} /></div>
-              <Button onClick={calcular} className="w-full">Calcular Rentabilidad</Button>
+              <div><Label>{t("rentabilidad.annualExpenses")}</Label><Input type="number" placeholder="3.000" value={gastosAnuales} onChange={(e) => setGastosAnuales(e.target.value)} /></div>
+              <Button onClick={calcular} className="w-full">{t("rentabilidad.calculateButton")}</Button>
             </CardContent>
           </Card>
           <ToolHistoryPanel history={history} loading={histLoading} onLoad={(e) => setResultado(e.result_data)} onDelete={deleteEntry} />
@@ -76,16 +74,16 @@ const RentabilidadPage = () => {
         <div className="space-y-4">
           {resultado ? (
             <>
-              <RentCard title="Alquiler Tradicional" icon={Home} bruta={resultado.tradicional.bruta} neta={resultado.tradicional.neta} ingresoAnual={resultado.tradicional.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtEur} />
-              <RentCard title="Alquiler Temporal" icon={Building} bruta={resultado.temporal.bruta} neta={resultado.temporal.neta} ingresoAnual={resultado.temporal.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtEur} />
+              <RentCard title={t("rentabilidad.traditionalRental")} icon={Home} bruta={resultado.tradicional.bruta} neta={resultado.tradicional.neta} ingresoAnual={resultado.tradicional.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtEur} t={t} />
+              <RentCard title={t("rentabilidad.temporaryRental")} icon={Building} bruta={resultado.temporal.bruta} neta={resultado.temporal.neta} ingresoAnual={resultado.temporal.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtEur} t={t} />
               {resultado.tradicional.bruta > 0 && resultado.temporal.bruta > 0 && (
                 <Card className="glass-card border-primary/30">
                   <CardContent className="p-5">
-                    <div className="flex items-center gap-2 mb-2"><TrendingUp className="h-4 w-4 text-primary" /><span className="font-medium text-sm">Comparativa</span></div>
+                    <div className="flex items-center gap-2 mb-2"><TrendingUp className="h-4 w-4 text-primary" /><span className="font-medium text-sm">{t("rentabilidad.comparison")}</span></div>
                     <p className="text-sm text-muted-foreground">
                       {resultado.temporal.neta > resultado.tradicional.neta
-                        ? `El alquiler temporal genera ${fmtPct(resultado.temporal.neta - resultado.tradicional.neta)} más de rentabilidad neta, aunque con mayor gestión operativa.`
-                        : `El alquiler tradicional es ${fmtPct(resultado.tradicional.neta - resultado.temporal.neta)} más rentable en neto, con menor esfuerzo de gestión.`}
+                        ? t("rentabilidad.temporalBetter", { diff: fmtPct(resultado.temporal.neta - resultado.tradicional.neta) })
+                        : t("rentabilidad.traditionalBetter", { diff: fmtPct(resultado.tradicional.neta - resultado.temporal.neta) })}
                     </p>
                   </CardContent>
                 </Card>
@@ -93,7 +91,7 @@ const RentabilidadPage = () => {
             </>
           ) : (
             <Card className="glass-card"><CardContent className="p-8 text-center text-muted-foreground">
-              <BarChart3 className="h-10 w-10 mx-auto mb-3 opacity-30" /><p className="text-sm">Introduce los datos de inversión para ver el análisis de rentabilidad.</p>
+              <BarChart3 className="h-10 w-10 mx-auto mb-3 opacity-30" /><p className="text-sm">{t("rentabilidad.emptyDesc")}</p>
             </CardContent></Card>
           )}
         </div>
@@ -102,16 +100,16 @@ const RentabilidadPage = () => {
   );
 };
 
-function RentCard({ title, icon: Icon, bruta, neta, ingresoAnual, fmtPct, fmtCurrency }: { title: string; icon: typeof Home; bruta: number; neta: number; ingresoAnual: number; fmtPct: (n: number) => string; fmtCurrency: (n: number) => string }) {
+function RentCard({ title, icon: Icon, bruta, neta, ingresoAnual, fmtPct, fmtCurrency, t }: { title: string; icon: typeof Home; bruta: number; neta: number; ingresoAnual: number; fmtPct: (n: number) => string; fmtCurrency: (n: number) => string; t: (key: string) => string }) {
   const color = neta >= 8 ? "text-success" : neta >= 5 ? "text-warning" : "text-destructive";
   return (
     <Card className="glass-card">
       <CardHeader className="pb-2"><div className="flex items-center gap-2"><Icon className="h-4 w-4 text-primary" /><CardTitle className="text-base">{title}</CardTitle></div></CardHeader>
       <CardContent className="space-y-3">
-        <div className="flex justify-between text-sm"><span className="text-muted-foreground">Ingreso anual</span><span className="font-medium">{fmtCurrency(ingresoAnual)}</span></div>
-        <div className="flex justify-between text-sm"><span className="text-muted-foreground">Rentabilidad bruta</span><span className="font-medium">{fmtPct(bruta)}</span></div>
+        <div className="flex justify-between text-sm"><span className="text-muted-foreground">{t("rentabilidad.annualIncome")}</span><span className="font-medium">{fmtCurrency(ingresoAnual)}</span></div>
+        <div className="flex justify-between text-sm"><span className="text-muted-foreground">{t("rentabilidad.grossYield")}</span><span className="font-medium">{fmtPct(bruta)}</span></div>
         <Separator />
-        <div className="flex justify-between"><span className="font-medium">Rentabilidad neta</span><span className={`font-bold text-lg ${color}`}>{fmtPct(neta)}</span></div>
+        <div className="flex justify-between"><span className="font-medium">{t("rentabilidad.netYield")}</span><span className={`font-bold text-lg ${color}`}>{fmtPct(neta)}</span></div>
       </CardContent>
     </Card>
   );
