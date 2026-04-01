@@ -48,6 +48,7 @@ export default function AdminPage() {
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [affiliateFilter, setAffiliateFilter] = useState("all");
 
   // Edit user dialog
   const [editUser, setEditUser] = useState<AdminUser | null>(null);
