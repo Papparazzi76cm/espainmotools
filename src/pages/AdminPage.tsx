@@ -628,6 +628,25 @@ export default function AdminPage() {
                     ? `Activo · ${editUser?.affiliate_id}` 
                     : "Activar para generar un ID de afiliado único"}
                 </p>
+                {editUser?.is_affiliate && editUser?.affiliate_id && (
+                  <div className="mt-1 space-y-1">
+                    <p className="text-[10px] font-mono text-muted-foreground break-all">
+                      https://es-ace-inmotools.lovable.app/auth?ref={editUser.affiliate_id}
+                    </p>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="h-7 text-xs gap-1"
+                      onClick={() => {
+                        if (editUser) {
+                          regenerateAffiliate(editUser.user_id);
+                        }
+                      }}
+                    >
+                      <Link2 className="h-3 w-3" /> Regenerar enlace
+                    </Button>
+                  </div>
+                )}
               </div>
               <Switch
                 checked={editUser?.is_affiliate || false}

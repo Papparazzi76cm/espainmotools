@@ -62,6 +62,7 @@ function ProtectedRoutes() {
           <Route path="/herramientas/:toolId" element={<ToolPlaceholder />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/mi-agencia" element={<AgencyPage />} />
+          <Route path="/mi-afiliado" element={<AffiliatePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AppLayout>
