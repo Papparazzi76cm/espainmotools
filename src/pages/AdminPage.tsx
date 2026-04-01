@@ -614,6 +614,22 @@ export default function AdminPage() {
               />
               <Label htmlFor="isPaid">Usuario de pago (Premium)</Label>
             </div>
+            <div className="flex items-center justify-between rounded-lg border border-border p-3">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium">Rol de Afiliado</Label>
+                <p className="text-xs text-muted-foreground">
+                  {editUser?.is_affiliate 
+                    ? `Activo · ${editUser?.affiliate_id}` 
+                    : "Activar para generar un ID de afiliado único"}
+                </p>
+              </div>
+              <Switch
+                checked={editUser?.is_affiliate || false}
+                onCheckedChange={(checked) => {
+                  if (editUser) toggleAffiliate(editUser.user_id, checked);
+                }}
+              />
+            </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditUser(null)}>Cancelar</Button>
