@@ -252,6 +252,7 @@ export default function AdminPage() {
                     <TableHead>Usuario</TableHead>
                     <TableHead>Agencia</TableHead>
                     <TableHead>Rol</TableHead>
+                    <TableHead>Afiliado</TableHead>
                     <TableHead>Estado</TableHead>
                     <TableHead>Plan</TableHead>
                     <TableHead>Acceso hasta</TableHead>
