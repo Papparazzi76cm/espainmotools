@@ -104,7 +104,7 @@ const AuthPage = () => {
   return (
     <div className="relative min-h-screen bg-background overflow-x-hidden">
       <ParticleField />
-      <LandingNav onGetStarted={() => openAuth(false)} />
+      <LandingNav onGetStarted={() => openAuth(false)} onLogin={() => openAuth(true)} />
 
       <HeroSection onGetStarted={() => openAuth(false)} />
       <FeatureCards />

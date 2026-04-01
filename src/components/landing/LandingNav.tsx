@@ -35,7 +35,7 @@ const LandingNav = ({ onGetStarted, onLogin }: LandingNavProps) => {
         </div>
 
         <div className="hidden sm:flex items-center gap-3">
-          <Button variant="ghost" size="sm" onClick={onGetStarted}>
+          <Button variant="ghost" size="sm" onClick={onLogin}>
             Iniciar Sesión
           </Button>
           <Button size="sm" onClick={onGetStarted} className="rounded-lg shadow-sm shadow-primary/20">
