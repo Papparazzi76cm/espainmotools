@@ -82,14 +82,6 @@ const HeroSection = ({ onGetStarted }: HeroSectionProps) => {
             Empezar Gratis
             <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={onGetStarted}
-            className="text-base px-8 py-6 rounded-xl border-primary/30 backdrop-blur-sm hover:bg-primary/10 hover:border-primary/50 transition-all duration-300"
-          >
-            Ver Demo
-          </Button>
         </motion.div>
 
         {/* Stats bar */}
