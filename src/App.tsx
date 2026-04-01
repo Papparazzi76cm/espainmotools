@@ -30,6 +30,7 @@ import AffiliateTermsPage from "./pages/AffiliateTermsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import CookiesPolicyPage from "./pages/CookiesPolicyPage";
 import TermsOfUsePage from "./pages/TermsOfUsePage";
+import LegalNoticePage from "./pages/LegalNoticePage";
 import { ToolGuard } from "@/components/ToolGuard";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 
