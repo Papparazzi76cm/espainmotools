@@ -31,6 +31,7 @@ const LandingNav = ({ onGetStarted }: LandingNavProps) => {
           <a href="#features" className="hover:text-foreground transition-colors">Herramientas</a>
           <a href="#how-it-works" className="hover:text-foreground transition-colors">Cómo funciona</a>
           <a href="#pricing" className="hover:text-foreground transition-colors">Precios</a>
+          <a href="/afiliados" className="hover:text-foreground transition-colors">Afiliados</a>
         </div>
 
         <div className="hidden sm:flex items-center gap-3">
