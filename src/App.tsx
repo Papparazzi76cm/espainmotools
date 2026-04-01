@@ -29,6 +29,7 @@ import AffiliateLandingPage from "./pages/AffiliateLandingPage";
 import AffiliateTermsPage from "./pages/AffiliateTermsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import CookiesPolicyPage from "./pages/CookiesPolicyPage";
+import TermsOfUsePage from "./pages/TermsOfUsePage";
 import { ToolGuard } from "@/components/ToolGuard";
 
 const queryClient = new QueryClient();
