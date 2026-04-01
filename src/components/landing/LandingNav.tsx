@@ -19,7 +19,7 @@ const LandingNav = ({ onGetStarted, onLogin }: LandingNavProps) => {
         <div className="flex items-center justify-between w-full sm:w-auto">
           <PynmoLogo size="sm" className="flex-shrink-0" />
           <div className="flex items-center gap-1.5 sm:hidden">
-            <Button variant="ghost" size="sm" onClick={onGetStarted} className="text-xs px-2 h-8">
+            <Button variant="ghost" size="sm" onClick={onLogin} className="text-xs px-2 h-8">
               Iniciar Sesión
             </Button>
             <Button size="sm" onClick={onGetStarted} className="rounded-lg shadow-sm shadow-primary/20 text-xs px-2.5 h-8">
