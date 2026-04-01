@@ -32,6 +32,21 @@ export function AppSidebar() {
   const { isAdmin, isTester, role } = useUserRole();
   const isAgency = role === "agencia" || role === "agencia_xl";
 
+  // Check if user is an affiliate
+  const [isAffiliate, setIsAffiliate] = useState(false);
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      const { data } = await supabase
+        .from("affiliates")
+        .select("is_active")
+        .eq("user_id", user.id)
+        .eq("is_active", true)
+        .maybeSingle();
+      setIsAffiliate(!!data);
+    })();
+  }, [user]);
+
   // For agents, filter tools by permissions
   const [allowedTools, setAllowedTools] = useState<string[] | null>(null);
 
