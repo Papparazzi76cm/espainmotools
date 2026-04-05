@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SEOHead from "@/components/SEOHead";
 
 const sectionsES = [
   { title: "1. ¿Qué son las cookies?", content: "Las cookies son pequeños archivos de texto que los sitios web almacenan en su dispositivo cuando los visita." },
