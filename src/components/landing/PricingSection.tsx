@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Check, Crown, Zap, Building2, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useGeoPricing } from "@/hooks/useGeoPricing";
 
 interface PricingSectionProps {
   onGetStarted: () => void;
@@ -9,29 +10,30 @@ interface PricingSectionProps {
 
 const PricingSection = ({ onGetStarted }: PricingSectionProps) => {
   const { t } = useTranslation();
+  const geo = useGeoPricing();
 
   const individualPlans = [
     {
-      name: t("pricing.monthly"), price: "15", period: t("pricing.perMonth"), icon: Zap,
+      name: t("pricing.monthly"), price: geo.individual.monthly, symbol: geo.symbol, period: t("pricing.perMonth"), icon: Zap,
       features: [t("pricing.feat_allTools"), t("pricing.feat_unlimited"), t("pricing.feat_emailSupport"), t("pricing.feat_updates")],
       popular: false,
     },
     {
-      name: t("pricing.annual"), price: "10", period: t("pricing.perMonth"), badge: t("pricing.save37"), icon: Crown,
-      features: [t("pricing.feat_allMonthly"), t("pricing.feat_unlimited"), t("pricing.feat_prioritySupport"), t("pricing.feat_newToolsFirst"), t("pricing.feat_annualBilling")],
+      name: t("pricing.annual"), price: geo.individual.annual, symbol: geo.symbol, period: t("pricing.perMonth"), badge: t("pricing.save37"), icon: Crown,
+      features: [t("pricing.feat_allMonthly"), t("pricing.feat_unlimited"), t("pricing.feat_prioritySupport"), t("pricing.feat_newToolsFirst"), t("pricing.feat_annualBilling", { total: geo.individual.annualTotal, symbol: geo.symbol })],
       popular: true,
     },
   ];
 
   const agencyPlans = [
     {
-      name: t("pricing.agencyMonthly"), price: "49", period: t("pricing.perMonth"), icon: Building2,
+      name: t("pricing.agencyMonthly"), price: geo.agency.monthly, symbol: geo.symbol, period: t("pricing.perMonth"), icon: Building2,
       features: [t("pricing.feat_max10"), t("pricing.feat_fullAccess"), t("pricing.feat_unlimited"), t("pricing.feat_prioritySupport"), t("pricing.feat_adminPanel")],
       popular: false,
     },
     {
-      name: t("pricing.agencyAnnual"), price: "37", period: t("pricing.perMonth"), badge: t("pricing.save20"), icon: Users,
-      features: [t("pricing.feat_max10"), t("pricing.feat_allMonthlyAgency"), t("pricing.feat_dedicatedSupport"), t("pricing.feat_newToolsFirst"), t("pricing.feat_annualBillingAgency")],
+      name: t("pricing.agencyAnnual"), price: geo.agency.annual, symbol: geo.symbol, period: t("pricing.perMonth"), badge: t("pricing.save20"), icon: Users,
+      features: [t("pricing.feat_max10"), t("pricing.feat_allMonthlyAgency"), t("pricing.feat_dedicatedSupport"), t("pricing.feat_newToolsFirst"), t("pricing.feat_annualBillingAgency", { total: geo.agency.annualTotal, symbol: geo.symbol })],
       popular: true,
     },
   ];
@@ -90,7 +92,7 @@ function PlanCard({ plan, index, onGetStarted, ctaLabel }: { plan: any; index: n
         <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
       </div>
       <div className="mb-6">
-        <span className="text-4xl font-bold text-foreground">{plan.price}€</span>
+        <span className="text-4xl font-bold text-foreground">{plan.symbol}{plan.price}</span>
         <span className="text-muted-foreground">{plan.period}</span>
       </div>
       <ul className="space-y-3 mb-8">
