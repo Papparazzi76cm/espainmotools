@@ -57,7 +57,7 @@ const GuionesPage = () => {
             <CardContent className="space-y-4">
               <div><Label>{t("guiones.type")}</Label><Input placeholder={t("guiones.typePlaceholder")} value={tipo} onChange={(e) => setTipo(e.target.value)} /></div>
               <div><Label>{t("guiones.location")}</Label><Input placeholder={t("guiones.locationPlaceholder")} value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} /></div>
-              <div><Label>{t("guiones.price")}</Label><Input placeholder={t("guiones.pricePlaceholder")} value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
+              <div><Label>{t("guiones.price")} ({currencySymbol})</Label><Input placeholder={t("guiones.pricePlaceholder")} value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
               <div><Label>{t("guiones.features")}</Label><Textarea placeholder={t("guiones.featuresPlaceholder")} value={caracteristicas} onChange={(e) => setCaracteristicas(e.target.value)} rows={3} /></div>
               <div>
                 <Label>{t("guiones.tone")}</Label>
