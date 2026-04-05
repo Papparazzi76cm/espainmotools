@@ -36,6 +36,7 @@ interface InformeResult {
 
 const InformesPage = () => {
   const { t } = useTranslation();
+  const { currencySymbol } = useCountryCurrency();
   const [tipo, setTipo] = useState("casa");
   const [ubicacion, setUbicacion] = useState("");
   const [superficie, setSuperficie] = useState("");
