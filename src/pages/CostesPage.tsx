@@ -35,9 +35,7 @@ const comunidadesES = [
   { value: "valencia", label: "Comunidad Valenciana", itp: 0.10 },
 ];
 
-// Extract a numeric tax rate from a country's tax_config
 function extractTransferTaxRate(taxConfig: Record<string, string | number>): number {
-  // Look for common transfer tax keys
   const transferKeys = ["transferencia", "traspaso", "isai", "alcabala", "itp", "iti"];
   for (const key of transferKeys) {
     for (const [k, v] of Object.entries(taxConfig)) {
@@ -47,7 +45,7 @@ function extractTransferTaxRate(taxConfig: Record<string, string | number>): num
       }
     }
   }
-  return 0.03; // fallback 3%
+  return 0.03;
 }
 
 function extractVATRate(taxConfig: Record<string, string | number>): number {
@@ -63,7 +61,17 @@ function extractVATRate(taxConfig: Record<string, string | number>): number {
   return 0.10;
 }
 
-// Build a list of tax line items from tax_config for display
+function findTaxLabel(taxConfig: Record<string, string | number>, keys: string[]): string | null {
+  for (const key of keys) {
+    for (const [k] of Object.entries(taxConfig)) {
+      if (k.toLowerCase().includes(key)) {
+        return k.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+      }
+    }
+  }
+  return null;
+}
+
 function buildTaxSummary(taxConfig: Record<string, string | number>): { key: string; label: string; detail: string }[] {
   return Object.entries(taxConfig).map(([key, value]) => ({
     key,
@@ -109,6 +117,35 @@ const CostesPage = () => {
 
   const taxSummary = useMemo(() => buildTaxSummary(taxConfig), [taxConfig]);
 
+  // Dynamic tax labels based on country's tax_config
+  const buyerTransferTaxLabel = useMemo(() => {
+    if (isSpain) return null; // Spain uses its own ITP/IVA logic
+    return findTaxLabel(taxConfig, ["transferencia", "traspaso", "isai", "alcabala", "itp", "iti"]) || t("costes.transferTaxLabel");
+  }, [isSpain, taxConfig, t]);
+
+  const buyerVATLabel = useMemo(() => {
+    if (isSpain) return null;
+    return findTaxLabel(taxConfig, ["iva", "igv", "itbms", "itbis"]) || "IVA";
+  }, [isSpain, taxConfig]);
+
+  const sellerMainTaxLabel = useMemo(() => {
+    if (isSpain) return t("costes.irpfLabel");
+    // Look for income/gains tax in tax_config
+    const label = findTaxLabel(taxConfig, ["renta", "ganancia", "isr", "islr", "impuesto_renta"]);
+    return label || t("costes.mainTaxLabel");
+  }, [isSpain, taxConfig, t]);
+
+  const sellerTransferTaxLabel = useMemo(() => {
+    if (isSpain) return t("costes.municipalSurplus");
+    const label = findTaxLabel(taxConfig, ["transferencia", "traspaso", "isai", "alcabala", "plusvalia", "municipal"]);
+    return label || t("costes.transferTaxLabel");
+  }, [isSpain, taxConfig, t]);
+
+  const newBuildLabel = isSpain ? t("costes.newBuildSpain") : t("costes.newBuild");
+  const acquisitionInfoText = isSpain ? t("costes.acquisitionInfoSpain") : t("costes.acquisitionInfo");
+  const emptySellerTipText = isSpain ? t("costes.emptySellerTipSpain") : t("costes.emptySellerTip");
+  const regionFieldLabel = isSpain ? t("costes.autonomousCommunity") : t("costes.regionLabel", { defaultValue: "Región / Estado / Provincia" });
+
   const calcularComprador = () => {
     const p = parseFloat(precio);
     if (!p || p <= 0) return;
@@ -132,13 +169,12 @@ const CostesPage = () => {
       setResultadoComprador(res);
       saveResult(`${t("costes.buyerCost")} — ${fmt(p)} — ${ccaa?.label || "General"}`, { tipo: "comprador", precio: p, comunidad, esObraNueva }, res);
     } else {
-      // Generic country calculation
       const transferRate = extractTransferTaxRate(taxConfig);
       const vatRate = extractVATRate(taxConfig);
       const transferTax = esObraNueva ? p * vatRate : p * transferRate;
       const transferLabel = esObraNueva
-        ? `${Object.keys(taxConfig).find(k => ["iva", "igv", "itbms", "itbis"].some(v => k.toLowerCase().includes(v)))?.toUpperCase() || "IVA"} (${(vatRate * 100).toFixed(0)}%)`
-        : `Impuesto de transferencia (${(transferRate * 100).toFixed(1)}%)`;
+        ? `${buyerVATLabel} (${(vatRate * 100).toFixed(0)}%)`
+        : `${buyerTransferTaxLabel} (${(transferRate * 100).toFixed(1)}%)`;
       const notaria = Math.max(p * 0.005, 300);
       const registro = Math.max(p * 0.003, 200);
       const res = { impuestos: transferTax, impuestoLabel: transferLabel, notaria, registro, gestoria: 0, total: transferTax + notaria + registro };
@@ -200,10 +236,7 @@ const CostesPage = () => {
     else { setTab("comprador"); setResultadoComprador(entry.result_data?.comprador || entry.result_data); }
   };
 
-  // Labels for seller results adapt to country
-  const mainTaxLabel = isSpain ? t("costes.irpfLabel") : t("costes.mainTaxLabel", { defaultValue: "Impuesto sobre la ganancia" });
-  const transferTaxLabel = isSpain ? t("costes.municipalSurplus") : t("costes.transferTaxLabel", { defaultValue: "Impuesto de transferencia" });
-  const regionFieldLabel = isSpain ? t("costes.autonomousCommunity") : t("costes.regionLabel", { defaultValue: "Región / Estado / Provincia" });
+  const cur = currencySymbol;
 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in">
@@ -239,7 +272,7 @@ const CostesPage = () => {
               <Card className="glass-card">
                 <CardHeader><CardTitle className="text-base">{t("costes.operationData")}</CardTitle></CardHeader>
                 <CardContent className="space-y-4">
-                  <div><Label>{t("costes.propertyPrice")} ({currencySymbol})</Label><Input type="number" placeholder="250000" value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
+                  <div><Label>{t("costes.propertyPrice", { currency: cur })}</Label><Input type="number" placeholder="250000" value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
                   {isSpain ? (
                     <>
                       <div>
@@ -251,7 +284,7 @@ const CostesPage = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <input type="checkbox" id="obraNueva" checked={esObraNueva} onChange={(e) => setEsObraNueva(e.target.checked)} className="rounded border-border" />
-                        <Label htmlFor="obraNueva" className="cursor-pointer text-sm">{t("costes.newBuild")}</Label>
+                        <Label htmlFor="obraNueva" className="cursor-pointer text-sm">{newBuildLabel}</Label>
                       </div>
                     </>
                   ) : (
@@ -262,7 +295,7 @@ const CostesPage = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <input type="checkbox" id="obraNueva" checked={esObraNueva} onChange={(e) => setEsObraNueva(e.target.checked)} className="rounded border-border" />
-                        <Label htmlFor="obraNueva" className="cursor-pointer text-sm">{t("costes.newBuild")}</Label>
+                        <Label htmlFor="obraNueva" className="cursor-pointer text-sm">{newBuildLabel}</Label>
                       </div>
                     </>
                   )}
@@ -296,7 +329,7 @@ const CostesPage = () => {
               <Card className="glass-card">
                 <CardHeader><CardTitle className="text-base">{t("costes.saleData")}</CardTitle></CardHeader>
                 <CardContent className="space-y-4">
-                  <div><Label>{t("costes.salePrice")} ({currencySymbol})</Label><Input type="number" placeholder="300000" value={precioVenta} onChange={(e) => setPrecioVenta(e.target.value)} /></div>
+                  <div><Label>{t("costes.salePrice", { currency: cur })}</Label><Input type="number" placeholder="300000" value={precioVenta} onChange={(e) => setPrecioVenta(e.target.value)} /></div>
                   {isSpain ? (
                     <div>
                       <Label>{regionFieldLabel}</Label>
@@ -314,10 +347,10 @@ const CostesPage = () => {
                   <div><Label>{t("costes.agencyCommission")}</Label><Input type="number" placeholder="3" value={comision} onChange={(e) => setComision(e.target.value)} /></div>
                   <Separator />
                   <div className="p-3 rounded-lg bg-muted/50 border border-border">
-                    <div className="flex items-start gap-2 mb-3"><Info className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" /><p className="text-xs text-muted-foreground">{t("costes.acquisitionInfo")}</p></div>
+                    <div className="flex items-start gap-2 mb-3"><Info className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" /><p className="text-xs text-muted-foreground">{acquisitionInfoText}</p></div>
                     <div className="space-y-3">
                       <div><Label>{t("costes.acquisitionYear")}</Label><Input type="number" placeholder="2015" value={anioAdquisicion} onChange={(e) => setAnioAdquisicion(e.target.value)} /></div>
-                      <div><Label>{t("costes.acquisitionPrice")} ({currencySymbol})</Label><Input type="number" placeholder="180000" value={precioAdquisicion} onChange={(e) => setPrecioAdquisicion(e.target.value)} /></div>
+                      <div><Label>{t("costes.acquisitionPrice", { currency: cur })}</Label><Input type="number" placeholder="180000" value={precioAdquisicion} onChange={(e) => setPrecioAdquisicion(e.target.value)} /></div>
                     </div>
                   </div>
                   <Button onClick={calcularVendedor} className="w-full" disabled={aiLoading}>
@@ -332,11 +365,11 @@ const CostesPage = () => {
                 <CardHeader className="pb-2"><div className="flex items-center gap-2"><ArrowUp className="h-4 w-4 text-primary" /><CardTitle className="text-base">{t("costes.sellerCosts")}</CardTitle></div></CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-1">
-                    <CostLine label={mainTaxLabel} value={resultadoVendedor.irpf_importe} fmt={fmt} />
+                    <CostLine label={sellerMainTaxLabel} value={resultadoVendedor.irpf_importe} fmt={fmt} />
                     {resultadoVendedor.irpf_detalle && <p className="text-xs text-muted-foreground pl-1">{resultadoVendedor.irpf_detalle}</p>}
                   </div>
                   <div className="space-y-1">
-                    <CostLine label={transferTaxLabel} value={resultadoVendedor.plusvalia_estimada} fmt={fmt} />
+                    <CostLine label={sellerTransferTaxLabel} value={resultadoVendedor.plusvalia_estimada} fmt={fmt} />
                     {resultadoVendedor.plusvalia_detalle && <p className="text-xs text-muted-foreground pl-1">{resultadoVendedor.plusvalia_detalle}</p>}
                   </div>
                   {resultadoVendedor.otros_costes && (
@@ -355,7 +388,7 @@ const CostesPage = () => {
               <Card className="glass-card"><CardContent className="p-8 text-center text-muted-foreground">
                 <Calculator className="h-10 w-10 mx-auto mb-3 opacity-30" /><p className="text-sm">{t("costes.emptySeller")}</p>
                 <div className="mt-4 p-3 rounded-lg bg-muted/50 border border-border text-left">
-                  <div className="flex items-start gap-2"><Info className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" /><p className="text-xs text-muted-foreground">{t("costes.emptySellerTip")}</p></div>
+                  <div className="flex items-start gap-2"><Info className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" /><p className="text-xs text-muted-foreground">{emptySellerTipText}</p></div>
                 </div>
               </CardContent></Card>
             )}
