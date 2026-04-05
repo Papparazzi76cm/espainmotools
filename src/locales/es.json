@@ -3,8 +3,26 @@
     "tools": "Herramientas",
     "howItWorks": "Cómo funciona",
     "pricing": "Precios",
+    "blog": "Blog",
     "login": "Iniciar Sesión",
     "register": "Registrarse"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Guías, tendencias y recursos para agentes inmobiliarios que quieren ir un paso por delante.",
+    "backToHome": "Volver al inicio",
+    "backToBlog": "Volver al blog",
+    "noPosts": "No hay artículos publicados todavía.",
+    "loading": "Cargando...",
+    "notFound": "Artículo no encontrado.",
+    "cta": "¿Quieres probar estas herramientas en tu negocio inmobiliario?",
+    "ctaButton": "Empezar Gratis",
+    "categories": {
+      "captacion": "Captación",
+      "marketing": "Marketing",
+      "legal": "Legal",
+      "general": "General"
+    }
   },
   "hero": {
     "badge": "Potenciado por Inteligencia Artificial",
