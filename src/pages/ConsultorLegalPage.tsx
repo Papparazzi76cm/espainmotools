@@ -90,7 +90,7 @@ const ConsultorLegalPage = () => {
             <Card className="glass-card">
               <CardContent className="p-8 text-center text-muted-foreground">
                 <Scale className="h-10 w-10 mx-auto mb-3 opacity-30" />
-                <p className="text-sm">{t("consultorLegal.emptyDesc")}</p>
+                <p className="text-sm">{t("consultorLegal.emptyDesc", { country: countryName })}</p>
               </CardContent>
             </Card>
           )}

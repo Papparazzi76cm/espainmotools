@@ -150,8 +150,7 @@ const ContratosPage = () => {
           ) : (
             <Card className="glass-card"><CardContent className="p-8 text-center text-muted-foreground">
               <FileSignature className="h-10 w-10 mx-auto mb-3 opacity-30" />
-              <p className="text-sm">{t("contratos.emptyDesc")}</p>
-              <p className="text-xs mt-2 text-muted-foreground/60">{t("contratos.emptyLegalRefs")}</p>
+              <p className="text-sm">{t("contratos.emptyDesc", { country: countryName })}</p>
             </CardContent></Card>
           )}
         </div>

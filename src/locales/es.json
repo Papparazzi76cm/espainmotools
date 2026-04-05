@@ -288,7 +288,7 @@
     "response": "Respuesta",
     "summary": "Resumen",
     "recommendations": "Recomendaciones",
-    "emptyDesc": "Escribe tu consulta legal inmobiliaria y recibirás orientación adaptada a la legislación española."
+    "emptyDesc": "Escribe tu consulta legal inmobiliaria y recibirás orientación adaptada a la legislación de {{country}}."
   },
   "costes": {
     "title": "Calculadora de Costes",
@@ -499,10 +499,10 @@
     "summary": "📋 Resumen",
     "generatedContract": "📄 Contrato Generado",
     "keyClauses": "🔑 Cláusulas Clave",
-    "legalBasis": "⚖️ Base Legal Española",
+    "legalBasis": "⚖️ Base Legal",
     "warnings": "⚠️ Advertencias",
-    "emptyDesc": "Genera contratos inmobiliarios completos adaptados a la legislación española.",
-    "emptyLegalRefs": "Código Civil, LAU, LPH, Ley Hipotecaria y más.",
+    "emptyDesc": "Genera contratos inmobiliarios completos adaptados a la legislación de {{country}}.",
+    "emptyLegalRefs": "",
     "errorMinFields": "Completa el tipo de contrato, partes e inmueble como mínimo.",
     "types": {
       "compraventa": "Compraventa de Inmueble",

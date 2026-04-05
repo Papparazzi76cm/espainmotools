@@ -288,7 +288,7 @@
     "response": "Response",
     "summary": "Summary",
     "recommendations": "Recommendations",
-    "emptyDesc": "Write your real estate legal question and receive guidance adapted to Spanish law."
+    "emptyDesc": "Write your real estate legal question and receive guidance adapted to the laws of {{country}}."
   },
   "costes": {
     "title": "Cost Calculator",
@@ -499,10 +499,10 @@
     "summary": "📋 Summary",
     "generatedContract": "📄 Generated Contract",
     "keyClauses": "🔑 Key Clauses",
-    "legalBasis": "⚖️ Spanish Legal Basis",
+    "legalBasis": "⚖️ Legal Basis",
     "warnings": "⚠️ Warnings",
-    "emptyDesc": "Generate complete real estate contracts adapted to Spanish law.",
-    "emptyLegalRefs": "Civil Code, LAU, LPH, Mortgage Law and more.",
+    "emptyDesc": "Generate complete real estate contracts adapted to the laws of {{country}}.",
+    "emptyLegalRefs": "",
     "errorMinFields": "Complete the contract type, parties and property as a minimum.",
     "types": {
       "compraventa": "Property Purchase & Sale",
