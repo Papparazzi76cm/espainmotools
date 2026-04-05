@@ -1,4 +1,5 @@
 import logoSrc from "@/assets/logo-espainmotools.png";
+import { Link } from "react-router-dom";
 
 interface PynmoLogoProps {
   size?: "sm" | "md" | "lg";
@@ -13,7 +14,9 @@ const sizes = {
 
 const PynmoLogo = ({ size = "md", className = "" }: PynmoLogoProps) => {
   return (
-    <img src={logoSrc} alt="Espainmotools" className={`${sizes[size]} w-auto object-contain ${className}`} />
+    <Link to="/">
+      <img src={logoSrc} alt="Espainmotools" className={`${sizes[size]} w-auto object-contain ${className}`} />
+    </Link>
   );
 };
 
