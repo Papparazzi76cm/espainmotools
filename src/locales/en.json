@@ -79,13 +79,13 @@
     "feat_allMonthly": "Everything in monthly plan",
     "feat_prioritySupport": "Priority support",
     "feat_newToolsFirst": "New tools first",
-    "feat_annualBilling": "Annual billing: €120/year",
+    "feat_annualBilling": "Annual billing: {{symbol}}{{total}}/year",
     "feat_max10": "Up to 10 users",
     "feat_fullAccess": "Full access to all tools",
     "feat_adminPanel": "Admin panel",
     "feat_allMonthlyAgency": "Everything in agency monthly plan",
     "feat_dedicatedSupport": "Dedicated support",
-    "feat_annualBillingAgency": "Annual billing: €444/year"
+    "feat_annualBillingAgency": "Annual billing: {{symbol}}{{total}}/year"
   },
   "footer": {
     "legalNotice": "Legal Notice",
