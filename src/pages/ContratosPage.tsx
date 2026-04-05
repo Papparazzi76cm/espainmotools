@@ -20,6 +20,11 @@ const contractTypeKeys = ["compraventa", "alquiler", "arras", "reserva", "opcion
 
 const ContratosPage = () => {
   const { t } = useTranslation();
+  const { selectedCountry } = useCountry();
+  const countryName = selectedCountry?.country_name || "España";
+  const legislation = (selectedCountry?.legislation || {}) as Record<string, string>;
+  const terminology = (selectedCountry?.terminology || {}) as Record<string, string>;
+  const legalRefs = selectedCountry?.legal_references || "";
   const [tipoContrato, setTipoContrato] = useState("");
   const [partes, setPartes] = useState("");
   const [inmueble, setInmueble] = useState("");
