@@ -497,6 +497,11 @@ export type Database = {
         }
         Returns: boolean
       }
+      mark_trial_paid: { Args: { _user_id: string }; Returns: undefined }
+      update_trial_end: {
+        Args: { _trial_end: string; _user_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "tester" | "agencia" | "agencia_xl" | "agente"
