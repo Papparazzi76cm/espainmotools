@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import PynmoLogo from "@/components/PynmoLogo";
 import FooterSection from "@/components/landing/FooterSection";
+import SEOHead from "@/components/SEOHead";
 
 const sectionsES = [
   { title: "1. Objeto del programa", content: "El Programa de Afiliados de Ace-Inmotools permite a usuarios registrados obtener comisiones por referir nuevos clientes de pago a la plataforma. Al registrarse como afiliado, el usuario acepta íntegramente estos términos y condiciones." },
@@ -48,6 +49,7 @@ export default function AffiliateTermsPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead titleKey="seo.affiliateTerms.title" descriptionKey="seo.affiliateTerms.description" canonical="https://es-ace-inmotools.lovable.app/terminos-afiliados" />
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border/40">
         <div className="max-w-4xl mx-auto flex items-center justify-between px-4 h-16">
           <PynmoLogo size="sm" />

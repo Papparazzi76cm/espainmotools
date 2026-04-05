@@ -903,5 +903,40 @@
     "save": "Save",
     "commissionGenerated": "Commission generated successfully",
     "commissionSkipped": "Commission not generated:"
+  },
+  "seo": {
+    "defaultDescription": "AI-powered software for real estate agencies. 11 smart tools for lead generation, marketing, legal analysis and content for real estate agents in Spain.",
+    "landing": {
+      "title": "AI Software for Real Estate Agencies",
+      "description": "11 AI-powered smart tools for real estate agents: lead generation, marketing, legal analysis and virtual home staging. Try free."
+    },
+    "affiliate": {
+      "title": "Affiliate Program",
+      "description": "Earn recurring commissions by recommending Ace-Inmotools. Affiliate program for real estate professionals."
+    },
+    "affiliateTerms": {
+      "title": "Affiliate Program Terms",
+      "description": "Terms and conditions of the Ace-Inmotools affiliate program for real estate professionals."
+    },
+    "terms": {
+      "title": "Terms of Use",
+      "description": "Terms and conditions of use for the Ace-Inmotools platform."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "Privacy policy and personal data processing of Ace-Inmotools."
+    },
+    "cookies": {
+      "title": "Cookie Policy",
+      "description": "Information about cookie usage on the Ace-Inmotools platform."
+    },
+    "legalNotice": {
+      "title": "Legal Notice",
+      "description": "Legal information and identification data of Ace-Inmotools."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Access all AI tools for your real estate business from a single dashboard."
+    }
   }
 }

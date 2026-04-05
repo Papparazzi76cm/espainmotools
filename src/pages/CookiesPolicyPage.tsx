@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SEOHead from "@/components/SEOHead";
 
 const sectionsES = [
   { title: "1. ¿Qué son las cookies?", content: "Las cookies son pequeños archivos de texto que los sitios web almacenan en su dispositivo cuando los visita." },
@@ -32,6 +33,7 @@ const CookiesPolicyPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead titleKey="seo.cookies.title" descriptionKey="seo.cookies.description" canonical="https://es-ace-inmotools.lovable.app/politica-cookies" />
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="mb-8">
           <Button variant="ghost" size="sm" asChild><a href="/auth"><ArrowLeft className="h-4 w-4 mr-1" />{t("legal.back")}</a></Button>

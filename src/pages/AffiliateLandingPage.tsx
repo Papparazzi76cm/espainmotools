@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import SEOHead from "@/components/SEOHead";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -55,6 +56,7 @@ export default function AffiliateLandingPage() {
 
   return (
     <div className="relative min-h-screen bg-background overflow-x-hidden">
+      <SEOHead titleKey="seo.affiliate.title" descriptionKey="seo.affiliate.description" canonical="https://es-ace-inmotools.lovable.app/afiliados" />
       <ParticleField />
 
       {/* Nav */}

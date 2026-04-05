@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://es-ace-inmotools.lovable.app/sitemap.xml

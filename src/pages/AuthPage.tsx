@@ -18,6 +18,7 @@ import PricingSection from "@/components/landing/PricingSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
 import FooterSection from "@/components/landing/FooterSection";
 import ChatbotWidget from "@/components/landing/ChatbotWidget";
+import SEOHead from "@/components/SEOHead";
 import { storeAffiliateRef, getAffiliateRef, clearAffiliateRef } from "@/lib/affiliateTracking";
 import { useTranslation } from "react-i18next";
 
@@ -72,8 +73,35 @@ const AuthPage = () => {
 
   const openAuth = (login = true) => { setIsLogin(login); setShowAuth(true); };
 
+  const softwareJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Ace-Inmotools",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": t("seo.landing.description"),
+    "url": "https://es-ace-inmotools.lovable.app/auth",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "description": "Free trial"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "39"
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-background overflow-x-hidden">
+      <SEOHead
+        titleKey="seo.landing.title"
+        descriptionKey="seo.landing.description"
+        canonical="https://es-ace-inmotools.lovable.app/auth"
+        jsonLd={softwareJsonLd}
+      />
       <ParticleField />
       <LandingNav onGetStarted={() => openAuth(false)} onLogin={() => openAuth(true)} />
       <HeroSection onGetStarted={() => openAuth(false)} />

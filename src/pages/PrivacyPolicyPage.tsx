@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SEOHead from "@/components/SEOHead";
 
 const sectionsES = [
   { title: "1. Responsable del tratamiento", content: "El responsable del tratamiento de los datos personales recogidos a través de esta plataforma es Ace-inmotools. Puede contactar con nosotros a través del correo electrónico disponible en la sección de contacto de nuestra web." },
@@ -40,6 +41,7 @@ const PrivacyPolicyPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead titleKey="seo.privacy.title" descriptionKey="seo.privacy.description" canonical="https://es-ace-inmotools.lovable.app/politica-privacidad" />
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="mb-8">
           <Button variant="ghost" size="sm" asChild><a href="/auth"><ArrowLeft className="h-4 w-4 mr-1" />{t("legal.back")}</a></Button>

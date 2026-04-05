@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PynmoLogo from "@/components/PynmoLogo";
 import { useTranslation } from "react-i18next";
+import SEOHead from "@/components/SEOHead";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-5xl mx-auto animate-fade-in">
+      <SEOHead titleKey="seo.dashboard.title" descriptionKey="seo.dashboard.description" noindex />
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-1">
           <PynmoLogo size="lg" />
