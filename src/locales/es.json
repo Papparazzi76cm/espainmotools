@@ -145,7 +145,7 @@
   "tools": {
     "home-staging": { "title": "Home Staging IA", "description": "Edita imágenes de inmuebles con inteligencia artificial" },
     "descripciones": { "title": "Generador de Textos", "description": "Crea descripciones y anuncios profesionales para inmuebles" },
-    "consultor-legal": { "title": "Consultor Jurídico", "description": "Resuelve dudas legales inmobiliarias de España" },
+    "consultor-legal": { "title": "Consultor Jurídico", "description": "Resuelve dudas legales inmobiliarias adaptadas a tu país" },
     "costes": { "title": "Calculadora de Costes", "description": "Desglose completo de costes de compraventa" },
     "rentabilidad": { "title": "Calculadora de Rentabilidad", "description": "Analiza la rentabilidad de inversiones inmobiliarias" },
     "informes": { "title": "Informes de Valoración", "description": "Genera informes profesionales personalizados" },
