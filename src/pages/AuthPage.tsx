@@ -145,6 +145,29 @@ const AuthPage = () => {
                             </button>
                           </div>
                         </div>
+                        <div>
+                          <Label className="mb-2 block">{t("auth.country")}</Label>
+                          <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                            <SelectTrigger className="w-full">
+                              <SelectValue>
+                                <span className="flex items-center gap-2">
+                                  <span>{countries.find(c => c.country_code === selectedCountry)?.flag_emoji || "🇪🇸"}</span>
+                                  <span>{countries.find(c => c.country_code === selectedCountry)?.country_name || "España"}</span>
+                                </span>
+                              </SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              {countries.map((c) => (
+                                <SelectItem key={c.country_code} value={c.country_code}>
+                                  <span className="flex items-center gap-2">
+                                    <span>{c.flag_emoji}</span>
+                                    <span className="text-sm">{c.country_name}</span>
+                                  </span>
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </>
                     )}
                     <div><Label>{t("auth.email")}</Label><Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tu@email.com" required /></div>
