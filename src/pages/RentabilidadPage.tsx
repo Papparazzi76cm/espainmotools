@@ -42,7 +42,7 @@ const RentabilidadPage = () => {
     const netaTemp = temp ? ((ingresoTempAnual - gastos * 1.3) / precio) * 100 : 0;
     const res = { tradicional: { bruta: brutaTrad, neta: netaTrad, ingresoAnual: ingresoTradAnual }, temporal: { bruta: brutaTemp, neta: netaTemp, ingresoAnual: ingresoTempAnual } };
     setResultado(res);
-    saveResult(`${fmtEur(precio)}`, { precioCompra: precio, alquilerTradicional: trad, alquilerTemporal: temp, ocupacionTemporal: ocup, gastosAnuales: gastos }, res);
+    saveResult(`${fmtCurrency(precio)}`, { precioCompra: precio, alquilerTradicional: trad, alquilerTemporal: temp, ocupacionTemporal: ocup, gastosAnuales: gastos }, res);
   };
 
   return (
