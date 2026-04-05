@@ -9,6 +9,7 @@ import { LogOut, Shield, Building2, Link2 } from "lucide-react";
 import PynmoLogo from "@/components/PynmoLogo";
 import { supabase } from "@/integrations/supabase/client";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import CountrySelector from "@/components/CountrySelector";
 import { useTranslation } from "react-i18next";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
