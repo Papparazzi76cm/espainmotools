@@ -33,7 +33,9 @@ const AuthPage = () => {
   const [fullName, setFullName] = useState("");
   const [userType, setUserType] = useState<"agente" | "agencia" | "">("");
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("es");
   const [loading, setLoading] = useState(false);
+  const { countries } = useCountryConfig();
   const navigate = useNavigate();
 
   useEffect(() => {
