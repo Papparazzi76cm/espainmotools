@@ -127,43 +127,40 @@ Detalles adicionales: ${data.detalles || "ninguno"}.`;
         break;
       }
       case "costes-vendedor": {
-        systemPrompt = `Eres un asesor fiscal inmobiliario experto en la legislación tributaria española. Calcula con precisión los costes fiscales de una venta de inmueble.
+        const taxDetails = Object.entries(taxConfig).map(([k, v]) => `- ${k}: ${v}`).join("\n");
+        systemPrompt = `Eres un asesor fiscal inmobiliario experto en la legislación tributaria de ${countryName}. Calcula con precisión los costes fiscales de una venta de inmueble según la normativa del país.
 
-Para el IRPF por ganancia patrimonial:
-- Calcula la ganancia = precio de venta - precio de adquisición (ajustado por coeficientes de actualización si aplica).
-- Aplica los tramos vigentes del IRPF sobre la ganancia: 19% (hasta 6.000€), 21% (6.000-50.000€), 23% (50.000-200.000€), 27% (200.000-300.000€), 28% (>300.000€).
-- Considera gastos deducibles habituales (notaría, registro, comisiones de compra).
+Impuestos y tasas aplicables en ${countryName}:
+${taxDetails || "Consulta la normativa fiscal vigente del país."}
 
-Para la plusvalía municipal (IIVTNU):
-- Calcula usando el método real (ganancia real sobre valor catastral estimado) y el método objetivo (coeficientes por años de tenencia según normativa vigente).
-- Usa el método que resulte más favorable al contribuyente (tras la sentencia del TC).
-- Los coeficientes máximos orientativos por años de tenencia son: 1 año: 0.14, 2: 0.13, 3: 0.15, 4: 0.17, 5-8: ~0.17-0.20, 9-12: ~0.08-0.12, 13-20: ~0.08-0.45.
+Calcula cada impuesto según los tramos y tasas vigentes del país. Considera gastos deducibles habituales.
 
 Responde en JSON:
 {
-  "irpf_importe": número,
-  "irpf_detalle": "explicación del cálculo del IRPF con tramos aplicados",
-  "plusvalia_estimada": número,
-  "plusvalia_detalle": "explicación del cálculo de la plusvalía municipal",
+  "impuesto_principal_importe": número,
+  "impuesto_principal_detalle": "explicación del cálculo del impuesto principal sobre la ganancia",
+  "impuesto_transferencia_estimado": número,
+  "impuesto_transferencia_detalle": "explicación del cálculo del impuesto de transferencia/plusvalía",
+  "otros_costes": "otros costes aplicables (notaría, registro, etc.)",
   "notas": "observaciones adicionales o recomendaciones fiscales"
 }`;
-        userPrompt = `Calcula los costes fiscales de venta de un inmueble:
-- Precio de venta: ${data.precio_venta}€
-- Precio de adquisición: ${data.precio_adquisicion}€
+        userPrompt = `Calcula los costes fiscales de venta de un inmueble en ${countryName}:
+- Precio de venta: ${data.precio_venta}
+- Precio de adquisición: ${data.precio_adquisicion}
 - Año de adquisición: ${data.anio_adquisicion}
 - Año actual: ${new Date().getFullYear()}
-- Comunidad Autónoma: ${data.comunidad}
+- Región/Estado/Provincia: ${data.comunidad || "no especificada"}
 - Comisión del agente: ${data.comision}%`;
         break;
       }
       case "informes": {
-        systemPrompt = `Eres un tasador inmobiliario profesional en España. Genera informes de valoración detallados y fundamentados según la normativa española (Orden ECO/805/2003).
-Utiliza metodología comparativa de mercado y análisis de características del inmueble. Los precios deben expresarse en euros (€).
+        systemPrompt = `Eres un tasador inmobiliario profesional en ${countryName}. Genera informes de valoración detallados y fundamentados según la normativa del país.
+Utiliza metodología comparativa de mercado y análisis de características del inmueble. Los precios deben expresarse en la moneda local del país.
 Responde en JSON con esta estructura exacta:
 {
   "resumen_ejecutivo": "resumen del informe en 3-4 líneas",
   "analisis_mercado": "análisis de la zona y mercado actual en 4-6 líneas",
-  "valoracion_estimada": "rango de valoración con justificación (ej: 'Entre 180.000 € y 220.000 €, basado en...')",
+  "valoracion_estimada": "rango de valoración con justificación",
   "factores_positivos": ["factor 1", "factor 2", "factor 3"],
   "factores_negativos": ["factor 1", "factor 2"],
   "recomendaciones": ["recomendación 1", "recomendación 2", "recomendación 3"],
