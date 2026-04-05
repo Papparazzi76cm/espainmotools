@@ -86,27 +86,29 @@ function AuthRoute() {
 }
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/auth" element={<AuthRoute />} />
-            <Route path="/afiliados" element={<AffiliateLandingPage />} />
-            <Route path="/terminos-afiliados" element={<AffiliateTermsPage />} />
-            <Route path="/terminos" element={<TermsOfUsePage />} />
-            <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
-            <Route path="/politica-cookies" element={<CookiesPolicyPage />} />
-            <Route path="/aviso-legal" element={<LegalNoticePage />} />
-            <Route path="/*" element={<ProtectedRoutes />} />
-          </Routes>
-          <CookieConsentBanner />
-        </BrowserRouter>
-      </AuthProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/auth" element={<AuthRoute />} />
+              <Route path="/afiliados" element={<AffiliateLandingPage />} />
+              <Route path="/terminos-afiliados" element={<AffiliateTermsPage />} />
+              <Route path="/terminos" element={<TermsOfUsePage />} />
+              <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
+              <Route path="/politica-cookies" element={<CookiesPolicyPage />} />
+              <Route path="/aviso-legal" element={<LegalNoticePage />} />
+              <Route path="/*" element={<ProtectedRoutes />} />
+            </Routes>
+            <CookieConsentBanner />
+          </BrowserRouter>
+        </AuthProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 export default App;
