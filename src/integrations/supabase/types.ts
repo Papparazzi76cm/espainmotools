@@ -116,6 +116,60 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          author: string
+          category: string
+          content_en: string
+          content_es: string
+          cover_image: string | null
+          created_at: string
+          excerpt_en: string
+          excerpt_es: string
+          id: string
+          is_published: boolean
+          published_at: string | null
+          slug: string
+          title_en: string
+          title_es: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string
+          category?: string
+          content_en?: string
+          content_es?: string
+          cover_image?: string | null
+          created_at?: string
+          excerpt_en?: string
+          excerpt_es?: string
+          id?: string
+          is_published?: boolean
+          published_at?: string | null
+          slug: string
+          title_en: string
+          title_es: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          category?: string
+          content_en?: string
+          content_es?: string
+          cover_image?: string | null
+          created_at?: string
+          excerpt_en?: string
+          excerpt_es?: string
+          id?: string
+          is_published?: boolean
+          published_at?: string | null
+          slug?: string
+          title_en?: string
+          title_es?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       commissions: {
         Row: {
           affiliate_id: string
