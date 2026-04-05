@@ -12,6 +12,7 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-5xl mx-auto animate-fade-in">
+      <SEOHead titleKey="seo.dashboard.title" descriptionKey="seo.dashboard.description" noindex />
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-1">
           <PynmoLogo size="lg" />
