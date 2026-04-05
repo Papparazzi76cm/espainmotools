@@ -112,13 +112,15 @@ const BlogPage = () => {
                     className="group border-border/50 bg-card hover:border-primary/40 transition-all duration-300 cursor-pointer overflow-hidden h-full flex flex-col"
                     onClick={() => navigate(`/blog/${post.slug}`)}
                   >
-                    {post.cover_image && (
+                    {(blogCoverImages[post.slug] || post.cover_image) && (
                       <div className="h-48 overflow-hidden">
                         <img
-                          src={post.cover_image}
+                          src={blogCoverImages[post.slug] || post.cover_image!}
                           alt={isEn ? post.title_en : post.title_es}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
+                          width={896}
+                          height={512}
                         />
                       </div>
                     )}

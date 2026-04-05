@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, User } from "lucide-react";
+import { blogCoverImages } from "@/lib/blogImages";
 import ParticleField from "@/components/landing/ParticleField";
 import LandingNav from "@/components/landing/LandingNav";
 import FooterSection from "@/components/landing/FooterSection";
