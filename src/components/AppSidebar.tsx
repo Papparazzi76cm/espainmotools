@@ -9,6 +9,7 @@ import { LogOut, Shield, Building2, Link2 } from "lucide-react";
 import PynmoLogo from "@/components/PynmoLogo";
 import { supabase } from "@/integrations/supabase/client";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import CountrySelector from "@/components/CountrySelector";
 import { useTranslation } from "react-i18next";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -153,6 +154,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="p-3">
+        {!collapsed && <CountrySelector />}
         {!collapsed && <LanguageSwitcher />}
         {!collapsed && <TrialCountdown />}
         {!collapsed && user && (
@@ -165,6 +167,7 @@ export function AppSidebar() {
         )}
         {collapsed && (
           <>
+            <CountrySelector compact />
             <LanguageSwitcher compact />
             <Button variant="ghost" size="icon" onClick={signOut} className="w-full text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent/50">
               <LogOut className="h-4 w-4" />

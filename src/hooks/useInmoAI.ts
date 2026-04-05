@@ -5,12 +5,14 @@ import { useTrialContext } from "@/contexts/TrialContext";
 import { useUserRole } from "@/hooks/useUserRole";
 import { TESTER_DAILY_LIMITS } from "@/hooks/useTrial";
 import { useTranslation } from "react-i18next";
+import { useCountry } from "@/contexts/CountryContext";
 
 export function useInmoAI() {
   const [loading, setLoading] = useState(false);
   const { canUseTool, logUsage, trial } = useTrialContext();
   const { role, isTester } = useUserRole();
   const { i18n } = useTranslation();
+  const { selectedCountry } = useCountry();
 
   const generate = async (tool: string, data: Record<string, string>, images?: string[]) => {
     const check = canUseTool(tool, 1, role);
@@ -29,6 +31,16 @@ export function useInmoAI() {
     try {
       const currentLang = i18n.language?.startsWith("en") ? "en" : "es";
       const body: Record<string, any> = { tool, data, language: currentLang };
+      if (selectedCountry) {
+        body.country = {
+          code: selectedCountry.country_code,
+          name: selectedCountry.country_name,
+          ai_context: selectedCountry.ai_context_prompt,
+          legislation: selectedCountry.legislation,
+          tax_config: selectedCountry.tax_config,
+          terminology: selectedCountry.terminology,
+        };
+      }
       if (images && images.length > 0) {
         body.images = images;
       }
