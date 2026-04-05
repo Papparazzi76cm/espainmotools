@@ -103,6 +103,7 @@
     "accountType": "Tipo de cuenta",
     "agent": "Agente",
     "agency": "Agencia",
+    "country": "País",
     "email": "Email",
     "password": "Contraseña",
     "acceptTerms": "Acepto los",
