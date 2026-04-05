@@ -22,6 +22,7 @@ const MAX_IMAGES = 20;
 
 const DescripcionesPage = () => {
   const { t } = useTranslation();
+  const { currencySymbol } = useCountryCurrency();
   const [tipo, setTipo] = useState("");
   const [estilo, setEstilo] = useState("comercial");
   const [habitaciones, setHabitaciones] = useState("");
