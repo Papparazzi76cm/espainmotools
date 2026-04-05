@@ -9,7 +9,7 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { tool, data, images, language } = await req.json();
+    const { tool, data, images, language, country } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -17,6 +17,20 @@ serve(async (req) => {
     const langInstruction = lang === "en"
       ? "\n\nIMPORTANT: You MUST respond entirely in English. All text, labels, descriptions and content must be in English."
       : "";
+
+    // Country context - defaults to Spain if not provided
+    const countryName = country?.name || "España";
+    const countryCode = country?.code || "es";
+    const aiContext = country?.ai_context || "";
+    const legislation = country?.legislation || {};
+    const taxConfig = country?.tax_config || {};
+    const terminology = country?.terminology || {};
+
+    const countryInstruction = `\n\nCONTEXTO DE PAÍS: ${countryName} (${countryCode.toUpperCase()}).
+${aiContext}
+Usa la terminología local: ${Object.entries(terminology).map(([k, v]) => `${k}=${v}`).join(", ")}.
+Adapta todas las referencias legales, fiscales e impositivas a la legislación de ${countryName}.
+NO menciones leyes ni impuestos de otros países a menos que se pida expresamente una comparativa.`;
 
     let systemPrompt = "";
     let userPrompt = "";
