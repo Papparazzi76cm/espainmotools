@@ -26,7 +26,6 @@ const RentabilidadPage = () => {
   const { history, loading: histLoading, saveResult, deleteEntry } = useToolHistory("rentabilidad");
 
   const fmtPct = (n: number) => `${n.toFixed(2)}%`;
-  const fmtEur = (n: number) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
   const calcular = () => {
     const precio = parseFloat(precioCompra);
