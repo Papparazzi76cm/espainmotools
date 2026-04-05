@@ -152,7 +152,7 @@
     "entorno": { "title": "Area Description", "description": "Describe the area and services near the property" },
     "guiones": { "title": "Video Scripts", "description": "Scripts for Reels, TikTok and YouTube" },
     "captacion": { "title": "Lead Generation Assistant", "description": "Scripts and talking points to attract property owners" },
-    "contratos": { "title": "Contract Generator", "description": "Real estate contracts adapted to Spanish law" },
+    "contratos": { "title": "Contract Generator", "description": "Real estate contracts adapted to your country's law" },
     "roleplay": { "title": "Role Play Assistant", "description": "Train negotiation with AI-simulated clients" }
   },
   "dashboard": {
