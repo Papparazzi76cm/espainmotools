@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SEOHead from "@/components/SEOHead";
 
 const sectionsES = [
   { title: "1. Responsable del tratamiento", content: "El responsable del tratamiento de los datos personales recogidos a través de esta plataforma es Ace-inmotools. Puede contactar con nosotros a través del correo electrónico disponible en la sección de contacto de nuestra web." },
