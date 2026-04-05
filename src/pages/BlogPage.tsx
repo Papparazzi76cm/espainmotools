@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calendar, User, ArrowLeft } from "lucide-react";
+import { Calendar, User, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ParticleField from "@/components/landing/ParticleField";
+import { blogCoverImages } from "@/lib/blogImages";
 import LandingNav from "@/components/landing/LandingNav";
 import FooterSection from "@/components/landing/FooterSection";
 import SEOHead from "@/components/SEOHead";
@@ -111,13 +112,15 @@ const BlogPage = () => {
                     className="group border-border/50 bg-card hover:border-primary/40 transition-all duration-300 cursor-pointer overflow-hidden h-full flex flex-col"
                     onClick={() => navigate(`/blog/${post.slug}`)}
                   >
-                    {post.cover_image && (
+                    {(blogCoverImages[post.slug] || post.cover_image) && (
                       <div className="h-48 overflow-hidden">
                         <img
-                          src={post.cover_image}
+                          src={blogCoverImages[post.slug] || post.cover_image!}
                           alt={isEn ? post.title_en : post.title_es}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
+                          width={896}
+                          height={512}
                         />
                       </div>
                     )}
