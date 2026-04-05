@@ -19,6 +19,7 @@ const durationKeys = ["30", "60", "90", "120", "150", "180", "210", "240", "270"
 
 const GuionesPage = () => {
   const { t } = useTranslation();
+  const { currencySymbol } = useCountryCurrency();
   const [tipo, setTipo] = useState("");
   const [ubicacion, setUbicacion] = useState("");
   const [precio, setPrecio] = useState("");
