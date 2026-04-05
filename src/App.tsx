@@ -32,6 +32,8 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import CookiesPolicyPage from "./pages/CookiesPolicyPage";
 import TermsOfUsePage from "./pages/TermsOfUsePage";
 import LegalNoticePage from "./pages/LegalNoticePage";
+import BlogPage from "./pages/BlogPage";
+import BlogPostPage from "./pages/BlogPostPage";
 import { ToolGuard } from "@/components/ToolGuard";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 
