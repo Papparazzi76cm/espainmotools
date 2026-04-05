@@ -13,6 +13,7 @@ import { useCountryCurrency } from "@/hooks/useCountryCurrency";
 
 const RentabilidadPage = () => {
   const { t } = useTranslation();
+  const { fmt: fmtCurrency, currencySymbol } = useCountryCurrency();
   const [precioCompra, setPrecioCompra] = useState("");
   const [alquilerTradicional, setAlquilerTradicional] = useState("");
   const [alquilerTemporal, setAlquilerTemporal] = useState("");
