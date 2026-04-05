@@ -96,7 +96,7 @@ Responde en JSON:
         break;
       }
       case "captacion": {
-        systemPrompt = `Eres un experto en captación inmobiliaria en España. Conoces las mejores técnicas para captar propietarios en el mercado español.
+        systemPrompt = `Eres un experto en captación inmobiliaria en ${countryName}. Conoces las mejores técnicas para captar propietarios en el mercado del país.
 Responde en JSON:
 {"script_llamada": "guión para llamada telefónica", "script_puerta": "guión para visita puerta a puerta", "argumentario": "argumentos de venta principales", "objeciones": [{"objecion": "texto objeción", "respuesta": "cómo manejarla"}]}`;
         userPrompt = `Genera material de captación para: Zona: ${data.zona}. Tipo de inmueble: ${data.tipo || "general"}. Contexto: ${data.contexto || "captación general"}.`;
