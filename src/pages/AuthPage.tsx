@@ -62,7 +62,7 @@ const AuthPage = () => {
       } else {
         const { error } = await supabase.auth.signUp({
           email, password,
-          options: { data: { full_name: fullName, user_type: userType, referred_by: affiliateRef || undefined }, emailRedirectTo: window.location.origin },
+          options: { data: { full_name: fullName, user_type: userType, country_code: selectedCountry, referred_by: affiliateRef || undefined }, emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
         if (affiliateRef) clearAffiliateRef();
