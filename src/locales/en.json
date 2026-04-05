@@ -499,10 +499,10 @@
     "summary": "📋 Summary",
     "generatedContract": "📄 Generated Contract",
     "keyClauses": "🔑 Key Clauses",
-    "legalBasis": "⚖️ Spanish Legal Basis",
+    "legalBasis": "⚖️ Legal Basis",
     "warnings": "⚠️ Warnings",
-    "emptyDesc": "Generate complete real estate contracts adapted to Spanish law.",
-    "emptyLegalRefs": "Civil Code, LAU, LPH, Mortgage Law and more.",
+    "emptyDesc": "Generate complete real estate contracts adapted to the laws of {{country}}.",
+    "emptyLegalRefs": "",
     "errorMinFields": "Complete the contract type, parties and property as a minimum.",
     "types": {
       "compraventa": "Property Purchase & Sale",
