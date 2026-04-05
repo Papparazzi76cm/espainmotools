@@ -83,7 +83,8 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const { messages, detect_country, country_name } = body;
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: "messages is required" }), {
         status: 400,
@@ -94,6 +95,24 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
+    // Build country-aware system prompt
+    let systemPrompt = SYSTEM_PROMPT;
+    if (country_name) {
+      systemPrompt += `\n\n## Contexto del usuario\nEl usuario se encuentra en **${country_name}**. Personaliza tus respuestas mencionando que la plataforma está adaptada al mercado inmobiliario de ${country_name}, con su legislación, impuestos y moneda local. Si te pregunta por herramientas legales o fiscales, confirma que se adaptarán a ${country_name}.`;
+    } else if (detect_country) {
+      // Try to detect country from request headers
+      const cfCountry = req.headers.get("cf-ipcountry") || req.headers.get("x-country") || "";
+      const countryMap: Record<string, string> = {
+        ES: "España", MX: "México", CR: "Costa Rica", PA: "Panamá", CO: "Colombia",
+        EC: "Ecuador", PE: "Perú", BO: "Bolivia", CL: "Chile", PY: "Paraguay",
+        AR: "Argentina", UY: "Uruguay", DO: "República Dominicana",
+      };
+      const detected = countryMap[cfCountry.toUpperCase()];
+      if (detected) {
+        systemPrompt += `\n\n## Contexto del usuario\nEl usuario parece estar en **${detected}**. Menciona que la plataforma está adaptada al mercado inmobiliario de ${detected}. Si te pregunta por herramientas legales o fiscales, confirma que se adaptarán a ${detected}.`;
+      }
+    }
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -103,8 +122,8 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...messages.slice(-20), // keep last 20 messages for context
+          { role: "system", content: systemPrompt },
+          ...messages.slice(-20),
         ],
         stream: true,
       }),
