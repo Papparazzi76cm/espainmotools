@@ -154,6 +154,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="p-3">
+        {!collapsed && <CountrySelector />}
         {!collapsed && <LanguageSwitcher />}
         {!collapsed && <TrialCountdown />}
         {!collapsed && user && (
