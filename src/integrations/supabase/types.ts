@@ -215,6 +215,57 @@ export type Database = {
         }
         Relationships: []
       }
+      country_config: {
+        Row: {
+          ai_context_prompt: string
+          country_code: string
+          country_name: string
+          created_at: string
+          currency_code: string
+          currency_symbol: string
+          flag_emoji: string
+          id: string
+          is_active: boolean
+          legal_references: string
+          legislation: Json
+          tax_config: Json
+          terminology: Json
+          updated_at: string
+        }
+        Insert: {
+          ai_context_prompt?: string
+          country_code: string
+          country_name: string
+          created_at?: string
+          currency_code?: string
+          currency_symbol?: string
+          flag_emoji?: string
+          id?: string
+          is_active?: boolean
+          legal_references?: string
+          legislation?: Json
+          tax_config?: Json
+          terminology?: Json
+          updated_at?: string
+        }
+        Update: {
+          ai_context_prompt?: string
+          country_code?: string
+          country_name?: string
+          created_at?: string
+          currency_code?: string
+          currency_symbol?: string
+          flag_emoji?: string
+          id?: string
+          is_active?: boolean
+          legal_references?: string
+          legislation?: Json
+          tax_config?: Json
+          terminology?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
       permissions: {
         Row: {
           created_at: string
