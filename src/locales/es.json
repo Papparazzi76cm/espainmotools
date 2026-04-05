@@ -152,7 +152,7 @@
     "entorno": { "title": "Descripción de Entorno", "description": "Describe la zona y servicios cercanos al inmueble" },
     "guiones": { "title": "Guiones de Vídeo", "description": "Scripts para Reels, TikTok y YouTube" },
     "captacion": { "title": "Asistente de Captación", "description": "Scripts y argumentarios para captar propietarios" },
-    "contratos": { "title": "Generador de Contratos", "description": "Contratos inmobiliarios adaptados a la legislación española" },
+    "contratos": { "title": "Generador de Contratos", "description": "Contratos inmobiliarios adaptados a la legislación de tu país" },
     "roleplay": { "title": "Asistente de Role Play", "description": "Entrena negociación con clientes simulados por IA" }
   },
   "dashboard": {
