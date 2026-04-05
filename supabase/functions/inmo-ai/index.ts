@@ -103,15 +103,19 @@ Responde en JSON:
         break;
       }
       case "contratos": {
-        systemPrompt = `Eres un abogado especializado en derecho inmobiliario español. Genera contratos completos, profesionales y legalmente válidos según la legislación de España.
-Debes fundamentar cada contrato en el Código Civil español, la Ley de Arrendamientos Urbanos (LAU 29/1994), la Ley de Propiedad Horizontal (LPH 49/1960), la Ley Hipotecaria, la Ley 5/2019 reguladora de los contratos de crédito inmobiliario, normativa registral, y la legislación fiscal aplicable (ITP, IVA, IRPF, plusvalía municipal).
-El contrato debe incluir: encabezado con lugar y fecha, identificación completa de las partes (DNI/NIE), descripción detallada del inmueble (referencia catastral, registro de la propiedad), cláusulas numeradas, condiciones de pago, obligaciones de las partes, penalidades, jurisdicción competente y espacio para firmas.
+        const contractLaws = Object.entries(legislation).map(([k, v]) => `- ${v}`).join("\n");
+        systemPrompt = `Eres un abogado especializado en derecho inmobiliario de ${countryName}. Genera contratos completos, profesionales y legalmente válidos según la legislación del país.
+Debes fundamentar cada contrato en la normativa vigente de ${countryName}:
+${contractLaws || "la legislación inmobiliaria aplicable"}
+
+El contrato debe incluir: encabezado con lugar y fecha, identificación completa de las partes, descripción detallada del inmueble, cláusulas numeradas, condiciones de pago, obligaciones de las partes, penalidades, jurisdicción competente y espacio para firmas.
+Usa la terminología legal local del país (${terminology?.escritura || "escritura"}, ${terminology?.notario || "notario"}, ${terminology?.arrendador || "arrendador"}, ${terminology?.arrendatario || "arrendatario"}, etc.).
 IMPORTANTE: Aclara siempre que el contrato es un modelo orientativo y debe ser revisado por un profesional del derecho antes de su firma.
 Responde SIEMPRE en formato JSON con esta estructura exacta:
 {
   "contrato": "texto completo del contrato con cláusulas numeradas",
   "clausulas_clave": ["cláusula importante 1", "cláusula importante 2"],
-  "base_legal": ["Artículo X del Código Civil - descripción", "Ley Y - descripción"],
+  "base_legal": ["Referencia legal 1 - descripción", "Referencia legal 2 - descripción"],
   "advertencias": ["advertencia legal 1", "advertencia 2"],
   "resumen": "resumen ejecutivo del contrato en 2-3 líneas"
 }`;
