@@ -177,7 +177,8 @@ Responde en JSON con esta estructura exacta:
         });
     }
 
-    // Append language instruction to system prompt
+    // Append country and language instructions to system prompt
+    systemPrompt += countryInstruction;
     systemPrompt += langInstruction;
 
     // Build messages - support multimodal content for descripciones with images
