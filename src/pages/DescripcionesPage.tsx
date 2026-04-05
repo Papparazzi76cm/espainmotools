@@ -85,7 +85,7 @@ const DescripcionesPage = () => {
                 <div><Label>{t("descripciones.area")}</Label><Input type="number" placeholder="120" value={superficie} onChange={(e) => setSuperficie(e.target.value)} /></div>
               </div>
               <div><Label>{t("descripciones.location")}</Label><Input placeholder={t("descripciones.locationPlaceholder")} value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} /></div>
-              <div><Label>{t("descripciones.price")}</Label><Input placeholder={t("descripciones.pricePlaceholder")} value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
+              <div><Label>{t("descripciones.price")} ({currencySymbol})</Label><Input placeholder={t("descripciones.pricePlaceholder")} value={precio} onChange={(e) => setPrecio(e.target.value)} /></div>
               <div>
                 <Label>{t("descripciones.writingStyle")}</Label>
                 <Select value={estilo} onValueChange={setEstilo}>

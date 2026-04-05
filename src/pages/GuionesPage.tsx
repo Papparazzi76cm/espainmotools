@@ -12,6 +12,7 @@ import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
 import { useTranslation } from "react-i18next";
+import { useCountryCurrency } from "@/hooks/useCountryCurrency";
 
 const toneKeys = ["profesional", "cercano", "energetico", "lujo"] as const;
 const durationKeys = ["30", "60", "90", "120", "150", "180", "210", "240", "270", "300"] as const;

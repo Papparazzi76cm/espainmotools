@@ -75,8 +75,8 @@ const RentabilidadPage = () => {
         <div className="space-y-4">
           {resultado ? (
             <>
-              <RentCard title={t("rentabilidad.traditionalRental")} icon={Home} bruta={resultado.tradicional.bruta} neta={resultado.tradicional.neta} ingresoAnual={resultado.tradicional.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtEur} t={t} />
-              <RentCard title={t("rentabilidad.temporaryRental")} icon={Building} bruta={resultado.temporal.bruta} neta={resultado.temporal.neta} ingresoAnual={resultado.temporal.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtEur} t={t} />
+               <RentCard title={t("rentabilidad.traditionalRental")} icon={Home} bruta={resultado.tradicional.bruta} neta={resultado.tradicional.neta} ingresoAnual={resultado.tradicional.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtCurrency} t={t} />
+               <RentCard title={t("rentabilidad.temporaryRental")} icon={Building} bruta={resultado.temporal.bruta} neta={resultado.temporal.neta} ingresoAnual={resultado.temporal.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtCurrency} t={t} />
               {resultado.tradicional.bruta > 0 && resultado.temporal.bruta > 0 && (
                 <Card className="glass-card border-primary/30">
                   <CardContent className="p-5">

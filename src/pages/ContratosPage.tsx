@@ -72,6 +72,25 @@ const ContratosPage = () => {
         <div className="space-y-4">
           <Card className="glass-card">
             <CardHeader><CardTitle className="text-base">{t("contratos.contractData")}</CardTitle></CardHeader>
+            {/* Country legal context */}
+            <div className="px-6 pb-2">
+              <div className="p-2.5 rounded-lg bg-muted/50 border border-border">
+                <div className="flex items-start gap-2 mb-1.5">
+                  <Info className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-[11px] font-medium">{t("contratos.legalFramework", { country: countryName, defaultValue: `Legislación aplicable: ${countryName}` })}</p>
+                </div>
+                <div className="space-y-0.5">
+                  {Object.values(legislation).slice(0, 4).map((law, i) => (
+                    <p key={i} className="text-[10px] text-muted-foreground">• {law}</p>
+                  ))}
+                </div>
+                {terminology?.notario && (
+                  <p className="text-[10px] text-muted-foreground/60 mt-1">
+                    {terminology.notario} · {terminology.escritura} · {terminology.arrendador}/{terminology.arrendatario}
+                  </p>
+                )}
+              </div>
+            </div>
             <CardContent className="space-y-4">
               <div>
                 <Label>{t("contratos.contractType")}</Label>
