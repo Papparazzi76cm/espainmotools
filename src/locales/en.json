@@ -3,8 +3,26 @@
     "tools": "Tools",
     "howItWorks": "How it works",
     "pricing": "Pricing",
+    "blog": "Blog",
     "login": "Log In",
     "register": "Sign Up"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Guides, trends, and resources for real estate agents who want to stay ahead.",
+    "backToHome": "Back to home",
+    "backToBlog": "Back to blog",
+    "noPosts": "No articles published yet.",
+    "loading": "Loading...",
+    "notFound": "Article not found.",
+    "cta": "Want to try these tools in your real estate business?",
+    "ctaButton": "Get Started Free",
+    "categories": {
+      "captacion": "Lead Gen",
+      "marketing": "Marketing",
+      "legal": "Legal",
+      "general": "General"
+    }
   },
   "hero": {
     "badge": "Powered by Artificial Intelligence",
