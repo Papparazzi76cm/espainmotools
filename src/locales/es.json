@@ -288,7 +288,7 @@
     "response": "Respuesta",
     "summary": "Resumen",
     "recommendations": "Recomendaciones",
-    "emptyDesc": "Escribe tu consulta legal inmobiliaria y recibirás orientación adaptada a la legislación española."
+    "emptyDesc": "Escribe tu consulta legal inmobiliaria y recibirás orientación adaptada a la legislación de {{country}}."
   },
   "costes": {
     "title": "Calculadora de Costes",
