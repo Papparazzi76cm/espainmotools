@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SEOHead from "@/components/SEOHead";
 
 const sectionsES = [
   { title: "1. Objeto", content: "Los presentes Términos y Condiciones regulan el acceso y uso de la plataforma Ace-inmotools, un servicio de herramientas digitales basadas en inteligencia artificial destinadas a profesionales del sector inmobiliario en España." },
