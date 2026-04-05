@@ -79,13 +79,13 @@
     "feat_allMonthly": "Todo del plan mensual",
     "feat_prioritySupport": "Soporte prioritario",
     "feat_newToolsFirst": "Nuevas herramientas primero",
-    "feat_annualBilling": "Facturación anual: 120€/año",
+    "feat_annualBilling": "Facturación anual: {{total}}{{symbol}}/año",
     "feat_max10": "Máximo 10 usuarios",
     "feat_fullAccess": "Acceso completo a todas las herramientas",
     "feat_adminPanel": "Panel de administración",
     "feat_allMonthlyAgency": "Todo del plan mensual de agencia",
     "feat_dedicatedSupport": "Soporte dedicado",
-    "feat_annualBillingAgency": "Facturación anual: 444€/año"
+    "feat_annualBillingAgency": "Facturación anual: {{total}}{{symbol}}/año"
   },
   "footer": {
     "legalNotice": "Aviso Legal",
