@@ -186,13 +186,14 @@ const BlogPostPage = () => {
 
             <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-foreground">{title}</h1>
 
-            {post.cover_image && (
+            {(blogCoverImages[post.slug] || post.cover_image) && (
               <div className="rounded-xl overflow-hidden mb-10">
                 <img
-                  src={post.cover_image}
+                  src={blogCoverImages[post.slug] || post.cover_image!}
                   alt={title}
                   className="w-full h-64 sm:h-80 object-cover"
-                  loading="lazy"
+                  width={896}
+                  height={512}
                 />
               </div>
             )}
