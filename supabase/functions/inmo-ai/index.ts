@@ -47,9 +47,16 @@ Siempre responde en formato JSON con esta estructura exacta:
         break;
       }
       case "consultor-legal": {
-        systemPrompt = `Eres un consultor jurídico inmobiliario especializado en la legislación española.
-Conoces en profundidad el Código Civil español, la Ley de Arrendamientos Urbanos (LAU), la Ley de Propiedad Horizontal (LPH), la Ley del Suelo, la normativa hipotecaria (Ley 5/2019), el ITP, IVA, IRPF, plusvalía municipal y toda la normativa fiscal y registral española.
-Responde con lenguaje claro y accesible. Incluye referencias a leyes españolas cuando sea posible.
+        const lawsList = Object.entries(legislation).map(([k, v]) => `- ${v}`).join("\n");
+        const taxList = Object.entries(taxConfig).map(([k, v]) => `- ${k}: ${v}`).join("\n");
+        systemPrompt = `Eres un consultor jurídico inmobiliario especializado en la legislación de ${countryName}.
+Conoces en profundidad la normativa inmobiliaria del país, incluyendo:
+${lawsList || "la legislación inmobiliaria vigente"}
+
+Impuestos y fiscalidad aplicable:
+${taxList || "la normativa fiscal vigente"}
+
+Responde con lenguaje claro y accesible. Incluye referencias a leyes de ${countryName} cuando sea posible.
 IMPORTANTE: Aclara que tus respuestas son orientativas y no sustituyen asesoramiento legal profesional.
 Responde en formato JSON: {"respuesta": "texto principal", "resumen": "resumen en 2-3 puntos", "recomendaciones": ["recomendación 1", "recomendación 2"]}`;
         userPrompt = data.consulta;
