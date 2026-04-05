@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useCountryCurrency } from "@/hooks/useCountryCurrency";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -35,6 +36,7 @@ interface InformeResult {
 
 const InformesPage = () => {
   const { t } = useTranslation();
+  const { currencySymbol } = useCountryCurrency();
   const [tipo, setTipo] = useState("casa");
   const [ubicacion, setUbicacion] = useState("");
   const [superficie, setSuperficie] = useState("");
@@ -178,7 +180,7 @@ const InformesPage = () => {
                   <SelectContent>{CONSERVATION_STATES.map((v) => (<SelectItem key={v} value={v}>{t(`informes.conservationStates.${v}`)}</SelectItem>))}</SelectContent>
                 </Select>
               </div>
-              <div><Label>{t("informes.referencePrice")}</Label><Input placeholder={t("informes.referencePricePlaceholder")} value={precioReferencia} onChange={(e) => setPrecioReferencia(e.target.value)} className="mt-1.5" /></div>
+              <div><Label>{t("informes.referencePrice")} ({currencySymbol})</Label><Input placeholder={t("informes.referencePricePlaceholder")} value={precioReferencia} onChange={(e) => setPrecioReferencia(e.target.value)} className="mt-1.5" /></div>
               <div><Label>{t("informes.extrasLabel")}</Label><Textarea placeholder={t("informes.extrasPlaceholder")} value={extras} onChange={(e) => setExtras(e.target.value)} rows={2} className="mt-1.5" /></div>
 
               <div>

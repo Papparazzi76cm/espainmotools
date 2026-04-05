@@ -9,9 +9,11 @@ import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
 import { useTranslation } from "react-i18next";
+import { useCountryCurrency } from "@/hooks/useCountryCurrency";
 
 const RentabilidadPage = () => {
   const { t } = useTranslation();
+  const { fmt: fmtCurrency, currencySymbol } = useCountryCurrency();
   const [precioCompra, setPrecioCompra] = useState("");
   const [alquilerTradicional, setAlquilerTradicional] = useState("");
   const [alquilerTemporal, setAlquilerTemporal] = useState("");
@@ -24,7 +26,6 @@ const RentabilidadPage = () => {
   const { history, loading: histLoading, saveResult, deleteEntry } = useToolHistory("rentabilidad");
 
   const fmtPct = (n: number) => `${n.toFixed(2)}%`;
-  const fmtEur = (n: number) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
   const calcular = () => {
     const precio = parseFloat(precioCompra);
@@ -41,7 +42,7 @@ const RentabilidadPage = () => {
     const netaTemp = temp ? ((ingresoTempAnual - gastos * 1.3) / precio) * 100 : 0;
     const res = { tradicional: { bruta: brutaTrad, neta: netaTrad, ingresoAnual: ingresoTradAnual }, temporal: { bruta: brutaTemp, neta: netaTemp, ingresoAnual: ingresoTempAnual } };
     setResultado(res);
-    saveResult(`${fmtEur(precio)}`, { precioCompra: precio, alquilerTradicional: trad, alquilerTemporal: temp, ocupacionTemporal: ocup, gastosAnuales: gastos }, res);
+    saveResult(`${fmtCurrency(precio)}`, { precioCompra: precio, alquilerTradicional: trad, alquilerTemporal: temp, ocupacionTemporal: ocup, gastosAnuales: gastos }, res);
   };
 
   return (
@@ -56,16 +57,16 @@ const RentabilidadPage = () => {
           <Card className="glass-card">
             <CardHeader><CardTitle className="text-base">{t("rentabilidad.investmentData")}</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <div><Label>{t("rentabilidad.purchasePrice")}</Label><Input type="number" placeholder="250.000" value={precioCompra} onChange={(e) => setPrecioCompra(e.target.value)} /></div>
+              <div><Label>{t("rentabilidad.purchasePrice")} ({currencySymbol})</Label><Input type="number" placeholder="250000" value={precioCompra} onChange={(e) => setPrecioCompra(e.target.value)} /></div>
               <Separator />
               <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground"><Home className="h-4 w-4" /> {t("rentabilidad.traditionalRental")}</div>
-              <div><Label>{t("rentabilidad.monthlyRent")}</Label><Input type="number" placeholder="900" value={alquilerTradicional} onChange={(e) => setAlquilerTradicional(e.target.value)} /></div>
+              <div><Label>{t("rentabilidad.monthlyRent")} ({currencySymbol})</Label><Input type="number" placeholder="900" value={alquilerTradicional} onChange={(e) => setAlquilerTradicional(e.target.value)} /></div>
               <Separator />
               <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground"><Building className="h-4 w-4" /> {t("rentabilidad.temporaryRental")}</div>
-              <div><Label>{t("rentabilidad.nightlyPrice")}</Label><Input type="number" placeholder="80" value={alquilerTemporal} onChange={(e) => setAlquilerTemporal(e.target.value)} /></div>
+              <div><Label>{t("rentabilidad.nightlyPrice")} ({currencySymbol})</Label><Input type="number" placeholder="80" value={alquilerTemporal} onChange={(e) => setAlquilerTemporal(e.target.value)} /></div>
               <div><Label>{t("rentabilidad.estimatedOccupancy")}</Label><Input type="number" placeholder="60" value={ocupacionTemporal} onChange={(e) => setOcupacionTemporal(e.target.value)} /></div>
               <Separator />
-              <div><Label>{t("rentabilidad.annualExpenses")}</Label><Input type="number" placeholder="3.000" value={gastosAnuales} onChange={(e) => setGastosAnuales(e.target.value)} /></div>
+              <div><Label>{t("rentabilidad.annualExpenses")} ({currencySymbol})</Label><Input type="number" placeholder="3000" value={gastosAnuales} onChange={(e) => setGastosAnuales(e.target.value)} /></div>
               <Button onClick={calcular} className="w-full">{t("rentabilidad.calculateButton")}</Button>
             </CardContent>
           </Card>
@@ -74,8 +75,8 @@ const RentabilidadPage = () => {
         <div className="space-y-4">
           {resultado ? (
             <>
-              <RentCard title={t("rentabilidad.traditionalRental")} icon={Home} bruta={resultado.tradicional.bruta} neta={resultado.tradicional.neta} ingresoAnual={resultado.tradicional.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtEur} t={t} />
-              <RentCard title={t("rentabilidad.temporaryRental")} icon={Building} bruta={resultado.temporal.bruta} neta={resultado.temporal.neta} ingresoAnual={resultado.temporal.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtEur} t={t} />
+               <RentCard title={t("rentabilidad.traditionalRental")} icon={Home} bruta={resultado.tradicional.bruta} neta={resultado.tradicional.neta} ingresoAnual={resultado.tradicional.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtCurrency} t={t} />
+               <RentCard title={t("rentabilidad.temporaryRental")} icon={Building} bruta={resultado.temporal.bruta} neta={resultado.temporal.neta} ingresoAnual={resultado.temporal.ingresoAnual} fmtPct={fmtPct} fmtCurrency={fmtCurrency} t={t} />
               {resultado.tradicional.bruta > 0 && resultado.temporal.bruta > 0 && (
                 <Card className="glass-card border-primary/30">
                   <CardContent className="p-5">

@@ -2,15 +2,20 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Scale, Sparkles, Loader2, Send } from "lucide-react";
+import { Scale, Sparkles, Loader2, Send, Info } from "lucide-react";
 import { useInmoAI } from "@/hooks/useInmoAI";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
 import { useTranslation } from "react-i18next";
+import { useCountry } from "@/contexts/CountryContext";
 
 const ConsultorLegalPage = () => {
   const { t } = useTranslation();
+  const { selectedCountry } = useCountry();
+  const countryName = selectedCountry?.country_name || "España";
+  const legislation = (selectedCountry?.legislation || {}) as Record<string, string>;
+  const legalRefs = selectedCountry?.legal_references || "";
   const [consulta, setConsulta] = useState("");
   const [resultado, setResultado] = useState<{ respuesta: string; resumen: string; recomendaciones: string[] } | null>(null);
   const { generate, loading } = useInmoAI();
@@ -36,6 +41,19 @@ const ConsultorLegalPage = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
+          {/* Country legal context banner */}
+          <div className="p-3 rounded-lg bg-muted/50 border border-border">
+            <div className="flex items-start gap-2 mb-2">
+              <Info className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+              <p className="text-xs font-medium">{t("consultorLegal.legalFramework", { country: countryName, defaultValue: `Marco jurídico de ${countryName}` })}</p>
+            </div>
+            <div className="space-y-0.5">
+              {Object.values(legislation).slice(0, 5).map((law, i) => (
+                <p key={i} className="text-[11px] text-muted-foreground">• {law}</p>
+              ))}
+              {legalRefs && <p className="text-[10px] text-muted-foreground/60 mt-1 italic">{legalRefs}</p>}
+            </div>
+          </div>
           <Card className="glass-card">
             <CardHeader><CardTitle className="text-base">{t("consultorLegal.yourQuery")}</CardTitle></CardHeader>
             <CardContent className="space-y-4">

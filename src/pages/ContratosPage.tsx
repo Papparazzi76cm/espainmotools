@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, FileSignature, Sparkles, Loader2, Download, FileDown } from "lucide-react";
+import { Copy, FileSignature, Sparkles, Loader2, Download, FileDown, Info } from "lucide-react";
 import { toast } from "sonner";
 import { useInmoAI } from "@/hooks/useInmoAI";
 import { useAgencyProfile } from "@/hooks/useAgencyProfile";
@@ -14,11 +14,17 @@ import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
 import { useTranslation } from "react-i18next";
+import { useCountry } from "@/contexts/CountryContext";
 
 const contractTypeKeys = ["compraventa", "alquiler", "arras", "reserva", "opcion_compra", "cesion", "permuta", "exclusividad", "administracion", "alquiler_temporal"] as const;
 
 const ContratosPage = () => {
   const { t } = useTranslation();
+  const { selectedCountry } = useCountry();
+  const countryName = selectedCountry?.country_name || "España";
+  const legislation = (selectedCountry?.legislation || {}) as Record<string, string>;
+  const terminology = (selectedCountry?.terminology || {}) as Record<string, string>;
+  const legalRefs = selectedCountry?.legal_references || "";
   const [tipoContrato, setTipoContrato] = useState("");
   const [partes, setPartes] = useState("");
   const [inmueble, setInmueble] = useState("");
@@ -66,6 +72,25 @@ const ContratosPage = () => {
         <div className="space-y-4">
           <Card className="glass-card">
             <CardHeader><CardTitle className="text-base">{t("contratos.contractData")}</CardTitle></CardHeader>
+            {/* Country legal context */}
+            <div className="px-6 pb-2">
+              <div className="p-2.5 rounded-lg bg-muted/50 border border-border">
+                <div className="flex items-start gap-2 mb-1.5">
+                  <Info className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-[11px] font-medium">{t("contratos.legalFramework", { country: countryName, defaultValue: `Legislación aplicable: ${countryName}` })}</p>
+                </div>
+                <div className="space-y-0.5">
+                  {Object.values(legislation).slice(0, 4).map((law, i) => (
+                    <p key={i} className="text-[10px] text-muted-foreground">• {law}</p>
+                  ))}
+                </div>
+                {terminology?.notario && (
+                  <p className="text-[10px] text-muted-foreground/60 mt-1">
+                    {terminology.notario} · {terminology.escritura} · {terminology.arrendador}/{terminology.arrendatario}
+                  </p>
+                )}
+              </div>
+            </div>
             <CardContent className="space-y-4">
               <div>
                 <Label>{t("contratos.contractType")}</Label>
