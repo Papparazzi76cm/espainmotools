@@ -288,7 +288,7 @@
     "response": "Response",
     "summary": "Summary",
     "recommendations": "Recommendations",
-    "emptyDesc": "Write your real estate legal question and receive guidance adapted to Spanish law."
+    "emptyDesc": "Write your real estate legal question and receive guidance adapted to the laws of {{country}}."
   },
   "costes": {
     "title": "Cost Calculator",
