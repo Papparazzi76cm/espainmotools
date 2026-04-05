@@ -79,6 +79,7 @@ function ProtectedRoutes() {
         </Routes>
       </AppLayout>
     </TrialProvider>
+    </CountryProvider>
   );
 }
 

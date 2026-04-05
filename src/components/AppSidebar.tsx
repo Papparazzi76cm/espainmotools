@@ -167,6 +167,7 @@ export function AppSidebar() {
         )}
         {collapsed && (
           <>
+            <CountrySelector compact />
             <LanguageSwitcher compact />
             <Button variant="ghost" size="icon" onClick={signOut} className="w-full text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent/50">
               <LogOut className="h-4 w-4" />

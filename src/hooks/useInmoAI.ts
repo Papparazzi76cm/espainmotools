@@ -31,6 +31,16 @@ export function useInmoAI() {
     try {
       const currentLang = i18n.language?.startsWith("en") ? "en" : "es";
       const body: Record<string, any> = { tool, data, language: currentLang };
+      if (selectedCountry) {
+        body.country = {
+          code: selectedCountry.country_code,
+          name: selectedCountry.country_name,
+          ai_context: selectedCountry.ai_context_prompt,
+          legislation: selectedCountry.legislation,
+          tax_config: selectedCountry.tax_config,
+          terminology: selectedCountry.terminology,
+        };
+      }
       if (images && images.length > 0) {
         body.images = images;
       }
