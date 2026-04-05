@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, FileSignature, Sparkles, Loader2, Download, FileDown } from "lucide-react";
+import { Copy, FileSignature, Sparkles, Loader2, Download, FileDown, Info } from "lucide-react";
 import { toast } from "sonner";
 import { useInmoAI } from "@/hooks/useInmoAI";
 import { useAgencyProfile } from "@/hooks/useAgencyProfile";
@@ -14,6 +14,7 @@ import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
 import { useTranslation } from "react-i18next";
+import { useCountry } from "@/contexts/CountryContext";
 
 const contractTypeKeys = ["compraventa", "alquiler", "arras", "reserva", "opcion_compra", "cesion", "permuta", "exclusividad", "administracion", "alquiler_temporal"] as const;
 
