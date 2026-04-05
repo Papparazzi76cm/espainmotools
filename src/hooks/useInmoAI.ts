@@ -12,6 +12,7 @@ export function useInmoAI() {
   const { canUseTool, logUsage, trial } = useTrialContext();
   const { role, isTester } = useUserRole();
   const { i18n } = useTranslation();
+  const { selectedCountry } = useCountry();
 
   const generate = async (tool: string, data: Record<string, string>, images?: string[]) => {
     const check = canUseTool(tool, 1, role);
