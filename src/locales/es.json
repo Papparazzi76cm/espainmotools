@@ -903,5 +903,40 @@
     "save": "Guardar",
     "commissionGenerated": "Comisión generada correctamente",
     "commissionSkipped": "Comisión no generada:"
+  },
+  "seo": {
+    "defaultDescription": "Software con IA para inmobiliarias. 11 herramientas inteligentes de captación, marketing, análisis legal y contenido para agentes inmobiliarios en España.",
+    "landing": {
+      "title": "Software con IA para Inmobiliarias",
+      "description": "11 herramientas inteligentes de IA para agentes inmobiliarios: captación, marketing, análisis legal y home staging virtual. Prueba gratis."
+    },
+    "affiliate": {
+      "title": "Programa de Afiliados",
+      "description": "Gana comisiones recurrentes recomendando Ace-Inmotools. Programa de afiliados para profesionales inmobiliarios."
+    },
+    "affiliateTerms": {
+      "title": "Términos del Programa de Afiliados",
+      "description": "Condiciones del programa de afiliados de Ace-Inmotools para profesionales inmobiliarios."
+    },
+    "terms": {
+      "title": "Condiciones de Uso",
+      "description": "Términos y condiciones de uso de la plataforma Ace-Inmotools."
+    },
+    "privacy": {
+      "title": "Política de Privacidad",
+      "description": "Política de privacidad y tratamiento de datos personales de Ace-Inmotools."
+    },
+    "cookies": {
+      "title": "Política de Cookies",
+      "description": "Información sobre el uso de cookies en la plataforma Ace-Inmotools."
+    },
+    "legalNotice": {
+      "title": "Aviso Legal",
+      "description": "Información legal y datos identificativos de Ace-Inmotools."
+    },
+    "dashboard": {
+      "title": "Panel de Control",
+      "description": "Accede a todas las herramientas IA para tu negocio inmobiliario desde un solo panel."
+    }
   }
 }
