@@ -66,7 +66,7 @@ const RentabilidadPage = () => {
               <div><Label>{t("rentabilidad.nightlyPrice")} ({currencySymbol})</Label><Input type="number" placeholder="80" value={alquilerTemporal} onChange={(e) => setAlquilerTemporal(e.target.value)} /></div>
               <div><Label>{t("rentabilidad.estimatedOccupancy")}</Label><Input type="number" placeholder="60" value={ocupacionTemporal} onChange={(e) => setOcupacionTemporal(e.target.value)} /></div>
               <Separator />
-              <div><Label>{t("rentabilidad.annualExpenses")}</Label><Input type="number" placeholder="3.000" value={gastosAnuales} onChange={(e) => setGastosAnuales(e.target.value)} /></div>
+              <div><Label>{t("rentabilidad.annualExpenses")} ({currencySymbol})</Label><Input type="number" placeholder="3000" value={gastosAnuales} onChange={(e) => setGastosAnuales(e.target.value)} /></div>
               <Button onClick={calcular} className="w-full">{t("rentabilidad.calculateButton")}</Button>
             </CardContent>
           </Card>
