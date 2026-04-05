@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Scale, Sparkles, Loader2, Send } from "lucide-react";
+import { Scale, Sparkles, Loader2, Send, Info } from "lucide-react";
 import { useInmoAI } from "@/hooks/useInmoAI";
 import { UsageLimitBanner } from "@/components/UsageLimitBanner";
 import { useToolHistory } from "@/hooks/useToolHistory";
 import { ToolHistoryPanel } from "@/components/ToolHistoryPanel";
 import { useTranslation } from "react-i18next";
+import { useCountry } from "@/contexts/CountryContext";
 
 const ConsultorLegalPage = () => {
   const { t } = useTranslation();
