@@ -54,6 +54,7 @@ function ProtectedRoutes() {
   if (!user) return <Navigate to="/auth" replace />;
 
   return (
+    <CountryProvider>
     <TrialProvider>
       <AppLayout>
         <Routes>
