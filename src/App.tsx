@@ -103,6 +103,8 @@ const App = () => (
               <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
               <Route path="/politica-cookies" element={<CookiesPolicyPage />} />
               <Route path="/aviso-legal" element={<LegalNoticePage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/*" element={<ProtectedRoutes />} />
             </Routes>
             <CookieConsentBanner />
