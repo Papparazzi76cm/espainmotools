@@ -30,7 +30,7 @@
     "title2": "business with AI",
     "title3": "Convert more real estate",
     "title4": "leads into clients",
-    "subtitle": "11 smart tools in one platform. Lead generation, marketing, legal analysis and content — everything you need as a real estate agent in Spain.",
+    "subtitle": "11 smart tools in one platform. Lead generation, marketing, legal analysis and content — all adapted to your country's legislation.",
     "cta": "Start Free",
     "stat1": "AI Tools",
     "stat2": "Available",
@@ -93,7 +93,7 @@
     "affiliates": "Affiliate Program",
     "privacy": "Privacy Policy",
     "cookies": "Cookie Policy",
-    "copyright": "© {{year}} Ace-inmotools. Made with AI for real estate agents in Spain."
+    "copyright": "© {{year}} Ace-inmotools. Made with AI for real estate agents."
   },
   "auth": {
     "loginTitle": "Log in to your account",
@@ -145,20 +145,20 @@
   "tools": {
     "home-staging": { "title": "AI Home Staging", "description": "Edit property images with artificial intelligence" },
     "descripciones": { "title": "Text Generator", "description": "Create professional descriptions and ads for properties" },
-    "consultor-legal": { "title": "Legal Advisor", "description": "Resolve real estate legal questions in Spain" },
+    "consultor-legal": { "title": "Legal Advisor", "description": "Resolve real estate legal questions adapted to your country" },
     "costes": { "title": "Cost Calculator", "description": "Complete breakdown of purchase and sale costs" },
     "rentabilidad": { "title": "Profitability Calculator", "description": "Analyze real estate investment profitability" },
     "informes": { "title": "Valuation Reports", "description": "Generate personalized professional reports" },
     "entorno": { "title": "Area Description", "description": "Describe the area and services near the property" },
     "guiones": { "title": "Video Scripts", "description": "Scripts for Reels, TikTok and YouTube" },
     "captacion": { "title": "Lead Generation Assistant", "description": "Scripts and talking points to attract property owners" },
-    "contratos": { "title": "Contract Generator", "description": "Real estate contracts adapted to Spanish law" },
+    "contratos": { "title": "Contract Generator", "description": "Real estate contracts adapted to your country's law" },
     "roleplay": { "title": "Role Play Assistant", "description": "Train negotiation with AI-simulated clients" }
   },
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome to",
-    "subtitle": "Your AI-powered tool suite for the real estate industry in Spain.",
+    "subtitle": "Your AI-powered tool suite for the real estate industry, adapted to your country's legislation.",
     "comingSoon": "Coming soon"
   },
   "common": {
@@ -929,7 +929,7 @@
     "commissionSkipped": "Commission not generated:"
   },
   "seo": {
-    "defaultDescription": "AI-powered software for real estate agencies. 11 smart tools for lead generation, marketing, legal analysis and content for real estate agents in Spain.",
+    "defaultDescription": "AI-powered software for real estate agencies. 11 smart tools for lead generation, marketing, legal analysis and content for real estate agents.",
     "landing": {
       "title": "AI Software for Real Estate Agencies",
       "description": "11 AI-powered smart tools for real estate agents: lead generation, marketing, legal analysis and virtual home staging. Try free."

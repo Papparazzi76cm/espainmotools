@@ -51,7 +51,7 @@ const ChatbotWidget = () => {
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}` },
-        body: JSON.stringify({ messages: updated }),
+        body: JSON.stringify({ messages: updated, detect_country: true }),
       });
       if (!resp.ok || !resp.body) {
         const err = await resp.json().catch(() => ({}));

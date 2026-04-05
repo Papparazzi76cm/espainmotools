@@ -30,7 +30,7 @@
     "title2": "inmobiliario con IA",
     "title3": "Convierte más leads",
     "title4": "inmobiliarios en clientes",
-    "subtitle": "11 herramientas inteligentes en una sola plataforma. Captación, comercialización, análisis legal y contenido — todo lo que necesitas como agente inmobiliario en España.",
+    "subtitle": "11 herramientas inteligentes en una sola plataforma. Captación, comercialización, análisis legal y contenido — todo adaptado a la legislación de tu país.",
     "cta": "Empezar Gratis",
     "stat1": "Herramientas IA",
     "stat2": "Disponible",
@@ -93,7 +93,7 @@
     "affiliates": "Programa de Afiliados",
     "privacy": "Política de Privacidad",
     "cookies": "Política de Cookies",
-    "copyright": "© {{year}} Ace-inmotools. Hecho con IA para agentes inmobiliarios en España."
+    "copyright": "© {{year}} Ace-inmotools. Hecho con IA para agentes inmobiliarios."
   },
   "auth": {
     "loginTitle": "Inicia sesión en tu cuenta",
@@ -145,20 +145,20 @@
   "tools": {
     "home-staging": { "title": "Home Staging IA", "description": "Edita imágenes de inmuebles con inteligencia artificial" },
     "descripciones": { "title": "Generador de Textos", "description": "Crea descripciones y anuncios profesionales para inmuebles" },
-    "consultor-legal": { "title": "Consultor Jurídico", "description": "Resuelve dudas legales inmobiliarias de España" },
+    "consultor-legal": { "title": "Consultor Jurídico", "description": "Resuelve dudas legales inmobiliarias adaptadas a tu país" },
     "costes": { "title": "Calculadora de Costes", "description": "Desglose completo de costes de compraventa" },
     "rentabilidad": { "title": "Calculadora de Rentabilidad", "description": "Analiza la rentabilidad de inversiones inmobiliarias" },
     "informes": { "title": "Informes de Valoración", "description": "Genera informes profesionales personalizados" },
     "entorno": { "title": "Descripción de Entorno", "description": "Describe la zona y servicios cercanos al inmueble" },
     "guiones": { "title": "Guiones de Vídeo", "description": "Scripts para Reels, TikTok y YouTube" },
     "captacion": { "title": "Asistente de Captación", "description": "Scripts y argumentarios para captar propietarios" },
-    "contratos": { "title": "Generador de Contratos", "description": "Contratos inmobiliarios adaptados a la legislación española" },
+    "contratos": { "title": "Generador de Contratos", "description": "Contratos inmobiliarios adaptados a la legislación de tu país" },
     "roleplay": { "title": "Asistente de Role Play", "description": "Entrena negociación con clientes simulados por IA" }
   },
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Bienvenido a",
-    "subtitle": "Tu suite de herramientas con IA para el sector inmobiliario en España.",
+    "subtitle": "Tu suite de herramientas con IA para el sector inmobiliario, adaptada a la legislación de tu país.",
     "comingSoon": "Próximamente"
   },
   "common": {
@@ -929,7 +929,7 @@
     "commissionSkipped": "Comisión no generada:"
   },
   "seo": {
-    "defaultDescription": "Software con IA para inmobiliarias. 11 herramientas inteligentes de captación, marketing, análisis legal y contenido para agentes inmobiliarios en España.",
+    "defaultDescription": "Software con IA para inmobiliarias. 11 herramientas inteligentes de captación, marketing, análisis legal y contenido para agentes inmobiliarios.",
     "landing": {
       "title": "Software con IA para Inmobiliarias",
       "description": "11 herramientas inteligentes de IA para agentes inmobiliarios: captación, marketing, análisis legal y home staging virtual. Prueba gratis."
