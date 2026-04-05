@@ -63,9 +63,11 @@ Responde en formato JSON: {"respuesta": "texto principal", "resumen": "resumen e
         break;
       }
       case "entorno": {
-        systemPrompt = `Eres un experto en el mercado inmobiliario de España. Conoces bien las zonas, barrios y ciudades españolas.
+        const currSymbol = countryCode === "es" ? "€" : (terminology?.currency_symbol || "$");
+        const currCode = country?.code === "es" ? "EUR" : (country?.currency_code || "USD");
+        systemPrompt = `Eres un experto en el mercado inmobiliario de ${countryName}. Conoces bien las zonas, barrios y ciudades del país.
 Genera una descripción atractiva del entorno/zona para uso inmobiliario.
-Incluye también un análisis de precios estimados de la zona en euros (€).
+Incluye también un análisis de precios estimados de la zona en la moneda local.
 Responde en JSON: {
   "descripcion": "texto descriptivo del entorno",
   "servicios": ["servicio 1", "servicio 2"],
@@ -74,9 +76,9 @@ Responde en JSON: {
   "precios_zona": {
     "resumen": "descripción general de los precios en la zona",
     "rangos": [
-      {"tipo": "Piso", "rango_min": 150000, "rango_max": 300000, "moneda": "EUR"},
-      {"tipo": "Casa / Chalet", "rango_min": 250000, "rango_max": 500000, "moneda": "EUR"},
-      {"tipo": "Terreno (m²)", "rango_min": 100, "rango_max": 500, "moneda": "EUR"}
+      {"tipo": "${terminology?.piso || "Departamento/Piso"}", "rango_min": 0, "rango_max": 0, "moneda": "${currCode}"},
+      {"tipo": "Casa", "rango_min": 0, "rango_max": 0, "moneda": "${currCode}"},
+      {"tipo": "Terreno (m²)", "rango_min": 0, "rango_max": 0, "moneda": "${currCode}"}
     ],
     "tendencia": "alza|estable|baja",
     "nivel": "economico|medio|medio-alto|alto|premium"
@@ -86,8 +88,9 @@ Responde en JSON: {
         break;
       }
       case "guiones": {
-        systemPrompt = `Eres un creador de contenido inmobiliario para redes sociales en España.
-Genera guiones profesionales y dinámicos adaptados a la duración indicada. Responde en JSON:
+        systemPrompt = `Eres un creador de contenido inmobiliario para redes sociales en ${countryName}.
+Genera guiones profesionales y dinámicos adaptados a la duración indicada. Usa terminología local del país.
+Responde en JSON:
 {"reel": "guión para Instagram Reel", "tiktok": "guión para TikTok", "youtube": "guión para YouTube con intro, desarrollo y cierre"}`;
         userPrompt = `Guión para inmueble: Tipo: ${data.tipo}. Ubicación: ${data.ubicacion}. Precio: ${data.precio || "consultar"}. Características: ${data.caracteristicas}. Tono: ${data.tono || "profesional y cercano"}. Duración objetivo: ${data.duracion || "60 segundos"}.`;
         break;
