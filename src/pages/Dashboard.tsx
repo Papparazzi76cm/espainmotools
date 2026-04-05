@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PynmoLogo from "@/components/PynmoLogo";
 import { useTranslation } from "react-i18next";
+import SEOHead from "@/components/SEOHead";
 
 const Dashboard = () => {
   const navigate = useNavigate();

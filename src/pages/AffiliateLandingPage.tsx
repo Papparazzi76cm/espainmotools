@@ -56,6 +56,7 @@ export default function AffiliateLandingPage() {
 
   return (
     <div className="relative min-h-screen bg-background overflow-x-hidden">
+      <SEOHead titleKey="seo.affiliate.title" descriptionKey="seo.affiliate.description" canonical="https://es-ace-inmotools.lovable.app/afiliados" />
       <ParticleField />
 
       {/* Nav */}

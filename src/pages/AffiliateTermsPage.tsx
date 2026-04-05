@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import PynmoLogo from "@/components/PynmoLogo";
 import FooterSection from "@/components/landing/FooterSection";
+import SEOHead from "@/components/SEOHead";
 
 const sectionsES = [
   { title: "1. Objeto del programa", content: "El Programa de Afiliados de Ace-Inmotools permite a usuarios registrados obtener comisiones por referir nuevos clientes de pago a la plataforma. Al registrarse como afiliado, el usuario acepta íntegramente estos términos y condiciones." },

@@ -43,6 +43,7 @@ const TermsOfUsePage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead titleKey="seo.terms.title" descriptionKey="seo.terms.description" canonical="https://es-ace-inmotools.lovable.app/terminos" />
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="mb-8">
           <Button variant="ghost" size="sm" asChild><a href="/auth"><ArrowLeft className="h-4 w-4 mr-1" />{t("legal.back")}</a></Button>
