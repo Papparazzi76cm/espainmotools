@@ -12,6 +12,10 @@ import { useCountry } from "@/contexts/CountryContext";
 
 const ConsultorLegalPage = () => {
   const { t } = useTranslation();
+  const { selectedCountry } = useCountry();
+  const countryName = selectedCountry?.country_name || "España";
+  const legislation = (selectedCountry?.legislation || {}) as Record<string, string>;
+  const legalRefs = selectedCountry?.legal_references || "";
   const [consulta, setConsulta] = useState("");
   const [resultado, setResultado] = useState<{ respuesta: string; resumen: string; recomendaciones: string[] } | null>(null);
   const { generate, loading } = useInmoAI();
