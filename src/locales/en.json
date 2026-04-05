@@ -103,6 +103,7 @@
     "accountType": "Account type",
     "agent": "Agent",
     "agency": "Agency",
+    "country": "Country",
     "email": "Email",
     "password": "Password",
     "acceptTerms": "I accept the",

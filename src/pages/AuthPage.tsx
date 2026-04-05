@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { X, Building2, User } from "lucide-react";
+import { X, Building2, User, Globe } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useCountryConfig } from "@/hooks/useCountryConfig";
 import PynmoLogo from "@/components/PynmoLogo";
 import { motion, AnimatePresence } from "framer-motion";
 import ParticleField from "@/components/landing/ParticleField";
@@ -31,7 +33,9 @@ const AuthPage = () => {
   const [fullName, setFullName] = useState("");
   const [userType, setUserType] = useState<"agente" | "agencia" | "">("");
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("es");
   const [loading, setLoading] = useState(false);
+  const { countries } = useCountryConfig();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,7 +62,7 @@ const AuthPage = () => {
       } else {
         const { error } = await supabase.auth.signUp({
           email, password,
-          options: { data: { full_name: fullName, user_type: userType, referred_by: affiliateRef || undefined }, emailRedirectTo: window.location.origin },
+          options: { data: { full_name: fullName, user_type: userType, country_code: selectedCountry, referred_by: affiliateRef || undefined }, emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
         if (affiliateRef) clearAffiliateRef();
@@ -140,6 +144,29 @@ const AuthPage = () => {
                               <Building2 className="h-5 w-5" />{t("auth.agency")}
                             </button>
                           </div>
+                        </div>
+                        <div>
+                          <Label className="mb-2 block">{t("auth.country")}</Label>
+                          <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                            <SelectTrigger className="w-full">
+                              <SelectValue>
+                                <span className="flex items-center gap-2">
+                                  <span>{countries.find(c => c.country_code === selectedCountry)?.flag_emoji || "🇪🇸"}</span>
+                                  <span>{countries.find(c => c.country_code === selectedCountry)?.country_name || "España"}</span>
+                                </span>
+                              </SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              {countries.map((c) => (
+                                <SelectItem key={c.country_code} value={c.country_code}>
+                                  <span className="flex items-center gap-2">
+                                    <span>{c.flag_emoji}</span>
+                                    <span className="text-sm">{c.country_name}</span>
+                                  </span>
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </div>
                       </>
                     )}

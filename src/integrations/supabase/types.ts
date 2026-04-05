@@ -296,6 +296,7 @@ export type Database = {
           agency_logo_url: string | null
           agency_name: string | null
           agency_phone: string | null
+          country_code: string | null
           created_at: string
           full_name: string | null
           id: string
@@ -313,6 +314,7 @@ export type Database = {
           agency_logo_url?: string | null
           agency_name?: string | null
           agency_phone?: string | null
+          country_code?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
@@ -330,6 +332,7 @@ export type Database = {
           agency_logo_url?: string | null
           agency_name?: string | null
           agency_phone?: string | null
+          country_code?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
