@@ -9,7 +9,7 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { tool, data, images, language } = await req.json();
+    const { tool, data, images, language, country } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -18,32 +18,56 @@ serve(async (req) => {
       ? "\n\nIMPORTANT: You MUST respond entirely in English. All text, labels, descriptions and content must be in English."
       : "";
 
+    // Country context - defaults to Spain if not provided
+    const countryName = country?.name || "España";
+    const countryCode = country?.code || "es";
+    const aiContext = country?.ai_context || "";
+    const legislation = country?.legislation || {};
+    const taxConfig = country?.tax_config || {};
+    const terminology = country?.terminology || {};
+
+    const countryInstruction = `\n\nCONTEXTO DE PAÍS: ${countryName} (${countryCode.toUpperCase()}).
+${aiContext}
+Usa la terminología local: ${Object.entries(terminology).map(([k, v]) => `${k}=${v}`).join(", ")}.
+Adapta todas las referencias legales, fiscales e impositivas a la legislación de ${countryName}.
+NO menciones leyes ni impuestos de otros países a menos que se pida expresamente una comparativa.`;
+
     let systemPrompt = "";
     let userPrompt = "";
 
     switch (tool) {
       case "descripciones": {
         const hasImages = images && Array.isArray(images) && images.length > 0;
-        systemPrompt = `Eres un experto copywriter y especialista en marketing inmobiliario digital en España. Genera descripciones profesionales de inmuebles y anuncios optimizados para cada plataforma.
+        systemPrompt = `Eres un experto copywriter y especialista en marketing inmobiliario digital en ${countryName}. Genera descripciones profesionales de inmuebles y anuncios optimizados para cada plataforma.
 ${hasImages ? "Se te proporcionan fotografías del inmueble. Analízalas detalladamente para identificar: estilo arquitectónico, acabados, materiales, luminosidad, distribución, vistas, estado de conservación y cualquier detalle relevante. Usa esta información visual para enriquecer significativamente las descripciones generadas." : ""}
+Usa la moneda y terminología local de ${countryName}. Adapta los portales inmobiliarios a los más relevantes del país.
 Siempre responde en formato JSON con esta estructura exacta:
-{"corta": "descripción corta de 1-2 líneas", "larga": "descripción detallada de 4-6 líneas", "redes": "copy para redes sociales con emojis y hashtags", "facebook": "texto optimizado para Facebook Ads", "instagram": "caption para Instagram con emojis y hashtags relevantes", "portal": "descripción profesional para portales inmobiliarios (Idealista, Fotocasa)"}`;
+{"corta": "descripción corta de 1-2 líneas", "larga": "descripción detallada de 4-6 líneas", "redes": "copy para redes sociales con emojis y hashtags", "facebook": "texto optimizado para Facebook Ads", "instagram": "caption para Instagram con emojis y hashtags relevantes", "portal": "descripción profesional para portales inmobiliarios del país"}`;
         userPrompt = `Genera descripciones y anuncios para: Tipo: ${data.tipo || "propiedad"}. Habitaciones: ${data.habitaciones || "N/A"}. Superficie: ${data.superficie || "N/A"} m². Ubicación: ${data.ubicacion || "España"}. Precio: ${data.precio || "consultar"}. Extras: ${data.extras || "ninguno"}. Estilo: ${data.estilo || "comercial"}.`;
         break;
       }
       case "consultor-legal": {
-        systemPrompt = `Eres un consultor jurídico inmobiliario especializado en la legislación española.
-Conoces en profundidad el Código Civil español, la Ley de Arrendamientos Urbanos (LAU), la Ley de Propiedad Horizontal (LPH), la Ley del Suelo, la normativa hipotecaria (Ley 5/2019), el ITP, IVA, IRPF, plusvalía municipal y toda la normativa fiscal y registral española.
-Responde con lenguaje claro y accesible. Incluye referencias a leyes españolas cuando sea posible.
+        const lawsList = Object.entries(legislation).map(([k, v]) => `- ${v}`).join("\n");
+        const taxList = Object.entries(taxConfig).map(([k, v]) => `- ${k}: ${v}`).join("\n");
+        systemPrompt = `Eres un consultor jurídico inmobiliario especializado en la legislación de ${countryName}.
+Conoces en profundidad la normativa inmobiliaria del país, incluyendo:
+${lawsList || "la legislación inmobiliaria vigente"}
+
+Impuestos y fiscalidad aplicable:
+${taxList || "la normativa fiscal vigente"}
+
+Responde con lenguaje claro y accesible. Incluye referencias a leyes de ${countryName} cuando sea posible.
 IMPORTANTE: Aclara que tus respuestas son orientativas y no sustituyen asesoramiento legal profesional.
 Responde en formato JSON: {"respuesta": "texto principal", "resumen": "resumen en 2-3 puntos", "recomendaciones": ["recomendación 1", "recomendación 2"]}`;
         userPrompt = data.consulta;
         break;
       }
       case "entorno": {
-        systemPrompt = `Eres un experto en el mercado inmobiliario de España. Conoces bien las zonas, barrios y ciudades españolas.
+        const currSymbol = countryCode === "es" ? "€" : (terminology?.currency_symbol || "$");
+        const currCode = country?.code === "es" ? "EUR" : (country?.currency_code || "USD");
+        systemPrompt = `Eres un experto en el mercado inmobiliario de ${countryName}. Conoces bien las zonas, barrios y ciudades del país.
 Genera una descripción atractiva del entorno/zona para uso inmobiliario.
-Incluye también un análisis de precios estimados de la zona en euros (€).
+Incluye también un análisis de precios estimados de la zona en la moneda local.
 Responde en JSON: {
   "descripcion": "texto descriptivo del entorno",
   "servicios": ["servicio 1", "servicio 2"],
@@ -52,9 +76,9 @@ Responde en JSON: {
   "precios_zona": {
     "resumen": "descripción general de los precios en la zona",
     "rangos": [
-      {"tipo": "Piso", "rango_min": 150000, "rango_max": 300000, "moneda": "EUR"},
-      {"tipo": "Casa / Chalet", "rango_min": 250000, "rango_max": 500000, "moneda": "EUR"},
-      {"tipo": "Terreno (m²)", "rango_min": 100, "rango_max": 500, "moneda": "EUR"}
+      {"tipo": "${terminology?.piso || "Departamento/Piso"}", "rango_min": 0, "rango_max": 0, "moneda": "${currCode}"},
+      {"tipo": "Casa", "rango_min": 0, "rango_max": 0, "moneda": "${currCode}"},
+      {"tipo": "Terreno (m²)", "rango_min": 0, "rango_max": 0, "moneda": "${currCode}"}
     ],
     "tendencia": "alza|estable|baja",
     "nivel": "economico|medio|medio-alto|alto|premium"
@@ -64,29 +88,34 @@ Responde en JSON: {
         break;
       }
       case "guiones": {
-        systemPrompt = `Eres un creador de contenido inmobiliario para redes sociales en España.
-Genera guiones profesionales y dinámicos adaptados a la duración indicada. Responde en JSON:
+        systemPrompt = `Eres un creador de contenido inmobiliario para redes sociales en ${countryName}.
+Genera guiones profesionales y dinámicos adaptados a la duración indicada. Usa terminología local del país.
+Responde en JSON:
 {"reel": "guión para Instagram Reel", "tiktok": "guión para TikTok", "youtube": "guión para YouTube con intro, desarrollo y cierre"}`;
         userPrompt = `Guión para inmueble: Tipo: ${data.tipo}. Ubicación: ${data.ubicacion}. Precio: ${data.precio || "consultar"}. Características: ${data.caracteristicas}. Tono: ${data.tono || "profesional y cercano"}. Duración objetivo: ${data.duracion || "60 segundos"}.`;
         break;
       }
       case "captacion": {
-        systemPrompt = `Eres un experto en captación inmobiliaria en España. Conoces las mejores técnicas para captar propietarios en el mercado español.
+        systemPrompt = `Eres un experto en captación inmobiliaria en ${countryName}. Conoces las mejores técnicas para captar propietarios en el mercado del país.
 Responde en JSON:
 {"script_llamada": "guión para llamada telefónica", "script_puerta": "guión para visita puerta a puerta", "argumentario": "argumentos de venta principales", "objeciones": [{"objecion": "texto objeción", "respuesta": "cómo manejarla"}]}`;
         userPrompt = `Genera material de captación para: Zona: ${data.zona}. Tipo de inmueble: ${data.tipo || "general"}. Contexto: ${data.contexto || "captación general"}.`;
         break;
       }
       case "contratos": {
-        systemPrompt = `Eres un abogado especializado en derecho inmobiliario español. Genera contratos completos, profesionales y legalmente válidos según la legislación de España.
-Debes fundamentar cada contrato en el Código Civil español, la Ley de Arrendamientos Urbanos (LAU 29/1994), la Ley de Propiedad Horizontal (LPH 49/1960), la Ley Hipotecaria, la Ley 5/2019 reguladora de los contratos de crédito inmobiliario, normativa registral, y la legislación fiscal aplicable (ITP, IVA, IRPF, plusvalía municipal).
-El contrato debe incluir: encabezado con lugar y fecha, identificación completa de las partes (DNI/NIE), descripción detallada del inmueble (referencia catastral, registro de la propiedad), cláusulas numeradas, condiciones de pago, obligaciones de las partes, penalidades, jurisdicción competente y espacio para firmas.
+        const contractLaws = Object.entries(legislation).map(([k, v]) => `- ${v}`).join("\n");
+        systemPrompt = `Eres un abogado especializado en derecho inmobiliario de ${countryName}. Genera contratos completos, profesionales y legalmente válidos según la legislación del país.
+Debes fundamentar cada contrato en la normativa vigente de ${countryName}:
+${contractLaws || "la legislación inmobiliaria aplicable"}
+
+El contrato debe incluir: encabezado con lugar y fecha, identificación completa de las partes, descripción detallada del inmueble, cláusulas numeradas, condiciones de pago, obligaciones de las partes, penalidades, jurisdicción competente y espacio para firmas.
+Usa la terminología legal local del país (${terminology?.escritura || "escritura"}, ${terminology?.notario || "notario"}, ${terminology?.arrendador || "arrendador"}, ${terminology?.arrendatario || "arrendatario"}, etc.).
 IMPORTANTE: Aclara siempre que el contrato es un modelo orientativo y debe ser revisado por un profesional del derecho antes de su firma.
 Responde SIEMPRE en formato JSON con esta estructura exacta:
 {
   "contrato": "texto completo del contrato con cláusulas numeradas",
   "clausulas_clave": ["cláusula importante 1", "cláusula importante 2"],
-  "base_legal": ["Artículo X del Código Civil - descripción", "Ley Y - descripción"],
+  "base_legal": ["Referencia legal 1 - descripción", "Referencia legal 2 - descripción"],
   "advertencias": ["advertencia legal 1", "advertencia 2"],
   "resumen": "resumen ejecutivo del contrato en 2-3 líneas"
 }`;
@@ -98,43 +127,40 @@ Detalles adicionales: ${data.detalles || "ninguno"}.`;
         break;
       }
       case "costes-vendedor": {
-        systemPrompt = `Eres un asesor fiscal inmobiliario experto en la legislación tributaria española. Calcula con precisión los costes fiscales de una venta de inmueble.
+        const taxDetails = Object.entries(taxConfig).map(([k, v]) => `- ${k}: ${v}`).join("\n");
+        systemPrompt = `Eres un asesor fiscal inmobiliario experto en la legislación tributaria de ${countryName}. Calcula con precisión los costes fiscales de una venta de inmueble según la normativa del país.
 
-Para el IRPF por ganancia patrimonial:
-- Calcula la ganancia = precio de venta - precio de adquisición (ajustado por coeficientes de actualización si aplica).
-- Aplica los tramos vigentes del IRPF sobre la ganancia: 19% (hasta 6.000€), 21% (6.000-50.000€), 23% (50.000-200.000€), 27% (200.000-300.000€), 28% (>300.000€).
-- Considera gastos deducibles habituales (notaría, registro, comisiones de compra).
+Impuestos y tasas aplicables en ${countryName}:
+${taxDetails || "Consulta la normativa fiscal vigente del país."}
 
-Para la plusvalía municipal (IIVTNU):
-- Calcula usando el método real (ganancia real sobre valor catastral estimado) y el método objetivo (coeficientes por años de tenencia según normativa vigente).
-- Usa el método que resulte más favorable al contribuyente (tras la sentencia del TC).
-- Los coeficientes máximos orientativos por años de tenencia son: 1 año: 0.14, 2: 0.13, 3: 0.15, 4: 0.17, 5-8: ~0.17-0.20, 9-12: ~0.08-0.12, 13-20: ~0.08-0.45.
+Calcula cada impuesto según los tramos y tasas vigentes del país. Considera gastos deducibles habituales.
 
 Responde en JSON:
 {
-  "irpf_importe": número,
-  "irpf_detalle": "explicación del cálculo del IRPF con tramos aplicados",
-  "plusvalia_estimada": número,
-  "plusvalia_detalle": "explicación del cálculo de la plusvalía municipal",
+  "impuesto_principal_importe": número,
+  "impuesto_principal_detalle": "explicación del cálculo del impuesto principal sobre la ganancia",
+  "impuesto_transferencia_estimado": número,
+  "impuesto_transferencia_detalle": "explicación del cálculo del impuesto de transferencia/plusvalía",
+  "otros_costes": "otros costes aplicables (notaría, registro, etc.)",
   "notas": "observaciones adicionales o recomendaciones fiscales"
 }`;
-        userPrompt = `Calcula los costes fiscales de venta de un inmueble:
-- Precio de venta: ${data.precio_venta}€
-- Precio de adquisición: ${data.precio_adquisicion}€
+        userPrompt = `Calcula los costes fiscales de venta de un inmueble en ${countryName}:
+- Precio de venta: ${data.precio_venta}
+- Precio de adquisición: ${data.precio_adquisicion}
 - Año de adquisición: ${data.anio_adquisicion}
 - Año actual: ${new Date().getFullYear()}
-- Comunidad Autónoma: ${data.comunidad}
+- Región/Estado/Provincia: ${data.comunidad || "no especificada"}
 - Comisión del agente: ${data.comision}%`;
         break;
       }
       case "informes": {
-        systemPrompt = `Eres un tasador inmobiliario profesional en España. Genera informes de valoración detallados y fundamentados según la normativa española (Orden ECO/805/2003).
-Utiliza metodología comparativa de mercado y análisis de características del inmueble. Los precios deben expresarse en euros (€).
+        systemPrompt = `Eres un tasador inmobiliario profesional en ${countryName}. Genera informes de valoración detallados y fundamentados según la normativa del país.
+Utiliza metodología comparativa de mercado y análisis de características del inmueble. Los precios deben expresarse en la moneda local del país.
 Responde en JSON con esta estructura exacta:
 {
   "resumen_ejecutivo": "resumen del informe en 3-4 líneas",
   "analisis_mercado": "análisis de la zona y mercado actual en 4-6 líneas",
-  "valoracion_estimada": "rango de valoración con justificación (ej: 'Entre 180.000 € y 220.000 €, basado en...')",
+  "valoracion_estimada": "rango de valoración con justificación",
   "factores_positivos": ["factor 1", "factor 2", "factor 3"],
   "factores_negativos": ["factor 1", "factor 2"],
   "recomendaciones": ["recomendación 1", "recomendación 2", "recomendación 3"],
@@ -151,7 +177,8 @@ Responde en JSON con esta estructura exacta:
         });
     }
 
-    // Append language instruction to system prompt
+    // Append country and language instructions to system prompt
+    systemPrompt += countryInstruction;
     systemPrompt += langInstruction;
 
     // Build messages - support multimodal content for descripciones with images
