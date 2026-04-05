@@ -38,10 +38,11 @@ NO menciones leyes ni impuestos de otros países a menos que se pida expresament
     switch (tool) {
       case "descripciones": {
         const hasImages = images && Array.isArray(images) && images.length > 0;
-        systemPrompt = `Eres un experto copywriter y especialista en marketing inmobiliario digital en España. Genera descripciones profesionales de inmuebles y anuncios optimizados para cada plataforma.
+        systemPrompt = `Eres un experto copywriter y especialista en marketing inmobiliario digital en ${countryName}. Genera descripciones profesionales de inmuebles y anuncios optimizados para cada plataforma.
 ${hasImages ? "Se te proporcionan fotografías del inmueble. Analízalas detalladamente para identificar: estilo arquitectónico, acabados, materiales, luminosidad, distribución, vistas, estado de conservación y cualquier detalle relevante. Usa esta información visual para enriquecer significativamente las descripciones generadas." : ""}
+Usa la moneda y terminología local de ${countryName}. Adapta los portales inmobiliarios a los más relevantes del país.
 Siempre responde en formato JSON con esta estructura exacta:
-{"corta": "descripción corta de 1-2 líneas", "larga": "descripción detallada de 4-6 líneas", "redes": "copy para redes sociales con emojis y hashtags", "facebook": "texto optimizado para Facebook Ads", "instagram": "caption para Instagram con emojis y hashtags relevantes", "portal": "descripción profesional para portales inmobiliarios (Idealista, Fotocasa)"}`;
+{"corta": "descripción corta de 1-2 líneas", "larga": "descripción detallada de 4-6 líneas", "redes": "copy para redes sociales con emojis y hashtags", "facebook": "texto optimizado para Facebook Ads", "instagram": "caption para Instagram con emojis y hashtags relevantes", "portal": "descripción profesional para portales inmobiliarios del país"}`;
         userPrompt = `Genera descripciones y anuncios para: Tipo: ${data.tipo || "propiedad"}. Habitaciones: ${data.habitaciones || "N/A"}. Superficie: ${data.superficie || "N/A"} m². Ubicación: ${data.ubicacion || "España"}. Precio: ${data.precio || "consultar"}. Extras: ${data.extras || "ninguno"}. Estilo: ${data.estilo || "comercial"}.`;
         break;
       }
