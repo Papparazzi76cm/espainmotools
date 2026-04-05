@@ -145,7 +145,7 @@
   "tools": {
     "home-staging": { "title": "AI Home Staging", "description": "Edit property images with artificial intelligence" },
     "descripciones": { "title": "Text Generator", "description": "Create professional descriptions and ads for properties" },
-    "consultor-legal": { "title": "Legal Advisor", "description": "Resolve real estate legal questions in Spain" },
+    "consultor-legal": { "title": "Legal Advisor", "description": "Resolve real estate legal questions adapted to your country" },
     "costes": { "title": "Cost Calculator", "description": "Complete breakdown of purchase and sale costs" },
     "rentabilidad": { "title": "Profitability Calculator", "description": "Analyze real estate investment profitability" },
     "informes": { "title": "Valuation Reports", "description": "Generate personalized professional reports" },
