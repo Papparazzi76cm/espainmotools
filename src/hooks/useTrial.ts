@@ -86,6 +86,34 @@ export function useTrial() {
       .maybeSingle();
 
     if (data) {
+      // Activate trial on first login if not yet activated
+      if (!data.trial_activated && !data.is_paid) {
+        const now = new Date();
+        const newEnd = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
+        await supabase
+          .from("user_trials")
+          .update({
+            trial_activated: true,
+            trial_start: now.toISOString(),
+            trial_end: newEnd.toISOString(),
+          })
+          .eq("user_id", user.id);
+
+        setTrial({
+          trialStart: now,
+          trialEnd: newEnd,
+          isPaid: false,
+          isTrialActive: true,
+          isTrialExpired: false,
+          daysRemaining: 14,
+          hoursRemaining: 0,
+          minutesRemaining: 0,
+          secondsRemaining: 0,
+        });
+        setLoading(false);
+        return;
+      }
+
       const end = new Date(data.trial_end);
       const now = new Date();
       const diff = end.getTime() - now.getTime();
@@ -96,7 +124,7 @@ export function useTrial() {
         trialEnd: end,
         isPaid: data.is_paid,
         isTrialActive: isActive,
-        isTrialExpired: diff <= 0 && !data.is_paid,
+        isTrialExpired: data.trial_activated && diff <= 0 && !data.is_paid,
         daysRemaining: Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))),
         hoursRemaining: Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))),
         minutesRemaining: Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))),
