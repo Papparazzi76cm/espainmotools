@@ -461,6 +461,7 @@ export type Database = {
           created_at: string
           id: string
           is_paid: boolean
+          trial_activated: boolean
           trial_end: string
           trial_start: string
           user_id: string
@@ -469,6 +470,7 @@ export type Database = {
           created_at?: string
           id?: string
           is_paid?: boolean
+          trial_activated?: boolean
           trial_end?: string
           trial_start?: string
           user_id: string
@@ -477,6 +479,7 @@ export type Database = {
           created_at?: string
           id?: string
           is_paid?: boolean
+          trial_activated?: boolean
           trial_end?: string
           trial_start?: string
           user_id?: string
